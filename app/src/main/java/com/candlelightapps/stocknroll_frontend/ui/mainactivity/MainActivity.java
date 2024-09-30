@@ -1,4 +1,4 @@
-package com.candlelightapps.stocknroll_frontend;
+package com.candlelightapps.stocknroll_frontend.ui.mainactivity;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.candlelightapps.stocknroll_frontend.R;
 
 public class MainActivity extends AppCompatActivity {
 
