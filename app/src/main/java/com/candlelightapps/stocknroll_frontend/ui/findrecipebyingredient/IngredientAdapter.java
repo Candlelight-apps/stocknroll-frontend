@@ -2,9 +2,7 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +12,7 @@ import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityRecipeItemViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
@@ -23,7 +22,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     public IngredientAdapter(List<Ingredient> ingredientList, Context context) {
         this.ingredientList = ingredientList;
-        this.context = context;
     }
 
     @NonNull
@@ -49,6 +47,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     @Override
     public int getItemCount() {
         return ingredientList.size();
+    }
+
+    public void setIngredientFilteredList(ArrayList<Ingredient> ingredientFilterList) {
+        this.ingredientList = ingredientFilterList;
+        notifyDataSetChanged();
     }
 
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {
