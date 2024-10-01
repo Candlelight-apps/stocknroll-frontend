@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -42,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="100sp"
                 android:text="@{Ingredient.name}"
+                tools:text="Name"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:padding="10sp"
@@ -53,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{`` + Ingredient.quantity}"
+                tools:text="1"
                 style="@style/BtnTextStyle"
                 android:layout_gravity="end|center_vertical"
                 android:paddingStart="0sp"
