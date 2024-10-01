@@ -43,7 +43,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     @Override
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
-
+        Ingredient ingredient = ingredientList.get(position);
+        holder.activityRecipeItemViewBinding.setIngredient(ingredient);
     }
 
     @Override
