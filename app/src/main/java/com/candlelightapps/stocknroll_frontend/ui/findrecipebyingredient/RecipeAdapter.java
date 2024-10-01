@@ -40,12 +40,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-
+        Recipe recipe = recipeList.get(position);
+        holder.activityFoundRecipeViewBinding.setRecipe(recipe);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return recipeList.size();
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
