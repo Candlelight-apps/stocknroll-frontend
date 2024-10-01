@@ -43,36 +43,43 @@
                 android:text="View All" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Produce" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Dairy &amp; Eggs" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Meat &amp; Seafood" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Bakery &amp; Grains" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Snacks &amp; Sweets" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab6"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Beverages" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab7"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Other" />
