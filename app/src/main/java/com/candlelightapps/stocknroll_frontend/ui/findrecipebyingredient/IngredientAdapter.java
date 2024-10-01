@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candlelightapps.stocknroll_frontend.R;
-import com.candlelightapps.stocknroll_frontend.databinding.ActivityFindRecipeByIngredientBinding;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityRecipeItemViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 
@@ -49,7 +48,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     @Override
     public int getItemCount() {
-        return 0;
+        return ingredientList.size();
     }
 
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {
