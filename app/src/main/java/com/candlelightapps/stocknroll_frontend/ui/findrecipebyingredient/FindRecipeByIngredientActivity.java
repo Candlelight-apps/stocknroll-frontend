@@ -6,8 +6,12 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.candlelightapps.stocknroll_frontend.R;
+import com.candlelightapps.stocknroll_frontend.databinding.ActivityFindRecipeByIngredientBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 
 import java.util.ArrayList;
@@ -19,12 +23,17 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private List<Ingredient> ingredientList;
     private ArrayList<Ingredient> ingredientFilterList;
     private SearchView ingredientSearchView;
+    private RecyclerView recyclerView;
+    private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_find_recipe_by_ingredient);
+
+        activityFindRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_find_recipe_by_ingredient);
+
 
         ingredientSearchView = findViewById(R.id.searchItems);
         ingredientSearchView.clearFocus();
@@ -42,6 +51,16 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void displayInRecyclerView() {
+        recyclerView = activityFindRecipeByIngredientBinding.ingredientRecyclerView;
+        ingredientAdapter = new IngredientAdapter(ingredientList, this);
+        recyclerView.setAdapter(ingredientAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        ingredientAdapter.notifyDataSetChanged();
     }
 
     private void filterIngredientList(String text) {
