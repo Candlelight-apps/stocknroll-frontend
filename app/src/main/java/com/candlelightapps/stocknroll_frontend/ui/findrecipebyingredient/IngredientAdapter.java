@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityFindRecipeByIngredientBinding;
+import com.candlelightapps.stocknroll_frontend.databinding.ActivityRecipeItemViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 
 import java.util.List;
@@ -30,14 +31,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     @Override
     public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding = DataBindingUtil.inflate(
+        ActivityRecipeItemViewBinding activityRecipeItemViewBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(context),
-                R.layout.activity_find_recipe_by_ingredient,
+                R.layout.activity_recipe_item_view,
                 parent,
                 false
         );
 
-        return new IngredientViewHolder(activityFindRecipeByIngredientBinding);
+        return new IngredientViewHolder(activityRecipeItemViewBinding);
     }
 
     @Override
@@ -52,11 +53,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {
 
-        private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
+        private ActivityRecipeItemViewBinding activityRecipeItemViewBinding;
 
-        public IngredientViewHolder(ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding) {
-            super(activityFindRecipeByIngredientBinding.getRoot());
-            this.activityFindRecipeByIngredientBinding = activityFindRecipeByIngredientBinding;
+        public IngredientViewHolder(ActivityRecipeItemViewBinding activityRecipeItemViewBinding) {
+            super(activityRecipeItemViewBinding.getRoot());
+            this.activityRecipeItemViewBinding = activityRecipeItemViewBinding;
         }
     }
 }
