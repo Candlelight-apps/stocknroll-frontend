@@ -32,7 +32,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
     private SearchView ingredientSearchView;
     private RecyclerView recyclerView;
-    private ExtendedFloatingActionButton sortByName;
+    private ExtendedFloatingActionButton sortByName, sortByExpiryDate;
 
     private IngredientAdapter ingredientAdapter;
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
@@ -66,6 +66,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         });
 
         sortByName = findViewById(R.id.btnSortByName);
+        sortByExpiryDate = findViewById(R.id.btnSortByExpiry);
 
         sortByName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,12 +75,26 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             }
         });
 
+        sortByExpiryDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(ingredientList, BY_EXPIRY_DATE);
+            }
+        });
+
     }
 
-    public static final Comparator<Ingredient> BY_NAME_ALPHABETICAL = new Comparator<Ingredient>() {
+    public Comparator<Ingredient> BY_NAME_ALPHABETICAL = new Comparator<Ingredient>() {
         @Override
         public int compare(Ingredient ingredient, Ingredient i1) {
             return ingredient.getName().compareTo(i1.getName());
+        }
+    };
+
+    public Comparator<Ingredient> BY_EXPIRY_DATE = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient ingredient, Ingredient i1) {
+            return ingredient.getExpiryDate().compareTo(i1.getExpiryDate());
         }
     };
 
