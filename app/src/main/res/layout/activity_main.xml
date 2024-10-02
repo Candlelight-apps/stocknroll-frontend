@@ -21,7 +21,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="Stock'n'Roll"/>
+            app:title="Stock'n'Roll"
+            app:menu="@menu/search_menu"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            />
 
 
         <com.google.android.material.tabs.TabLayout
