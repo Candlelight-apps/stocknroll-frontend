@@ -12,7 +12,7 @@ public class Ingredient extends BaseObservable {
     String name;
     String category;
     int quantity;
-    LocalDate expiryDate;
+    String expiryDate;
     String imageUrl; //To be implemented later
 
     public Ingredient(String name, String category, int quantity, LocalDate expiryDate, String imageUrl) {
