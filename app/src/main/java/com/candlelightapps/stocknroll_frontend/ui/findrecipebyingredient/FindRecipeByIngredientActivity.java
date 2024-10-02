@@ -7,8 +7,10 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,6 +69,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
                 displayInRecyclerView();
             }
         });
+
     }
 
     public void displayInRecyclerView() {
