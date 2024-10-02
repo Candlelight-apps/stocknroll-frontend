@@ -7,6 +7,8 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +21,14 @@ import java.util.List;
 
 public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
-    private IngredientAdapter ingredientAdapter;
     private List<Ingredient> ingredientList;
     private ArrayList<Ingredient> ingredientFilterList;
+
+    private IngredientAdapter ingredientAdapter;
     private SearchView ingredientSearchView;
     private RecyclerView recyclerView;
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
+    private FindRecipeByIngredientActivityViewModel findRecipeByIngredientActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,9 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_recipe_by_ingredient);
 
         activityFindRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_find_recipe_by_ingredient);
+        findRecipeByIngredientActivityViewModel = new ViewModelProvider(this).get(FindRecipeByIngredientActivityViewModel.class);
 
+        getAllIngredients();
 
         ingredientSearchView = findViewById(R.id.searchItems);
         ingredientSearchView.clearFocus();
@@ -51,6 +57,16 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getAllIngredients() {
+        findRecipeByIngredientActivityViewModel.getAllIngredients().observe(this, new Observer<List<Ingredient>>() {
+            @Override
+            public void onChanged(List<Ingredient> ingredientsLiveData) {
+                ingredientList = (ArrayList<Ingredient>) ingredientsLiveData;
+                displayInRecyclerView();
+            }
+        });
     }
 
     public void displayInRecyclerView() {
