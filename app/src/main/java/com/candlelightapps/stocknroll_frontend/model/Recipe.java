@@ -3,6 +3,8 @@ package com.candlelightapps.stocknroll_frontend.model;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
+import com.candlelightapps.stocknroll_frontend.BR;
+
 public class Recipe extends BaseObservable {
 
      String title;
@@ -28,6 +30,7 @@ public class Recipe extends BaseObservable {
 
     public void setTitle(String title) {
         this.title = title;
+        notifyPropertyChanged(BR.title);
     }
 
     @Bindable
@@ -37,6 +40,7 @@ public class Recipe extends BaseObservable {
 
     public void setReadyInMinutes(int readyInMinutes) {
         this.readyInMinutes = readyInMinutes;
+        notifyPropertyChanged(BR.readyInMinutes);
     }
 
     @Bindable
@@ -46,6 +50,7 @@ public class Recipe extends BaseObservable {
 
     public void setSourceURL(String sourceURL) {
         this.sourceURL = sourceURL;
+        notifyPropertyChanged(BR.sourceURL);
     }
 
     @Bindable
@@ -55,6 +60,7 @@ public class Recipe extends BaseObservable {
 
     public void setImage(String image) {
         this.image = image;
+        notifyPropertyChanged(BR.image);
     }
 
     @Bindable
@@ -64,5 +70,6 @@ public class Recipe extends BaseObservable {
 
     public void setFavourite(Boolean favourite) {
         isFavourite = favourite;
+        notifyPropertyChanged(BR.favourite);
     }
 }

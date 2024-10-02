@@ -32,6 +32,7 @@ public class Ingredient extends BaseObservable {
 
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
     @Bindable
@@ -41,6 +42,7 @@ public class Ingredient extends BaseObservable {
 
     public void setCategory(String category) {
         this.category = category;
+        notifyPropertyChanged(BR.category);
     }
 
     @Bindable
@@ -50,6 +52,7 @@ public class Ingredient extends BaseObservable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        notifyPropertyChanged(BR.quantity);
     }
 
     @Bindable
@@ -59,6 +62,7 @@ public class Ingredient extends BaseObservable {
 
     public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
+        notifyPropertyChanged(BR.expiryDate);
     }
 
     @Bindable
@@ -68,5 +72,6 @@ public class Ingredient extends BaseObservable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        notifyPropertyChanged(BR.imageUrl);
     }
 }
