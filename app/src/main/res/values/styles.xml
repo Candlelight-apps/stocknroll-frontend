@@ -9,4 +9,9 @@
     <style name="CustomBtnColour" parent="ThemeOverlay.Material3.Button">
         <item name="background">@color/grey</item>
     </style>
+
+    <style name="TabTextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

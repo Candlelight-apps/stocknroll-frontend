@@ -32,10 +32,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:tabIndicatorColor="@color/material_dynamic_secondary90"
+            app:tabIndicatorColor="@color/material_dynamic_primary60"
+            app:tabTextColor="@color/dark_grey"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/material_dynamic_secondary90"
-            app:tabTextColor="@color/black">
+            app:tabSelectedTextColor="@color/black"
+            app:tabRippleColor="@color/blue"
+            app:tabTextAppearance="@style/TabTextAppearance">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -115,10 +117,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            app:itemIconTint="@color/material_dynamic_secondary90"
+            app:itemIconTint="@color/black"
             app:itemTextColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/bottom_nav_menu" />
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="labeled"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
