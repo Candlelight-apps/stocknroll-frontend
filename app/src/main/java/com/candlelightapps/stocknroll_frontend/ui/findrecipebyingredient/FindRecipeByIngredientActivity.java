@@ -27,7 +27,7 @@ import java.util.List;
 
 public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
-    private List<Ingredient> ingredientList;
+    private ArrayList<Ingredient> ingredientList;
     private ArrayList<Ingredient> ingredientFilterList;
 
     private SearchView ingredientSearchView;
@@ -37,14 +37,16 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private IngredientAdapter ingredientAdapter;
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
     private FindRecipeByIngredientActivityViewModel findRecipeByIngredientActivityViewModel;
+    private FindRecipeByIngredientClickHandlers findRecipeByIngredientClickHandlers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_find_recipe_by_ingredient);
 
         activityFindRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_find_recipe_by_ingredient);
+        findRecipeByIngredientClickHandlers = new FindRecipeByIngredientClickHandlers(this);
+        activityFindRecipeByIngredientBinding.setClickHandler(findRecipeByIngredientClickHandlers);
         findRecipeByIngredientActivityViewModel = new ViewModelProvider(this).get(FindRecipeByIngredientActivityViewModel.class);
 
         getAllIngredients();
