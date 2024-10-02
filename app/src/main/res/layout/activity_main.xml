@@ -97,24 +97,22 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Sort by: "
-            android:paddingTop="2dp"
-            android:paddingBottom="6dp"
-            android:paddingEnd="16dp"
             android:paddingStart="230dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingTop="2dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="6dp"
+            android:text="@array/sorting_options"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout"
-            android:text="@array/sorting_options">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_layout">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_sorting_inventory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none"
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/item_recycler_view"
@@ -130,11 +128,22 @@
             app:layout_constraintVertical_bias="1.0"
             tools:listitem="@layout/item_ingredient_view" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:tint="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/material_dynamic_primary95"
             app:itemIconTint="@color/black"
             app:itemTextColor="@color/black"
             app:labelVisibilityMode="labeled"
