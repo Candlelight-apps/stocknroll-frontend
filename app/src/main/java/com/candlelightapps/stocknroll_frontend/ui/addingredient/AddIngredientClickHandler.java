@@ -37,7 +37,7 @@ public class AddIngredientClickHandler {
                     ingredient.getExpiryDate(),
                     ingredient.getImageUrl());
 
-            viewModel.addAlbum(newIngredient);
+            viewModel.addIngredient(newIngredient);
 
             context.startActivity(intent);
         }
