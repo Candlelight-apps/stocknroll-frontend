@@ -15,7 +15,7 @@ public class Ingredient extends BaseObservable {
     String expiryDate;
     String imageUrl; //To be implemented later
 
-    public Ingredient(String name, String category, int quantity, LocalDate expiryDate, String imageUrl) {
+    public Ingredient(String name, String category, int quantity, String expiryDate, String imageUrl) {
         this.name = name;
         this.category = category;
         this.quantity = quantity;
@@ -56,11 +56,11 @@ public class Ingredient extends BaseObservable {
     }
 
     @Bindable
-    public LocalDate getExpiryDate() {
+    public String getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(LocalDate expiryDate) {
+    public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
         notifyPropertyChanged(BR.expiryDate);
     }
