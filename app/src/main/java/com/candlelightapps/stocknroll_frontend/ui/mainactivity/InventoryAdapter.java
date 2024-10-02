@@ -1,27 +1,23 @@
 package com.candlelightapps.stocknroll_frontend.ui.mainactivity;
 
 import android.content.Context;
-import android.media.RouteListingPreference;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ItemIngredientViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 
 import java.util.List;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
+public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.IngredientViewHolder> {
 
     private Context context;
     private List<Ingredient> ingredientList;
 
-    public IngredientAdapter(Context context, List<Ingredient> ingredientList) {
+    public InventoryAdapter(Context context, List<Ingredient> ingredientList) {
         this.context = context;
         this.ingredientList = ingredientList;
     }
