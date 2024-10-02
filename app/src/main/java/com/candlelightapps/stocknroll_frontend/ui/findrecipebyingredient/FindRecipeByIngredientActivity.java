@@ -1,6 +1,8 @@
 package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityFindRecipeByIngredientBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
@@ -112,6 +115,11 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     }
 
     public void displayInRecyclerView() {
+        if (ingredientList == null || ingredientList.isEmpty()) {
+                Toast.makeText(this, "Please add ingredients before searching for recipes", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                this.startActivity(intent);
+        } else {
         recyclerView = activityFindRecipeByIngredientBinding.ingredientRecyclerView;
         ingredientAdapter = new IngredientAdapter(ingredientList, this);
         recyclerView.setAdapter(ingredientAdapter);
@@ -119,6 +127,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         ingredientAdapter.notifyDataSetChanged();
+        }
     }
 
     private void filterIngredientList(String text) {
