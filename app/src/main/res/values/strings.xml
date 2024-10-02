@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StocknRoll</string>
+    <string name="cooking_time">Cooking Time: %s</string>
 </resources>
