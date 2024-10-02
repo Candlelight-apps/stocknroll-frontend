@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.MainActivity">
 
-    <data></data>
+    <data>
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -14,33 +16,31 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            app:titleTextColor="@color/white"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="Stock'n'Roll"
-            app:menu="@menu/search_menu"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/search_menu"
+            app:title="Stock'n'Roll"
+            app:titleTextColor="@color/white" />
 
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:tabIndicatorColor="@color/material_dynamic_primary60"
-            app:tabTextColor="@color/dark_grey"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/black"
             app:tabRippleColor="@color/blue"
-            app:tabTextAppearance="@style/TabTextAppearance">
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextAppearance="@style/TabTextAppearance"
+            app:tabTextColor="@color/dark_grey">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -91,29 +91,44 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <Spinner
-            android:id="@+id/sort_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/material_dynamic_secondary90"
-            android:entries="@array/sorting_options"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dropdown_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Sort by: "
+            android:paddingTop="2dp"
+            android:paddingBottom="6dp"
             android:paddingEnd="16dp"
+            android:paddingStart="230dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+            app:layout_constraintTop_toBottomOf="@id/tab_layout"
+            android:text="@array/sorting_options">
+
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_sorting_inventory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/item_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sort_spinner"
-            tools:listitem="@layout/item_card_view" />
+            app:layout_constraintTop_toBottomOf="@id/dropdown_layout"
+            app:layout_constraintVertical_bias="1.0"
+            tools:listitem="@layout/item_ingredient_view" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
@@ -122,9 +137,9 @@
             android:background="@color/white"
             app:itemIconTint="@color/black"
             app:itemTextColor="@color/black"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/bottom_nav_menu"
-            app:labelVisibilityMode="labeled"/>
+            app:menu="@menu/bottom_nav_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
