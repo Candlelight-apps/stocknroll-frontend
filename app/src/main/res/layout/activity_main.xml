@@ -6,7 +6,9 @@
     tools:context=".ui.main.MainActivity">
 
     <data>
-
+        <variable
+            name="clickHandler"
+            type="com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivityClickHandler" />
 
     </data>
 
@@ -138,7 +140,8 @@
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="16dp" />
+            android:layout_margin="16dp"
+            android:onClick="@{clickHandler::onFABClicked}"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
