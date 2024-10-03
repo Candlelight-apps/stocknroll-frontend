@@ -2,7 +2,6 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -92,14 +91,14 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     public Comparator<Ingredient> BY_NAME_ALPHABETICAL = new Comparator<Ingredient>() {
         @Override
         public int compare(Ingredient ingredient, Ingredient i1) {
-            return ingredient.getName().compareTo(i1.getName());
+            return ingredient == null || i1 == null ? 0 : ingredient.getName().compareTo(i1.getName());
         }
     };
 
     public Comparator<Ingredient> BY_EXPIRY_DATE = new Comparator<Ingredient>() {
         @Override
         public int compare(Ingredient ingredient, Ingredient i1) {
-            return ingredient.getExpiryDate().compareTo(i1.getExpiryDate());
+            return ingredient == null || i1 == null ? 0 : ingredient.getExpiryDate().compareTo(i1.getExpiryDate());
         }
     };
 
