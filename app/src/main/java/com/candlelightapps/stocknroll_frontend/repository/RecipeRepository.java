@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.MutableLiveData;
 
 import com.candlelightapps.stocknroll_frontend.model.Recipe;
-import com.candlelightapps.stocknroll_frontend.service.ApiService;
+import com.candlelightapps.stocknroll_frontend.service.RecipeApiService;
 import com.candlelightapps.stocknroll_frontend.service.RetrofitInstance;
 
 import java.util.List;
@@ -17,15 +17,15 @@ import retrofit2.Response;
 public class RecipeRepository {
 
     private final MutableLiveData<List<Recipe>> recipeList;
-    private final ApiService apiService;
+    private final RecipeApiService recipeApiService;
 
     public RecipeRepository(Application application) {
         recipeList = new MutableLiveData<>();
-        apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
+        recipeApiService = RetrofitInstance.getRetrofitInstance().create(RecipeApiService.class);
     }
 
     public MutableLiveData<List<Recipe>> getMutableLiveData() {
-        apiService.getAllRecipes().enqueue(new Callback<List<Recipe>>() {
+        recipeApiService.getAllRecipes().enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 if(response.isSuccessful() && response.body() != null) {

@@ -6,7 +6,6 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
-import com.candlelightapps.stocknroll_frontend.service.ApiService;
 import com.candlelightapps.stocknroll_frontend.service.IngredientApiService;
 import com.candlelightapps.stocknroll_frontend.service.RetrofitInstance;
 
@@ -19,7 +18,6 @@ import retrofit2.Response;
 public class IngredientRepository {
 
     private final MutableLiveData<List<Ingredient>> ingredientsList;
-    private ApiService apiService;
     private IngredientApiService ingredientApiService;
     Application application;
 
@@ -27,14 +25,14 @@ public class IngredientRepository {
     public IngredientRepository(Application application) {
         ingredientsList = new MutableLiveData<>();
         this.application = application;
+        ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
     }
 
     public MutableLiveData<List<Ingredient>> getMutableLiveData() {
-        apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
-        apiService.getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
+        ingredientApiService.getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
             @Override
             public void onResponse(Call<List<Ingredient>> call, Response<List<Ingredient>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     ingredientsList.setValue(response.body());
                 }
             }
@@ -49,7 +47,6 @@ public class IngredientRepository {
     }
 
     public void addIngredient(Ingredient ingredient) {
-        ingredientApiService = RetrofitInstance.getIngredientApiService();
         Call<Ingredient> call = ingredientApiService.addIngredient(ingredient);
 
         call.enqueue(new Callback<Ingredient>() {

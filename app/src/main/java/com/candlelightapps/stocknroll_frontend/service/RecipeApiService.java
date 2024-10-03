@@ -8,10 +8,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-public interface ApiService {
-    @GET("/api/ingredients/all")
-    Call<List<Ingredient>> getAllIngredients();
+public interface RecipeApiService {
 
-    @GET("/api/recipes/all") // Replace with your actual API endpoint for recipes
+    @GET("recipes")
     Call<List<Recipe>> getAllRecipes();
 }
