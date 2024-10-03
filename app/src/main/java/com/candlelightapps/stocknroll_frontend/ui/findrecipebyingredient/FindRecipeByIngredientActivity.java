@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityFindRecipeByIngredientBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private SearchView ingredientSearchView;
     private RecyclerView recyclerView;
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
-    private FindRecipeByIngredientActivityViewModel findRecipeByIngredientActivityViewModel;
+    private IngredientViewModel ingredientViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_recipe_by_ingredient);
 
         activityFindRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_find_recipe_by_ingredient);
-        findRecipeByIngredientActivityViewModel = new ViewModelProvider(this).get(FindRecipeByIngredientActivityViewModel.class);
+        ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
 
         getAllIngredients();
 
@@ -62,7 +63,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     }
 
     private void getAllIngredients() {
-        findRecipeByIngredientActivityViewModel.getAllIngredients().observe(this, new Observer<List<Ingredient>>() {
+        ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
             @Override
             public void onChanged(List<Ingredient> ingredientsLiveData) {
                 ingredientList = (ArrayList<Ingredient>) ingredientsLiveData;

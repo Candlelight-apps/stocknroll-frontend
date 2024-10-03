@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityMainBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private MainActivityViewModel mainActivityViewModel;
+    private IngredientViewModel ingredientViewModel;
     private List<Ingredient> ingredientList;
     private MainActivityClickHandler mainActivityClickHandler;
 
@@ -36,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+//        EdgeToEdge.enable(this);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
         mainActivityClickHandler = new MainActivityClickHandler(this);
         binding.setClickHandler(mainActivityClickHandler);
 
@@ -47,15 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
         getAllIngredients();
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
     }
 
     private void getAllIngredients() {
-        mainActivityViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
+        ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
             @Override
             public void onChanged(List<Ingredient> ingredients) {
                 ingredientList = (List<Ingredient>) ingredients;
