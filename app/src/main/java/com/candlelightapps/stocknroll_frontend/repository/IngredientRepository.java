@@ -47,6 +47,7 @@ public class IngredientRepository {
     }
 
     public void addIngredient(Ingredient ingredient) {
+        ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
         Call<Ingredient> call = ingredientApiService.addIngredient(ingredient);
 
         call.enqueue(new Callback<Ingredient>() {
@@ -60,7 +61,7 @@ public class IngredientRepository {
             @Override
             public void onFailure(Call<Ingredient> call, Throwable t) {
                 Toast.makeText(application.getApplicationContext(),
-                        "Unable to add new ingredient to the database",
+                        "Invalid ingredient. Unable to add to the database",
                         Toast.LENGTH_SHORT).show();
             }
         });
