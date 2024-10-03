@@ -5,7 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.MainActivity">
 
-    <data></data>
+    <data>
+        <variable
+            name="clickHandler"
+            type="com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivityClickHandler" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -14,28 +19,31 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            app:titleTextColor="@color/white"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_constraintStart_toStartOf="parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="Stock'n'Roll"/>
+            app:menu="@menu/search_menu"
+            app:title="Stock'n'Roll"
+            app:titleTextColor="@color/white" />
 
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:tabIndicatorColor="@color/material_dynamic_secondary90"
+            app:tabIndicatorColor="@color/material_dynamic_primary60"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/material_dynamic_secondary90"
-            app:tabTextColor="@color/black">
+            app:tabRippleColor="@color/blue"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextAppearance="@style/TabTextAppearance"
+            app:tabTextColor="@color/dark_grey">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -43,73 +51,107 @@
                 android:text="View All" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Produce" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Dairy &amp; Eggs" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Meat &amp; Seafood" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Bakery &amp; Grains" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Snacks &amp; Sweets" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab6"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Beverages" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab7"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Other" />
 
         </com.google.android.material.tabs.TabLayout>
 
-        <Spinner
-            android:id="@+id/sort_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/material_dynamic_secondary90"
-            android:entries="@array/sorting_options"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dropdown_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sort by: "
+            android:paddingStart="230dp"
+            android:paddingTop="2dp"
             android:paddingEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/item_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            android:paddingBottom="6dp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sort_spinner"
-            tools:listitem="@layout/item_card_view" />
+            app:layout_constraintTop_toBottomOf="@id/tab_layout">
+
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_sorting_inventory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text=""/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/inventory_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dropdown_layout"
+            app:layout_constraintVertical_bias="1.0"
+            tools:listitem="@layout/item_ingredient_view" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:tint="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:onClick="@{clickHandler::onFABClicked}"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:itemIconTint="@color/material_dynamic_secondary90"
+            android:background="@color/material_dynamic_primary95"
+            app:itemIconTint="@color/black"
             app:itemTextColor="@color/black"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_nav_menu" />
 

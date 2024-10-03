@@ -1,27 +1,30 @@
-package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
+package com.candlelightapps.stocknroll_frontend.ui.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.repository.IngredientRepository;
 
 import java.util.List;
 
-public class FindRecipeByIngredientActivityViewModel extends AndroidViewModel {
+public class IngredientViewModel extends AndroidViewModel {
 
-    private IngredientRepository ingredientRepository;
+    IngredientRepository ingredientRepository;
 
-
-    public FindRecipeByIngredientActivityViewModel(@NonNull Application application) {
+    public IngredientViewModel(@NonNull Application application) {
         super(application);
         this.ingredientRepository = new IngredientRepository(application);
     }
 
-    public LiveData<List<Ingredient>> getAllIngredients() {
+    public void addIngredient(Ingredient ingredient) {
+        ingredientRepository.addIngredient(ingredient);
+    }
+
+    public MutableLiveData<List<Ingredient>> getIngredients() {
         return ingredientRepository.getMutableLiveData();
     }
 }

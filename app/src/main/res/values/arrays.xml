@@ -5,4 +5,15 @@
         <item>Stock level</item>
         <item>Expiry date</item>
     </string-array>
+
+    <string-array name="food_categories">
+        <item>Produce</item>
+        <item>Dairy &amp; Eggs</item>
+        <item>Meat &amp; Seafood</item>
+        <item>Bakery &amp; Grains</item>
+        <item>Frozen Foods</item>
+        <item>Snacks &amp; Sweets</item>
+        <item>Beverages</item>
+        <item>Other</item>
+    </string-array>
 </resources>

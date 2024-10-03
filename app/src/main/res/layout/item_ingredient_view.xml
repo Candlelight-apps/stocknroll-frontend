@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="ingredient"
+            type="com.candlelightapps.stocknroll_frontend.model.Ingredient" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:id="@+id/ingredient_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{ingredient.name}"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="Ingredient name"/>
+
+                <ImageButton
+                    android:id="@+id/btn_decrease_quantity"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_add"
+                    android:contentDescription="Decrease quantity"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/ingredient_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{ingredient.quantity}"
+                    tools:text="5"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="8dp" />
+
+                <ImageButton
+                    android:id="@+id/btn_increase_quantity"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/add_icon"
+                    android:contentDescription="Increase quantity" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ingredient_expiry_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ingredient.expiryDate}"
+                tools:text="Expiry Date"
+                android:textSize="12sp"
+                />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

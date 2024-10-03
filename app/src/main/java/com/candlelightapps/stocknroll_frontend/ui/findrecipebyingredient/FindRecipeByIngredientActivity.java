@@ -20,6 +20,7 @@ import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityFindRecipeByIngredientBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
+import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
     private IngredientAdapter ingredientAdapter;
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
-    private FindRecipeByIngredientActivityViewModel findRecipeByIngredientActivityViewModel;
     private FindRecipeByIngredientClickHandlers findRecipeByIngredientClickHandlers;
+    private IngredientViewModel ingredientViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         activityFindRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_find_recipe_by_ingredient);
         findRecipeByIngredientClickHandlers = new FindRecipeByIngredientClickHandlers(this);
         activityFindRecipeByIngredientBinding.setClickHandler(findRecipeByIngredientClickHandlers);
-        findRecipeByIngredientActivityViewModel = new ViewModelProvider(this).get(FindRecipeByIngredientActivityViewModel.class);
+        ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
 
         getAllIngredients();
 
@@ -103,7 +104,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     };
 
     private void getAllIngredients() {
-        findRecipeByIngredientActivityViewModel.getAllIngredients().observe(this, new Observer<List<Ingredient>>() {
+        ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
             @Override
             public void onChanged(List<Ingredient> ingredientsLiveData) {
                 ingredientList = (ArrayList<Ingredient>) ingredientsLiveData;
