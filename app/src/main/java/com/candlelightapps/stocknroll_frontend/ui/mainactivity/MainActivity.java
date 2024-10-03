@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private MainActivityViewModel mainActivityViewModel;
     private List<Ingredient> ingredientList;
+    private MainActivityClickHandler mainActivityClickHandler;
 
     private AutoCompleteTextView sortingDropdownMenu;
     private RecyclerView recyclerView;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        mainActivityClickHandler = new MainActivityClickHandler(this);
+        binding.setClickHandler(mainActivityClickHandler);
 
         initaliseSortingDropdownMenu();
 
