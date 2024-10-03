@@ -1,27 +1,52 @@
 package com.candlelightapps.stocknroll_frontend.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.candlelightapps.stocknroll_frontend.BR;
 
-public class Recipe extends BaseObservable {
+public class Recipe extends BaseObservable implements Parcelable {
 
      String title;
      int readyInMinutes;
      String sourceURL;
      String image;
-     Boolean isFavourite;
+     Boolean favourite;
 
-    public Recipe(String title, int readyInMinutes, String sourceURL, String image, Boolean isFavourite) {
+    public Recipe() {}
+
+    public Recipe(String title, int readyInMinutes, String sourceURL, String image, Boolean favourite) {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.sourceURL = sourceURL;
         this.image = image;
-        this.isFavourite = isFavourite;
+        this.favourite = favourite;
     }
 
-    public Recipe() {}
+    protected Recipe(Parcel in) {
+        title = in.readString();
+        readyInMinutes = in.readInt();
+        sourceURL = in.readString();
+        image = in.readString();
+        byte tmpFavourite = in.readByte();
+        favourite = tmpFavourite == 0 ? null : tmpFavourite == 1;
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
     @Bindable
     public String getTitle() {
@@ -65,11 +90,26 @@ public class Recipe extends BaseObservable {
 
     @Bindable
     public Boolean getFavourite() {
-        return isFavourite;
+        return favourite;
     }
 
     public void setFavourite(Boolean favourite) {
-        isFavourite = favourite;
+        this.favourite = favourite;
         notifyPropertyChanged(BR.favourite);
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeInt(readyInMinutes);
+        parcel.writeString(sourceURL);
+        parcel.writeString(image);
+        parcel.writeByte((byte) (favourite == null ? 0 : favourite ? 1 : 2));
     }
 }

@@ -9,8 +9,6 @@ import androidx.databinding.Bindable;
 
 import com.candlelightapps.stocknroll_frontend.BR;
 
-import java.time.LocalDate;
-
 public class Ingredient extends BaseObservable implements Parcelable {
 
     int id;
