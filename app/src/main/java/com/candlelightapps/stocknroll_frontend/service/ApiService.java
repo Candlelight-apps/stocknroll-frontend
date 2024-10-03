@@ -9,9 +9,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface ApiService {
-    @GET("/api/ingredients/all")
+    @GET("/ingredients")
     Call<List<Ingredient>> getAllIngredients();
 
-    @GET("/api/recipes/all") // Replace with your actual API endpoint for recipes
+    @GET("/recipes/all") // Replace with your actual API endpoint for recipes
     Call<List<Recipe>> getAllRecipes();
 }
