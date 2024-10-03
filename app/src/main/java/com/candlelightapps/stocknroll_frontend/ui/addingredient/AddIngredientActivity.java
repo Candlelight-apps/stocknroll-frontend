@@ -4,37 +4,44 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityAddIngredientBinding;
+import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
+import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivityClickHandler;
+import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 public class AddIngredientActivity extends AppCompatActivity {
-
+  
     private ActivityAddIngredientBinding binding;
     private AutoCompleteTextView categoryDropdownMenu;
+    private AddIngredientClickHandler ingredientClickHandler;
+    private Ingredient ingredient;
+    IngredientViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
         binding = DataBindingUtil.setContentView(this,
                 R.layout.activity_add_ingredient);
 
         initaliseCategoryDropdownMenu ();
 
+        ingredient = new Ingredient();
 
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        viewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
+        ingredientClickHandler = new AddIngredientClickHandler(ingredient, this, viewModel);
+        
+      binding.setIngredient(ingredient);
     }
 
     private void initaliseCategoryDropdownMenu() {

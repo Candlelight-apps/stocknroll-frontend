@@ -1,11 +1,13 @@
 package com.candlelightapps.stocknroll_frontend.repository;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.service.ApiService;
+import com.candlelightapps.stocknroll_frontend.service.IngredientApiService;
 import com.candlelightapps.stocknroll_frontend.service.RetrofitInstance;
 
 import java.util.List;
@@ -17,14 +19,18 @@ import retrofit2.Response;
 public class IngredientRepository {
 
     private final MutableLiveData<List<Ingredient>> ingredientsList;
-    private final ApiService apiService;
+    private ApiService apiService;
+    private IngredientApiService ingredientApiService;
+    Application application;
+
 
     public IngredientRepository(Application application) {
         ingredientsList = new MutableLiveData<>();
-        apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
+        this.application = application;
     }
 
     public MutableLiveData<List<Ingredient>> getMutableLiveData() {
+        apiService = RetrofitInstance.getRetrofitInstance().create(ApiService.class);
         apiService.getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
             @Override
             public void onResponse(Call<List<Ingredient>> call, Response<List<Ingredient>> response) {
@@ -40,5 +46,26 @@ public class IngredientRepository {
             }
         });
         return ingredientsList;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        ingredientApiService = RetrofitInstance.getIngredientApiService();
+        Call<Ingredient> call = ingredientApiService.addIngredient(ingredient);
+
+        call.enqueue(new Callback<Ingredient>() {
+            @Override
+            public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
+                Toast.makeText(application.getApplicationContext(),
+                        String.format("Ingredient %s added", ingredient.getName()),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Ingredient> call, Throwable t) {
+                Toast.makeText(application.getApplicationContext(),
+                        "Unable to add new ingredient to the database",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
