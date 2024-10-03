@@ -39,7 +39,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
 
     @Override
     public int getItemCount() {
-        return ingredientList.size();
+        if (ingredientList == null) {
+            return 0;
+        } else {
+            return ingredientList.size();
+        }
     }
 
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {
