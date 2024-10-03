@@ -9,10 +9,17 @@ import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class AddIngredientClickHandler {
     private Ingredient ingredient;
     private Context context;
     private IngredientViewModel viewModel;
+
+    final static String DATE_FORMAT = "yyyy-MM-dd";
 
     public AddIngredientClickHandler(Ingredient ingredient, Context context, IngredientViewModel viewModel) {
         this.ingredient = ingredient;
@@ -27,19 +34,36 @@ public class AddIngredientClickHandler {
 
             Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_LONG).show();
 
-        } else  {
-            Intent intent = new Intent(view.getContext(), MainActivity.class);
+        } else {
+            if (ingredient.getExpiryDate() != null && isDateValid(ingredient.getExpiryDate())) {
 
-            Ingredient newIngredient = new Ingredient(ingredient.getId(),
-                    ingredient.getName(),
-                    ingredient.getCategory(),
-                    ingredient.getQuantity(),
-                    ingredient.getExpiryDate(),
-                    ingredient.getImageUrl());
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
 
-            viewModel.addIngredient(newIngredient);
+                Ingredient newIngredient = new Ingredient(ingredient.getId(),
+                        ingredient.getName(),
+                        ingredient.getCategory(),
+                        ingredient.getQuantity(),
+                        ingredient.getExpiryDate(),
+                        ingredient.getImageUrl());
 
-            context.startActivity(intent);
+                viewModel.addIngredient(newIngredient);
+
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, "Please provide date in correct format", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private boolean isDateValid(String expiryDate) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
+            df.setLenient(false);
+            df.parse(expiryDate);
+
+            return true;
+        } catch (ParseException e) {
+            return false;
         }
     }
 
