@@ -4,8 +4,12 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
+import com.candlelightapps.stocknroll_frontend.model.Recipe;
 import com.candlelightapps.stocknroll_frontend.repository.RecipeRepository;
+
+import java.util.List;
 
 public class RecipeViewModel extends AndroidViewModel {
 
@@ -14,6 +18,10 @@ public class RecipeViewModel extends AndroidViewModel {
     public RecipeViewModel(@NonNull Application application) {
         super(application);
         this.recipeRepository = new RecipeRepository(application);
+    }
+
+    public MutableLiveData<List<Recipe>> getRecipes() {
+        return recipeRepository.getMutableLiveData();
     }
 
 

@@ -4,11 +4,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,16 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityMainBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.model.Recipe;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
+import com.candlelightapps.stocknroll_frontend.ui.viewmodel.RecipeViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private IngredientViewModel ingredientViewModel;
+    private RecipeViewModel recipeViewModel;
     private List<Ingredient> ingredientList;
+    private List<Recipe> recipeList;
     private MainActivityClickHandler mainActivityClickHandler;
 
     private AutoCompleteTextView sortingDropdownMenu;
@@ -41,12 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
+        recipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         mainActivityClickHandler = new MainActivityClickHandler(this);
         binding.setClickHandler(mainActivityClickHandler);
 
         initaliseSortingDropdownMenu();
 
         getAllIngredients();
+        getAllRecipes();
 
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -64,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
                 displayInRecyclerView();
             }
         });
+    }
+
+    private void getAllRecipes() {
+        recipeViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                recipeList = (List<Recipe>) recipes;
+
+                displayInRecyclerView();
+            }
+        });
+
     }
 
     private void displayInRecyclerView() {
