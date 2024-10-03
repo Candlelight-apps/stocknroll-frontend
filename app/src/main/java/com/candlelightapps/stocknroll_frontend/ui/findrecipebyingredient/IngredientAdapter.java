@@ -1,10 +1,10 @@
 package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityRecipeItemViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
-import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +22,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     List<Ingredient> ingredientList;
     Context context;
+    ArrayList<String> selectedIngredientsForSearch = new ArrayList<>();
 
     public IngredientAdapter(List<Ingredient> ingredientList, Context context) {
         this.ingredientList = ingredientList;
@@ -47,11 +47,40 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
         Ingredient ingredient = ingredientList.get(position);
         holder.activityRecipeItemViewBinding.setIngredient(ingredient);
+
+        ImageButton addButton = holder.activityRecipeItemViewBinding.addButton;
+
+        if (selectedIngredientsForSearch.contains(ingredient.getName())) {
+            addButton.setImageResource(R.drawable.close_icon);
+        } else {
+            addButton.setImageResource(R.drawable.add_icon);
+        }
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = ingredient.getName();
+
+                if (selectedIngredientsForSearch.contains(name)) {
+                    selectedIngredientsForSearch.remove(name);
+                    Toast.makeText(context, name + " removed!", Toast.LENGTH_SHORT).show();
+                    addButton.setImageResource(R.drawable.add_icon);
+                } else {
+                    selectedIngredientsForSearch.add(name);
+                    Toast.makeText(context, name + " added!", Toast.LENGTH_SHORT).show();
+                    addButton.setImageResource(R.drawable.close_icon);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return ingredientList == null ? 0 : ingredientList.size();
+    }
+
+    public ArrayList<String> getSelectedIngredientsForSearch() {
+        return selectedIngredientsForSearch;
     }
 
     public void setIngredientFilteredList(ArrayList<Ingredient> ingredientFilterList) {

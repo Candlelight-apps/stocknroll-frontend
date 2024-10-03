@@ -89,7 +89,6 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
                 ingredientAdapter.notifyDataSetChanged();
             }
         });
-
     }
 
     public Comparator<Ingredient> BY_NAME_ALPHABETICAL = new Comparator<Ingredient>() {

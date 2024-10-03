@@ -14,6 +14,7 @@ retrofit = "2.11.0"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat" }
+google-material = { module = "com.google.android.material:material" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
