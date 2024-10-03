@@ -22,12 +22,12 @@ public class AddIngredientClickHandler {
 
     public void onSubmitButtonClicked(View view) {
 
-        if(ingredient.getName().isBlank() || ingredient.getCategory().isBlank()
-                || (ingredient.getExpiryDate().isBlank()) || (ingredient.getQuantity() == 0)) {
+        if(ingredient.getName() == null || ingredient.getCategory() == null
+                || ingredient.getExpiryDate() == null || ingredient.getQuantity() == 0) {
 
             Toast.makeText(context, "Fields cannot be empty", Toast.LENGTH_LONG).show();
 
-        } else {
+        } else  {
             Intent intent = new Intent(view.getContext(), MainActivity.class);
 
             Ingredient newIngredient = new Ingredient(ingredient.getId(),
