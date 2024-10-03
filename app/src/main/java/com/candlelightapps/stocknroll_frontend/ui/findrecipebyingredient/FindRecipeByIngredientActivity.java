@@ -23,8 +23,9 @@ import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -76,14 +77,16 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         sortByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(ingredientList, BY_NAME_ALPHABETICAL);
+                ingredientList.sort(BY_NAME_ALPHABETICAL);
+                ingredientAdapter.notifyDataSetChanged();
             }
         });
 
         sortByExpiryDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(ingredientList, BY_EXPIRY_DATE);
+                ingredientList.sort(BY_EXPIRY_DATE);
+                ingredientAdapter.notifyDataSetChanged();
             }
         });
 
@@ -92,14 +95,22 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     public Comparator<Ingredient> BY_NAME_ALPHABETICAL = new Comparator<Ingredient>() {
         @Override
         public int compare(Ingredient ingredient, Ingredient i1) {
-            return ingredient == null || i1 == null ? 0 : ingredient.getName().compareTo(i1.getName());
+            return ingredient == null || i1 == null || ingredient.getName() == null || i1.getName() == null ? 0 : ingredient.getName().compareTo(i1.getName());
         }
     };
 
     public Comparator<Ingredient> BY_EXPIRY_DATE = new Comparator<Ingredient>() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         @Override
         public int compare(Ingredient ingredient, Ingredient i1) {
-            return ingredient == null || i1 == null ? 0 : ingredient.getExpiryDate().compareTo(i1.getExpiryDate());
+            if (ingredient == null || i1 == null || ingredient.getExpiryDate() == null || i1.getExpiryDate() == null) {
+                return 0;
+            } else {
+                LocalDate ingredientDate = LocalDate.parse(ingredient.getExpiryDate(), dateTimeFormatter);
+                LocalDate i1Date = LocalDate.parse(i1.getExpiryDate(), dateTimeFormatter);
+
+                return ingredientDate.compareTo(i1Date);
+            }
         }
     };
 
