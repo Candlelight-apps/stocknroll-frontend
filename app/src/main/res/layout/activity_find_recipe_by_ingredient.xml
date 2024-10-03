@@ -23,7 +23,7 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="25sp"
+            android:padding="25dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,9 +43,9 @@
             app:layout_constraintTop_toBottomOf="@+id/header"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="30sp"
-            android:layout_marginEnd="30sp"
-            android:layout_marginTop="15sp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/search_view_background"
             />
 
@@ -58,8 +58,8 @@
             android:backgroundTint="@color/grey"
             android:text="Sort by Expiry"
             style="@style/BtnTextStyle"
-            android:layout_marginStart="30sp"
-            android:layout_marginTop="15sp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
             />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -71,8 +71,8 @@
             android:backgroundTint="@color/grey"
             android:text="Sort by Name"
             style="@style/BtnTextStyle"
-            android:layout_marginEnd="30sp"
-            android:layout_marginTop="15sp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="15dp"
             />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -84,7 +84,7 @@
             android:backgroundTint="@color/grey"
             android:text="Cancel"
             style="@style/BtnTextStyle"
-            android:layout_margin="30sp"
+            android:layout_margin="30dp"
             android:onClick="@{clickHandler::onBackBtnClicked}"
             />
 
@@ -97,17 +97,17 @@
             android:backgroundTint="@color/grey"
             android:text="Submit"
             style="@style/BtnTextStyle"
-            android:layout_margin="30sp"
+            android:layout_margin="30dp"
             />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0sp"
+            android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@+id/btnSortByName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
