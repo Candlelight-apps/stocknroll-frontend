@@ -19,13 +19,12 @@ import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivityClick
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 public class AddIngredientActivity extends AppCompatActivity {
-  
+
     private ActivityAddIngredientBinding binding;
     private AutoCompleteTextView categoryDropdownMenu;
     private AddIngredientClickHandler ingredientClickHandler;
     private Ingredient ingredient;
     IngredientViewModel viewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +33,15 @@ public class AddIngredientActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,
                 R.layout.activity_add_ingredient);
 
-        initaliseCategoryDropdownMenu ();
+        initaliseCategoryDropdownMenu();
 
         ingredient = new Ingredient();
 
         viewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
         ingredientClickHandler = new AddIngredientClickHandler(ingredient, this, viewModel);
-        
-      binding.setIngredient(ingredient);
+        binding.setClickHandler(ingredientClickHandler);
+
+        binding.setIngredient(ingredient);
     }
 
     private void initaliseCategoryDropdownMenu() {
