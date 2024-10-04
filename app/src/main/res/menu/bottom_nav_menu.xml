@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_pantry"
+        android:id="@+id/pantry"
         android:icon="@drawable/ic_pantry"
-        android:title="Pantry" />
+        android:title="@string/pantry" />
     <item
-        android:id="@+id/action_low_stock"
-        android:icon="@drawable/ic_low_stock"
-        android:title="Low Stock" />
-    <item
-        android:id="@+id/action_recipes"
+        android:id="@+id/recipes"
         android:icon="@drawable/ic_recipes"
-        android:title="Recipes" />
+        android:title="@string/recipes" />
     <item
-        android:id="@+id/action_shopping_list"
+        android:id="@+id/favourites"
+        android:icon="@drawable/baseline_favorite_border_24"
+        android:title="@string/favourites" />
+    <item
+        android:id="@+id/shopping_list"
         android:icon="@drawable/ic_shopping_list"
-        android:title="Shopping List" />
+        android:title="@string/shopping_list" />
 </menu>
