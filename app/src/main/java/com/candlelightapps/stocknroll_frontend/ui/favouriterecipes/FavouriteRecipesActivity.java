@@ -23,4 +23,6 @@ public class FavouriteRecipesActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+
 }
