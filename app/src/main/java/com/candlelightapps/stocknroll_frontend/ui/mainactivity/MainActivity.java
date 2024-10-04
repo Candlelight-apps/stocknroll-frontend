@@ -21,6 +21,8 @@ import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
@@ -47,19 +48,20 @@ public class MainActivity extends AppCompatActivity {
         initaliseSortingDropdownMenu();
 
         getAllIngredients();
-
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
     }
 
     private void getAllIngredients() {
         ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
             @Override
-            public void onChanged(List<Ingredient> ingredients) {
-                ingredientList = (List<Ingredient>) ingredients;
+            public void onChanged(List<Ingredient> ingredientsFromLiveData) {
+                ingredientList = (List<Ingredient>) ingredientsFromLiveData;
+
+                Collections.sort(ingredientList, new Comparator<Ingredient>() {
+                    @Override
+                    public int compare(Ingredient o1, Ingredient o2) {
+                        return o1.getName().compareToIgnoreCase(o2.getName());
+                    }
+                });
 
                 displayInRecyclerView();
             }
@@ -68,17 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayInRecyclerView() {
         recyclerView = binding.inventoryRecyclerView;
-
         inventoryAdapter = new InventoryAdapter(this, ingredientList);
-
         recyclerView.setAdapter(inventoryAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-
         recyclerView.setLayoutManager(layoutManager);
-
         recyclerView.setHasFixedSize(true);
-
         inventoryAdapter.notifyDataSetChanged();
     }
 

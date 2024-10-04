@@ -9,4 +9,15 @@
     <string name="expiry_date">Expiry date (yyyy-MM-dd)</string>
     <string name="image_url">Image URL</string>
     <string name="add">Add</string>
+    <string name="increase_quantity">Increase quantity</string>
+    <string name="decrease_quantity">Decrease quantity</string>
+    <string name="view_all">View All</string>
+    <string name="produce">Produce</string>
+    <string name="dairy_amp_eggs"><![CDATA[Dairy & Eggs]]></string>
+    <string name="meat_amp_seafood"><![CDATA[Meat & Seafood]]></string>
+    <string name="bakery_amp_grains"><![CDATA[Bakery & Grains]]></string>
+    <string name="snacks_amp_sweets"><![CDATA[Snacks & Sweets]]></string>
+    <string name="beverages">Beverages</string>
+    <string name="other">Other</string>
+    <string name="sort_by">Sort by:</string>
 </resources>

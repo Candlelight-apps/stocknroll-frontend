@@ -48,49 +48,49 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="View All" />
+                android:text="@string/view_all" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Produce" />
+                android:text="@string/produce" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Dairy &amp; Eggs" />
+                android:text="@string/dairy_amp_eggs" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Meat &amp; Seafood" />
+                android:text="@string/meat_amp_seafood" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Bakery &amp; Grains" />
+                android:text="@string/bakery_amp_grains" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Snacks &amp; Sweets" />
+                android:text="@string/snacks_amp_sweets" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab6"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Beverages" />
+                android:text="@string/beverages" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab7"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Other" />
+                android:text="@string/other" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -99,7 +99,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Sort by: "
+            android:hint="@string/sort_by"
             android:paddingStart="230dp"
             android:paddingTop="2dp"
             android:paddingEnd="16dp"
