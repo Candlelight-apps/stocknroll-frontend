@@ -66,4 +66,25 @@ public class IngredientRepository {
             }
         });
     }
+
+    public void deleteIngredient(long id) {
+        IngredientApiService ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
+        Call<Ingredient> call = ingredientApiService.deleteIngredient(id);
+
+        call.enqueue(new Callback<Ingredient>() {
+            @Override
+            public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
+                Toast.makeText(application.getApplicationContext(),
+                        response.body().toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Ingredient> call, Throwable throwable) {
+                Toast.makeText(application.getApplicationContext(),
+                        "Invalid ingredient. Unable to delete from the database",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
