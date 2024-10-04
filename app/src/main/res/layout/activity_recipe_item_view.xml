@@ -7,6 +7,9 @@
         <variable
             name="Ingredient"
             type="com.candlelightapps.stocknroll_frontend.model.Ingredient" />
+        <variable
+            name="clickHandler"
+            type="com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRecipeByIngredientClickHandlers" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +27,9 @@
             android:background="@drawable/btn_shape_round"
             android:src="@drawable/btn_add_drawable_selector"
             android:contentDescription="Select item To Search For Recipe"
+            android:onClick="@{clickHandler::onAddBtnClicked}"
+
+
             />
 
         <FrameLayout
