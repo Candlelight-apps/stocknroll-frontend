@@ -28,6 +28,9 @@
             android:name=".ui.addingredient.AddIngredientActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.findrecipebyingredient.FindRecipeByIngredientActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.mainactivity.MainActivity"
             android:exported="true" >
             <intent-filter>
