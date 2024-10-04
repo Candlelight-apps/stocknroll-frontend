@@ -21,22 +21,4 @@ public class MainActivityClickHandler {
 
         context.startActivity(intent);
     }
-
-//    public void onPantryClicked(View view) {
-//        Intent intent = new Intent(view.getContext(), MainActivity.class);
-//
-//        context.startActivity(intent);
-//    }
-//
-//    public void onRecipesClicked(View view) {
-//        Intent intent = new Intent(view.getContext(), FindRecipeByIngredientActivity.class);
-//
-//        context.startActivity(intent);
-//    }
-//
-//    public void onFavouritesClicked(View view) {
-//        Intent intent = new Intent(view.getContext(), FavouriteRecipesActivity.class);
-//
-//        context.startActivity(intent);
-//    }
 }
