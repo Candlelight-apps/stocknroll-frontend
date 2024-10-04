@@ -33,10 +33,12 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
     private ArrayList<Ingredient> ingredientList;
     private ArrayList<Ingredient> ingredientFilterList;
+    private List<String> ingredientsForRecipeSearch;
 
     private SearchView ingredientSearchView;
     private RecyclerView recyclerView;
     private ExtendedFloatingActionButton sortByName, sortByExpiryDate;
+    private View addButton;
 
     private IngredientAdapter ingredientAdapter;
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
@@ -87,6 +89,14 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ingredientList.sort(BY_EXPIRY_DATE);
                 ingredientAdapter.notifyDataSetChanged();
+            }
+        });
+
+        addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ingredientsForRecipeSearch = ingredientAdapter.selectedIngredientsForSearch;
             }
         });
     }
