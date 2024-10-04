@@ -9,6 +9,10 @@
             name="recipe"
             type="com.candlelightapps.stocknroll_frontend.model.Recipe" />
 
+        <variable
+            name="clickHandler"
+            type="com.candlelightapps.stocknroll_frontend.ui.favouriterecipes.FavouriteRecipesClickHandler" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
