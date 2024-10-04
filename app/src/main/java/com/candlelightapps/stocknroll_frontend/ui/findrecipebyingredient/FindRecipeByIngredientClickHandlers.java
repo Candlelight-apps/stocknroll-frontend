@@ -8,12 +8,21 @@ import android.view.View;
 
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 public class FindRecipeByIngredientClickHandlers {
 
     Context context;
+    private List<String> ingredientsForRecipeSearch = new ArrayList<>();
 
     public FindRecipeByIngredientClickHandlers(Context context) {
         this.context = context;
+    }
+
+    public void setIngredientsForRecipeSearch(List<String> ingredientsForRecipeSearch) {
+        this.ingredientsForRecipeSearch = ingredientsForRecipeSearch;
     }
 
     public void onBackBtnClicked(View view) {
@@ -29,5 +38,11 @@ public class FindRecipeByIngredientClickHandlers {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    public void onSubmitBtnClicked (View view) {
+        Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
+        intent.putExtra("ingredient_list", (Serializable) ingredientsForRecipeSearch);
+        context.startActivity(intent);
     }
 }
