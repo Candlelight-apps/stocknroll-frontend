@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.View;
 
 import com.candlelightapps.stocknroll_frontend.ui.addingredient.AddIngredientActivity;
+import com.candlelightapps.stocknroll_frontend.ui.favouriterecipes.FavouriteRecipesActivity;
+import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRecipeByIngredientActivity;
 
 public class MainActivityClickHandler {
 

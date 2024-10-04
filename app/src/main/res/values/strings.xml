@@ -20,4 +20,8 @@
     <string name="beverages">Beverages</string>
     <string name="other">Other</string>
     <string name="sort_by">Sort by:</string>
+    <string name="pantry">Pantry</string>
+    <string name="recipes">Recipes</string>
+    <string name="favourites">Favourites</string>
+    <string name="shopping_list">Shopping List</string>
 </resources>
