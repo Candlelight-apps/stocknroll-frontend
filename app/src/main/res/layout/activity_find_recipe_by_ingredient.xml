@@ -98,6 +98,7 @@
             android:text="Submit"
             style="@style/BtnTextStyle"
             android:layout_margin="30dp"
+            android:onClick="@{clickHandler::onSubmitBtnClicked}"
             />
 
         <androidx.recyclerview.widget.RecyclerView
