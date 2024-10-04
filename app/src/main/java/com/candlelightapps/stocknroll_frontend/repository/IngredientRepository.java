@@ -1,6 +1,7 @@
 package com.candlelightapps.stocknroll_frontend.repository;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +11,7 @@ import com.candlelightapps.stocknroll_frontend.service.IngredientApiService;
 import com.candlelightapps.stocknroll_frontend.service.RetrofitInstance;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,7 +19,7 @@ import retrofit2.Response;
 
 public class IngredientRepository {
 
-    private final MutableLiveData<List<Ingredient>> ingredientsList;
+    private MutableLiveData<List<Ingredient>> ingredientsList;
     private IngredientApiService ingredientApiService;
     Application application;
 
@@ -29,7 +31,9 @@ public class IngredientRepository {
     }
 
     public MutableLiveData<List<Ingredient>> getMutableLiveData() {
-        ingredientApiService.getAllIngredients().enqueue(new Callback<List<Ingredient>>() {
+        Call<List<Ingredient>> call = ingredientApiService.getAllIngredients();
+
+        call.enqueue(new Callback<List<Ingredient>>() {
             @Override
             public void onResponse(Call<List<Ingredient>> call, Response<List<Ingredient>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -39,17 +43,14 @@ public class IngredientRepository {
 
             @Override
             public void onFailure(Call<List<Ingredient>> call, Throwable t) {
-                ingredientsList.setValue(null);
-
+                Log.e("HTTP Failure", Objects.requireNonNull(t.getMessage()));
             }
         });
         return ingredientsList;
     }
 
     public void addIngredient(Ingredient ingredient) {
-        ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
         Call<Ingredient> call = ingredientApiService.addIngredient(ingredient);
-
         call.enqueue(new Callback<Ingredient>() {
             @Override
             public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
@@ -67,6 +68,27 @@ public class IngredientRepository {
         });
     }
 
+    public void updateIngredient(long id, int quantity) {
+
+        Call<Ingredient> call = ingredientApiService.updateIngredient(id,quantity);
+        call.enqueue(new Callback<Ingredient>() {
+            @Override
+            public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
+                Toast.makeText(application.getApplicationContext(),
+                        String.format("Quantity updated for %s.", response.body().getName()),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Ingredient> call, Throwable t) {
+                Log.e("update ingredient", Objects.requireNonNull(t.getMessage()));
+                Toast.makeText(application.getApplicationContext(),
+                        "FAIL: Unable to update quantity",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void deleteIngredient(long id) {
         IngredientApiService ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
         Call<Ingredient> call = ingredientApiService.deleteIngredient(id);
@@ -75,7 +97,7 @@ public class IngredientRepository {
             @Override
             public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
                 Toast.makeText(application.getApplicationContext(),
-                        response.body().toString(),
+                        String.format("%s deleted!", response.body().getName()),
                         Toast.LENGTH_SHORT).show();
             }
 
