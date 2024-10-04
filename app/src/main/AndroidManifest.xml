@@ -28,10 +28,10 @@
             android:name=".ui.addingredient.AddIngredientActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.mainactivity.MainActivity"
+            android:name=".ui.findrecipebyingredient.FindRecipeByIngredientActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.findrecipebyingredient.FindRecipeByIngredientActivity"
+            android:name=".ui.mainactivity.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
