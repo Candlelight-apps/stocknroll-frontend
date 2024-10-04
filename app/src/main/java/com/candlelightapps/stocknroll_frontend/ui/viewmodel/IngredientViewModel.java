@@ -27,4 +27,8 @@ public class IngredientViewModel extends AndroidViewModel {
     public MutableLiveData<List<Ingredient>> getIngredients() {
         return ingredientRepository.getMutableLiveData();
     }
+
+    public void deleteIngredient(long id) {
+        ingredientRepository.deleteIngredient(id);
+    }
 }
