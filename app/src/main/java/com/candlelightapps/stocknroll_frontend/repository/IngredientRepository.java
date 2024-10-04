@@ -49,7 +49,6 @@ public class IngredientRepository {
     }
 
     public void addIngredient(Ingredient ingredient) {
-//        ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
         Call<Ingredient> call = ingredientApiService.addIngredient(ingredient);
         call.enqueue(new Callback<Ingredient>() {
             @Override
@@ -68,9 +67,8 @@ public class IngredientRepository {
         });
     }
     public void updateIngredient(long id, int quantity) {
-//        ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
-        Call<Ingredient> call = ingredientApiService.updateIngredient(id,quantity);
 
+        Call<Ingredient> call = ingredientApiService.updateIngredient(id,quantity);
         call.enqueue(new Callback<Ingredient>() {
             @Override
             public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
