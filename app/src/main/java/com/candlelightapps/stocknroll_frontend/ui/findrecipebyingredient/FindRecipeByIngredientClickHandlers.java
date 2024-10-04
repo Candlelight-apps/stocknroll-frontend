@@ -15,6 +15,7 @@ import java.util.List;
 public class FindRecipeByIngredientClickHandlers {
 
     Context context;
+    private IngredientAdapter ingredientAdapter;
     private List<String> ingredientsForRecipeSearch = new ArrayList<>();
 
     public FindRecipeByIngredientClickHandlers(Context context) {
@@ -38,6 +39,10 @@ public class FindRecipeByIngredientClickHandlers {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    public void onAddBtnClicked(View view) {
+        ingredientsForRecipeSearch = ingredientAdapter.selectedIngredientsForSearch;
     }
 
     public void onSubmitBtnClicked (View view) {
