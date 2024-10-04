@@ -97,6 +97,8 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ingredientsForRecipeSearch = ingredientAdapter.selectedIngredientsForSearch;
+                findRecipeByIngredientClickHandlers.setIngredientsForRecipeSearch(ingredientsForRecipeSearch);
+
             }
         });
     }
