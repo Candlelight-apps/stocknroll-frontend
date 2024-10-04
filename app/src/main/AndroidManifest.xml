@@ -23,15 +23,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.favouriterecipes.FavouriteRecipesActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".ui.addingredient.AddIngredientActivity"
             android:exported="false" />
         <activity
             android:name=".ui.mainactivity.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.findrecipebyingredient.FindRecipeByIngredientActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.findrecipebyingredient.FindRecipeByIngredientActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
