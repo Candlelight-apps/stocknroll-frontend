@@ -42,6 +42,12 @@ public class FoundRecipeByIngredient extends AppCompatActivity {
         viewModel = new ViewModelProvider(this)
                 .get(RecipeViewModel.class);
 
+        Bundle b = getIntent().getBundleExtra("ingredient_list");
+
+        if (b != null) {
+            ingredientList = (List<String>) b.getSerializable("ingredient_list");
+
+        }
     }
 
     private void getRecipesByIngredients(List<String> ingredientList) {
