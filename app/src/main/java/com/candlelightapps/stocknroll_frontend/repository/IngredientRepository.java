@@ -1,6 +1,7 @@
 package com.candlelightapps.stocknroll_frontend.repository;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +11,7 @@ import com.candlelightapps.stocknroll_frontend.service.IngredientApiService;
 import com.candlelightapps.stocknroll_frontend.service.RetrofitInstance;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,9 +49,8 @@ public class IngredientRepository {
     }
 
     public void addIngredient(Ingredient ingredient) {
-        ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
+//        ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
         Call<Ingredient> call = ingredientApiService.addIngredient(ingredient);
-
         call.enqueue(new Callback<Ingredient>() {
             @Override
             public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
@@ -62,6 +63,27 @@ public class IngredientRepository {
             public void onFailure(Call<Ingredient> call, Throwable t) {
                 Toast.makeText(application.getApplicationContext(),
                         "Invalid ingredient. Unable to add to the database",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void updateIngredient(long id, int quantity) {
+//        ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
+        Call<Ingredient> call = ingredientApiService.updateIngredient(id,quantity);
+
+        call.enqueue(new Callback<Ingredient>() {
+            @Override
+            public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
+                Toast.makeText(application.getApplicationContext(),
+                        String.format("Quantity updated for %s.", response.body().getName()),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Ingredient> call, Throwable t) {
+                Log.e("update ingredient", Objects.requireNonNull(t.getMessage()));
+                Toast.makeText(application.getApplicationContext(),
+                        "FAIL: Unable to update quantity",
                         Toast.LENGTH_SHORT).show();
             }
         });
