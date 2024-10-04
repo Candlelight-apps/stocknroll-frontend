@@ -8,10 +8,7 @@
         <variable
             name="ingredient"
             type="com.candlelightapps.stocknroll_frontend.model.Ingredient" />
-        <variable
-            name="clickHandler"
-            type="com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivityClickHandler" />
-    </data>
+        </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
