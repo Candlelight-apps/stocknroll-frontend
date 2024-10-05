@@ -2,12 +2,18 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.databinding.DataBindingUtil;
 
 import androidx.lifecycle.Observer;
@@ -19,8 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityFindRecipeByIngredientBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.favouriterecipes.FavouriteRecipesActivity;
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.time.LocalDate;
@@ -37,6 +45,9 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private SearchView ingredientSearchView;
     private RecyclerView recyclerView;
     private ExtendedFloatingActionButton sortByName, sortByExpiryDate;
+    private BottomNavigationView bottomNavigationView;
+    private SwitchCompat switchFindRecipe;
+    private LinearLayout layoutEditFilters;
 
     private IngredientAdapter ingredientAdapter;
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
@@ -46,12 +57,18 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
+        // EdgeToEdge.enable(this);
 
         activityFindRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_find_recipe_by_ingredient);
+
         findRecipeByIngredientClickHandlers = new FindRecipeByIngredientClickHandlers(this);
         activityFindRecipeByIngredientBinding.setClickHandler(findRecipeByIngredientClickHandlers);
         ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
+        switchFindRecipe = activityFindRecipeByIngredientBinding.switchFindRecipe;
+        layoutEditFilters = activityFindRecipeByIngredientBinding.layoutEditFilters;
+        bottomNavigationView = activityFindRecipeByIngredientBinding.bottomNavigation;
+        recyclerView = activityFindRecipeByIngredientBinding.ingredientRecyclerView;
 
         getAllIngredients();
 
@@ -71,22 +88,82 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             }
         });
 
-        sortByName = findViewById(R.id.btnSortByName);
-        sortByExpiryDate = findViewById(R.id.btnSortByExpiry);
+        initaliseBottomNavigationMenu(bottomNavigationView);
 
-        sortByName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ingredientList.sort(BY_NAME_ALPHABETICAL);
-                ingredientAdapter.notifyDataSetChanged();
-            }
-        });
+        handleSwitchToggle();
 
-        sortByExpiryDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ingredientList.sort(BY_EXPIRY_DATE);
-                ingredientAdapter.notifyDataSetChanged();
+        cuisineDropdownSetup();
+
+        dietDropdownSetup();
+
+        intoleranceDropdownSetup();
+    }
+
+    private void intoleranceDropdownSetup() {
+        AutoCompleteTextView intolerancesDropdown = findViewById(R.id.intolerances_dropdown);
+        String[] intolerances = new String[]{
+                "Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy",
+                "Sulfite", "Tree Nut", "Wheat"
+        };
+        ArrayAdapter<String> intoleranceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, intolerances);
+        intolerancesDropdown.setAdapter(intoleranceAdapter);
+    }
+
+    private void dietDropdownSetup() {
+        AutoCompleteTextView dietTypeDropdown = findViewById(R.id.diet_type_dropdown);
+        String[] diets = new String[]{
+                "Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan",
+                "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"
+        };
+        ArrayAdapter<String> dietAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, diets);
+        dietTypeDropdown.setAdapter(dietAdapter);
+    }
+
+    private void cuisineDropdownSetup() {
+        AutoCompleteTextView cuisineDropdown = findViewById(R.id.cuisine_dropdown);
+        String[] cuisines = new String[]{
+                "African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European",
+                "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish",
+                "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern",
+                "Spanish", "Thai", "Vietnamese"
+        };
+        ArrayAdapter<String> cuisineAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, cuisines);
+        cuisineDropdown.setAdapter(cuisineAdapter);
+    }
+
+//        sortByName = findViewById(R.id.btnSortByName);
+//        sortByExpiryDate = findViewById(R.id.btnSortByExpiry);
+
+//        sortByName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ingredientList.sort(BY_NAME_ALPHABETICAL);
+//                ingredientAdapter.notifyDataSetChanged();
+//            }
+//        });
+//
+//        sortByExpiryDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ingredientList.sort(BY_EXPIRY_DATE);
+//                ingredientAdapter.notifyDataSetChanged();
+//            }
+//        });
+
+
+    private void handleSwitchToggle() {
+        switchFindRecipe.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                recyclerView.setVisibility(View.GONE);
+                layoutEditFilters.setVisibility(View.VISIBLE);
+                ingredientSearchView.setVisibility(View.GONE);
+                switchFindRecipe.setText("By criteria   ");
+
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                layoutEditFilters.setVisibility(View.GONE);
+                ingredientSearchView.setVisibility(View.VISIBLE);
+                switchFindRecipe.setText("By ingredient   ");
             }
         });
     }
@@ -100,6 +177,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
     public Comparator<Ingredient> BY_EXPIRY_DATE = new Comparator<Ingredient>() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         @Override
         public int compare(Ingredient ingredient, Ingredient i1) {
             if (ingredient == null || i1 == null || ingredient.getExpiryDate() == null || i1.getExpiryDate() == null) {
@@ -126,17 +204,16 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
     public void displayInRecyclerView() {
         if (ingredientList == null || ingredientList.isEmpty()) {
-                Toast.makeText(this, "Please add ingredients before searching for recipes", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                this.startActivity(intent);
+            Toast.makeText(this, "Please add ingredients before searching for recipes", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
         } else {
-        recyclerView = activityFindRecipeByIngredientBinding.ingredientRecyclerView;
-        ingredientAdapter = new IngredientAdapter(ingredientList, this);
-        recyclerView.setAdapter(ingredientAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        ingredientAdapter.notifyDataSetChanged();
+            ingredientAdapter = new IngredientAdapter(ingredientList, this);
+            recyclerView.setAdapter(ingredientAdapter);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setHasFixedSize(true);
+            ingredientAdapter.notifyDataSetChanged();
         }
     }
 
@@ -156,5 +233,31 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         } else {
             ingredientAdapter.setIngredientFilteredList(ingredientFilterList);
         }
+    }
+
+    private void initaliseBottomNavigationMenu(BottomNavigationView bottomNavigationView) {
+
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+
+            Intent intent;
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.pantry) {
+                    intent = new Intent(FindRecipeByIngredientActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    return true;
+
+
+                } else if (id == R.id.favourites) {
+                    intent = new Intent(FindRecipeByIngredientActivity.this, FavouriteRecipesActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+
+        });
     }
 }
