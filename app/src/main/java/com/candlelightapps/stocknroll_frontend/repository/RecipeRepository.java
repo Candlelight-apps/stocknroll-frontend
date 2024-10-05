@@ -34,7 +34,7 @@ public class RecipeRepository {
             @Override
             public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 if(response.isSuccessful() && response.body() != null) {
-                    recipeList.setValue(response.body());
+                    recipeListMutableLiveData.setValue(response.body());
                 }
             }
 
