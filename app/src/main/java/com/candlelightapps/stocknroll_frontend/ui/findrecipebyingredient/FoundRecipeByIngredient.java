@@ -1,5 +1,7 @@
 package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -18,7 +20,7 @@ import com.candlelightapps.stocknroll_frontend.ui.viewmodel.RecipeViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FoundRecipeByIngredient extends AppCompatActivity {
+public class FoundRecipeByIngredient extends AppCompatActivity implements FoundRecipesRecyclerViewInterface{
 
     private List<String> ingredientList;
     private List<Recipe> recipeList;
@@ -57,12 +59,22 @@ public class FoundRecipeByIngredient extends AppCompatActivity {
 
     public void displayInRecyclerView() {
         recyclerView = foundRecipeByIngredientBinding.recipeRecyclerView;
-        recipeAdapter = new RecipeAdapter(recipeList, this);
+        recipeAdapter = new RecipeAdapter(recipeList, this, this);
         recyclerView.setAdapter(recipeAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recipeAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Recipe recipe = recipeList.get(position);
+
+        Intent intent = new Intent (Intent.ACTION_VIEW, Uri.parse(recipe.getSourceUrl()));
+
+        startActivity(intent);
 
     }
 }
