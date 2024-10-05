@@ -25,18 +25,18 @@ public class FindRecipeByIngredientClickHandlers {
     }
 
 
-    public void onBackBtnClicked(View view) {
-        new AlertDialog.Builder(view.getContext())
-                .setTitle("Back to Home")
-                .setMessage("Are you sure you want to leave this page? All progress will be lost.")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(view.getContext(), MainActivity.class);
-                        view.getContext().startActivity(intent);
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
+//    public void onBackBtnClicked(View view) {
+//        new AlertDialog.Builder(view.getContext())
+//                .setTitle("Back to Home")
+//                .setMessage("Are you sure you want to leave this page? All progress will be lost.")
+//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Intent intent = new Intent(view.getContext(), MainActivity.class);
+//                        view.getContext().startActivity(intent);
+//                    }
+//                })
+//                .setNegativeButton("No", null)
+//                .show();
+//    }
 }

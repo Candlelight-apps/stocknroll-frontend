@@ -92,6 +92,22 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             }
         });
 
+        submitButton = findViewById(R.id.button_search);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ingredientsForRecipeSearch = ingredientAdapter.getSelectedIngredientsForSearch();
+
+                Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("ingredient_list", ingredientsForRecipeSearch);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+
         initaliseBottomNavigationMenu(bottomNavigationView);
 
         handleSwitchToggle();
@@ -103,37 +119,6 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         intoleranceDropdownSetup();
     }
 
-    private void intoleranceDropdownSetup() {
-        AutoCompleteTextView intolerancesDropdown = findViewById(R.id.intolerances_dropdown);
-        String[] intolerances = new String[]{
-                "Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy",
-                "Sulfite", "Tree Nut", "Wheat"
-        };
-        ArrayAdapter<String> intoleranceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, intolerances);
-        intolerancesDropdown.setAdapter(intoleranceAdapter);
-    }
-
-    private void dietDropdownSetup() {
-        AutoCompleteTextView dietTypeDropdown = findViewById(R.id.diet_type_dropdown);
-        String[] diets = new String[]{
-                "Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan",
-                "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"
-        };
-        ArrayAdapter<String> dietAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, diets);
-        dietTypeDropdown.setAdapter(dietAdapter);
-    }
-
-    private void cuisineDropdownSetup() {
-        AutoCompleteTextView cuisineDropdown = findViewById(R.id.cuisine_dropdown);
-        String[] cuisines = new String[]{
-                "African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European",
-                "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish",
-                "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern",
-                "Spanish", "Thai", "Vietnamese"
-        };
-        ArrayAdapter<String> cuisineAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, cuisines);
-        cuisineDropdown.setAdapter(cuisineAdapter);
-    }
 
 //        sortByName = findViewById(R.id.btnSortByName);
 //        sortByExpiryDate = findViewById(R.id.btnSortByExpiry);
@@ -153,37 +138,6 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 //                ingredientAdapter.notifyDataSetChanged();
 //            }
 //        });
-
-
-    private void handleSwitchToggle() {
-        switchFindRecipe.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                recyclerView.setVisibility(View.GONE);
-                layoutEditFilters.setVisibility(View.VISIBLE);
-                ingredientSearchView.setVisibility(View.GONE);
-                switchFindRecipe.setText("By criteria   ");
-
-            } else {
-                recyclerView.setVisibility(View.VISIBLE);
-                layoutEditFilters.setVisibility(View.GONE);
-                ingredientSearchView.setVisibility(View.VISIBLE);
-                switchFindRecipe.setText("By ingredient   ");
-
-        submitButton = findViewById(R.id.button_search);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ingredientsForRecipeSearch = ingredientAdapter.getSelectedIngredientsForSearch();
-
-                Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("ingredient_list", ingredientsForRecipeSearch);
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-            }
-        });
-    }
 
     public Comparator<Ingredient> BY_NAME_ALPHABETICAL = new Comparator<Ingredient>() {
         @Override
@@ -217,6 +171,24 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void handleSwitchToggle() {
+        switchFindRecipe.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                recyclerView.setVisibility(View.GONE);
+                layoutEditFilters.setVisibility(View.VISIBLE);
+                ingredientSearchView.setVisibility(View.GONE);
+                switchFindRecipe.setText("By criteria   ");
+
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                layoutEditFilters.setVisibility(View.GONE);
+                ingredientSearchView.setVisibility(View.VISIBLE);
+                switchFindRecipe.setText("By ingredient   ");
+
+            }
+        });
     }
 
     public void displayInRecyclerView() {
@@ -278,5 +250,38 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
         });
     }
+
+    private void intoleranceDropdownSetup() {
+        AutoCompleteTextView intolerancesDropdown = findViewById(R.id.intolerances_dropdown);
+        String[] intolerances = new String[]{
+                "Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy",
+                "Sulfite", "Tree Nut", "Wheat"
+        };
+        ArrayAdapter<String> intoleranceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, intolerances);
+        intolerancesDropdown.setAdapter(intoleranceAdapter);
+    }
+
+    private void dietDropdownSetup() {
+        AutoCompleteTextView dietTypeDropdown = findViewById(R.id.diet_type_dropdown);
+        String[] diets = new String[]{
+                "Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan",
+                "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"
+        };
+        ArrayAdapter<String> dietAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, diets);
+        dietTypeDropdown.setAdapter(dietAdapter);
+    }
+
+    private void cuisineDropdownSetup() {
+        AutoCompleteTextView cuisineDropdown = findViewById(R.id.cuisine_dropdown);
+        String[] cuisines = new String[]{
+                "African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European",
+                "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish",
+                "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern",
+                "Spanish", "Thai", "Vietnamese"
+        };
+        ArrayAdapter<String> cuisineAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, cuisines);
+        cuisineDropdown.setAdapter(cuisineAdapter);
+    }
+
 }
 
