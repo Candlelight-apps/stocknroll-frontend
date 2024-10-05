@@ -97,8 +97,7 @@
             android:backgroundTint="@color/grey"
             android:text="Submit"
             style="@style/BtnTextStyle"
-            android:layout_margin="30dp"
-            />
+            android:layout_margin="30dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"

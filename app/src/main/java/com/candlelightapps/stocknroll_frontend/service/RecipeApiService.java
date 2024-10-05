@@ -12,6 +12,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RecipeApiService {
 
@@ -28,5 +29,5 @@ public interface RecipeApiService {
     Call<List<Recipe>> getRecipesByCriteria(@Path("cuisine") String cuisine, @Path("diet") String diet, @Path("intolerances") String intolerances);
 
     @GET("recipes/ingredient")
-    Call<List<Recipe>> getRecipesByIngredients(@Body List<String> ingredients);
+    Call<List<Recipe>> getRecipesByIngredients(@Query("values") List<String> ingredients);
 }
