@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -41,14 +42,14 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
     private ArrayList<Ingredient> ingredientList;
     private ArrayList<Ingredient> ingredientFilterList;
-
+    private ArrayList<String> ingredientsForRecipeSearch;
     private SearchView ingredientSearchView;
     private RecyclerView recyclerView;
     private ExtendedFloatingActionButton sortByName, sortByExpiryDate;
     private BottomNavigationView bottomNavigationView;
     private SwitchCompat switchFindRecipe;
     private LinearLayout layoutEditFilters;
-
+    private Button submitButton;
     private IngredientAdapter ingredientAdapter;
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
     private FindRecipeByIngredientClickHandlers findRecipeByIngredientClickHandlers;
@@ -60,9 +61,12 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
         // EdgeToEdge.enable(this);
 
+        ingredientsForRecipeSearch = new ArrayList<>();
+
         activityFindRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_find_recipe_by_ingredient);
 
-        findRecipeByIngredientClickHandlers = new FindRecipeByIngredientClickHandlers(this);
+        findRecipeByIngredientClickHandlers = new FindRecipeByIngredientClickHandlers(this, ingredientsForRecipeSearch);
+
         activityFindRecipeByIngredientBinding.setClickHandler(findRecipeByIngredientClickHandlers);
         ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
         switchFindRecipe = activityFindRecipeByIngredientBinding.switchFindRecipe;
@@ -164,6 +168,19 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
                 layoutEditFilters.setVisibility(View.GONE);
                 ingredientSearchView.setVisibility(View.VISIBLE);
                 switchFindRecipe.setText("By ingredient   ");
+
+        submitButton = findViewById(R.id.button_search);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ingredientsForRecipeSearch = ingredientAdapter.getSelectedIngredientsForSearch();
+
+                Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("ingredient_list", ingredientsForRecipeSearch);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
             }
         });
     }
@@ -235,6 +252,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         }
     }
 
+
     private void initaliseBottomNavigationMenu(BottomNavigationView bottomNavigationView) {
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
@@ -261,3 +279,4 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         });
     }
 }
+

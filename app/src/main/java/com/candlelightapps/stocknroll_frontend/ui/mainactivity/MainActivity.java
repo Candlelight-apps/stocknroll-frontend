@@ -50,13 +50,9 @@ public class MainActivity extends AppCompatActivity {
         initaliseSortingDropdownMenu();
         getAllIngredients();
 
-        bottomNavigationView = binding.bottomNavigation;
 
-        initaliseBottomNavigationMenu();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-    }
-
-    private void initaliseBottomNavigationMenu() {
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
 
@@ -65,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-
-
-                if (id == R.id.recipes) {
                     intent = new Intent(MainActivity.this, FindRecipeByIngredientActivity.class);
                     startActivity(intent);
                     return true;
@@ -80,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-    }
+   }
 
     private void getAllIngredients() {
         ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
@@ -102,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayInRecyclerView() {
         recyclerView = binding.inventoryRecyclerView;
-        inventoryAdapter = new InventoryAdapter(this, ingredientList);
+        inventoryAdapter = new InventoryAdapter(this, ingredientList, ingredientViewModel);
         recyclerView.setAdapter(inventoryAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

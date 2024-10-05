@@ -9,14 +9,14 @@ public class Recipe extends BaseObservable {
 
      String title;
      int readyInMinutes;
-     String sourceURL;
+     String sourceUrl;
      String image;
      Boolean isFavourite;
 
-    public Recipe(String title, int readyInMinutes, String sourceURL, String image, Boolean isFavourite) {
+    public Recipe(String title, int readyInMinutes, String sourceUrl, String image, Boolean isFavourite) {
         this.title = title;
         this.readyInMinutes = readyInMinutes;
-        this.sourceURL = sourceURL;
+        this.sourceUrl = sourceUrl;
         this.image = image;
         this.isFavourite = isFavourite;
     }
@@ -44,13 +44,13 @@ public class Recipe extends BaseObservable {
     }
 
     @Bindable
-    public String getSourceURL() {
-        return sourceURL;
+    public String getSourceUrl() {
+        return sourceUrl;
     }
 
-    public void setSourceURL(String sourceURL) {
-        this.sourceURL = sourceURL;
-        notifyPropertyChanged(BR.sourceURL);
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
+        notifyPropertyChanged(BR.sourceUrl);
     }
 
     @Bindable

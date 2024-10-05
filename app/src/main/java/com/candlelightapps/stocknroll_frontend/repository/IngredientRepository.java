@@ -67,6 +67,7 @@ public class IngredientRepository {
             }
         });
     }
+
     public void updateIngredient(long id, int quantity) {
 
         Call<Ingredient> call = ingredientApiService.updateIngredient(id,quantity);
@@ -83,6 +84,27 @@ public class IngredientRepository {
                 Log.e("update ingredient", Objects.requireNonNull(t.getMessage()));
                 Toast.makeText(application.getApplicationContext(),
                         "FAIL: Unable to update quantity",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void deleteIngredient(long id) {
+        IngredientApiService ingredientApiService = RetrofitInstance.getRetrofitInstance().create(IngredientApiService.class);
+        Call<Ingredient> call = ingredientApiService.deleteIngredient(id);
+
+        call.enqueue(new Callback<Ingredient>() {
+            @Override
+            public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
+                Toast.makeText(application.getApplicationContext(),
+                        String.format("%s deleted!", response.body().getName()),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Ingredient> call, Throwable throwable) {
+                Toast.makeText(application.getApplicationContext(),
+                        "Invalid ingredient. Unable to delete from the database",
                         Toast.LENGTH_SHORT).show();
             }
         });
