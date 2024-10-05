@@ -2,7 +2,6 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.os.Bundle;
 
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -64,5 +63,6 @@ public class FoundRecipeByIngredient extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recipeAdapter.notifyDataSetChanged();
+
     }
 }
