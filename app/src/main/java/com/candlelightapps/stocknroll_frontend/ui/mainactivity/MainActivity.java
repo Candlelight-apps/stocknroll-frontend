@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayInRecyclerView() {
         recyclerView = binding.inventoryRecyclerView;
-        inventoryAdapter = new InventoryAdapter(this, ingredientList);
+        inventoryAdapter = new InventoryAdapter(this, ingredientList, ingredientViewModel);
         recyclerView.setAdapter(inventoryAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
