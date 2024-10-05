@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
@@ -16,15 +17,13 @@ public class FindRecipeByIngredientClickHandlers {
 
     Context context;
     private IngredientAdapter ingredientAdapter;
-    private List<String> ingredientsForRecipeSearch = new ArrayList<>();
 
-    public FindRecipeByIngredientClickHandlers(Context context) {
+
+    public FindRecipeByIngredientClickHandlers(Context context, List<String> ingredientsForRecipeSearch) {
         this.context = context;
+
     }
 
-    public void setIngredientsForRecipeSearch(List<String> ingredientsForRecipeSearch) {
-        this.ingredientsForRecipeSearch = ingredientsForRecipeSearch;
-    }
 
     public void onBackBtnClicked(View view) {
         new AlertDialog.Builder(view.getContext())
@@ -39,15 +38,5 @@ public class FindRecipeByIngredientClickHandlers {
                 })
                 .setNegativeButton("No", null)
                 .show();
-    }
-
-    public void onAddBtnClicked(View view) {
-        ingredientsForRecipeSearch = ingredientAdapter.selectedIngredientsForSearch;
-    }
-
-    public void onSubmitBtnClicked (View view) {
-        Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
-        intent.putExtra("ingredient_list", (Serializable) ingredientsForRecipeSearch);
-        context.startActivity(intent);
     }
 }
