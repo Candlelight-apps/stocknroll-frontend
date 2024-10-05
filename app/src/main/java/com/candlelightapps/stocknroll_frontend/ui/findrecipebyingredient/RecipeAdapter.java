@@ -1,7 +1,9 @@
 package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -19,10 +21,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     List<Recipe> recipeList;
     Context context;
+    FoundRecipesRecyclerViewInterface recyclerViewInterface;
 
-    public RecipeAdapter(List<Recipe> recipeList, Context context) {
+    public RecipeAdapter(List<Recipe> recipeList, Context context, FoundRecipesRecyclerViewInterface recyclerViewInterface) {
         this.recipeList = recipeList;
         this.context = context;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     @NonNull
@@ -35,7 +39,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 false
         );
 
-        return new RecipeViewHolder(activityFoundRecipeViewBinding);
+        return new RecipeViewHolder(activityFoundRecipeViewBinding, recyclerViewInterface);
     }
 
     @Override
@@ -56,9 +60,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         private ActivityFoundRecipeViewBinding activityFoundRecipeViewBinding;
 
-        public RecipeViewHolder(ActivityFoundRecipeViewBinding activityFoundRecipeViewBinding) {
+        public RecipeViewHolder(ActivityFoundRecipeViewBinding activityFoundRecipeViewBinding, FoundRecipesRecyclerViewInterface recyclerViewInterface) {
             super(activityFoundRecipeViewBinding.getRoot());
             this.activityFoundRecipeViewBinding = activityFoundRecipeViewBinding;
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterface != null) {
+
+                        int position = getAdapterPosition();
+
+                        if (position != RecyclerView.NO_POSITION) {
+                            recyclerViewInterface.onItemClick(position);
+                        }
+                    }
+
+                }
+            });
         }
     }
 }
