@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.findrecipebyingredient.FindRecipeByIngredientActivity"
-    >
+    tools:context=".ui.findrecipebyingredient.FindRecipeByIngredientActivity">
 
     <data>
+
         <variable
             name="clickHandler"
             type="com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRecipeByIngredientClickHandlers" />
@@ -16,99 +15,168 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="25dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/grey"
-            android:text="Stock'n'Roll"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:gravity="center"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="Find a recipe"
+            app:titleTextColor="@color/white" />
+
+        <Button
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="16dp"
+            android:text="Search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_find_recipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="30dp"
+            android:text="By ingredient   "
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_search" />
 
         <SearchView
             android:id="@+id/searchItems"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:queryHint="Search Item..."
-            app:layout_constraintTop_toBottomOf="@+id/header"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="30dp"
             android:background="@drawable/search_view_background"
-            />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btnSortByExpiry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/searchItems"
-            app:layout_constraintStart_toStartOf="parent"
-            android:backgroundTint="@color/grey"
-            android:text="Sort by Expiry"
-            style="@style/BtnTextStyle"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
-            />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btnSortByName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/searchItems"
+            android:queryHint="Search Item..."
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="@color/grey"
-            android:text="Sort by Name"
-            style="@style/BtnTextStyle"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="15dp"
-            />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:backgroundTint="@color/grey"
-            android:text="Cancel"
-            style="@style/BtnTextStyle"
-            android:layout_margin="30dp"
-            android:onClick="@{clickHandler::onBackBtnClicked}"
-            />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="@color/grey"
-            android:text="Submit"
-            style="@style/BtnTextStyle"
-            android:layout_margin="30dp"
-            />
+            app:layout_constraintTop_toBottomOf="@id/button_search" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnSortByName"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="10dp"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchItems"
+            tools:listitem="@layout/activity_recipe_item_view" />
+
+        <LinearLayout
+            android:id="@+id/layout_edit_filters"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_search">
+
+            <!-- Diet Type Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/diet_type_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Diet Type"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="16dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/diet_type_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Cuisine Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cuisine_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cuisine"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="16dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/cuisine_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Intolerances Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/intolerances_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Intolerances"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="16dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/intolerances_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- Cooking Time -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cooking_time_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Max Cooking Time (in minutes)"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_cooking_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/material_dynamic_primary95"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+            app:labelVisibilityMode="labeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_nav_menu" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ingredientRecyclerView"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
