@@ -22,7 +22,6 @@ import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRec
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private IngredientViewModel ingredientViewModel;
     private List<Ingredient> ingredientList;
     private MainActivityClickHandler mainActivityClickHandler;
+    private BottomNavigationView bottomNavigationView;
 
     private AutoCompleteTextView sortingDropdownMenu;
     private RecyclerView recyclerView;
@@ -48,10 +48,11 @@ public class MainActivity extends AppCompatActivity {
         binding.setClickHandler(mainActivityClickHandler);
 
         initaliseSortingDropdownMenu();
-
         getAllIngredients();
 
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
 
@@ -60,12 +61,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.pantry) {
-                    intent = new Intent(MainActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    return true;
-
-                } else if (id == R.id.recipes) {
                     intent = new Intent(MainActivity.this, FindRecipeByIngredientActivity.class);
                     startActivity(intent);
                     return true;
@@ -76,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
 
-    }
+        });
+   }
 
     private void getAllIngredients() {
         ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
