@@ -2,7 +2,9 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -33,11 +35,13 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
     private ArrayList<Ingredient> ingredientList;
     private ArrayList<Ingredient> ingredientFilterList;
+    private ArrayList<String> ingredientsForRecipeSearch;
 
 
     private SearchView ingredientSearchView;
     private RecyclerView recyclerView;
     private ExtendedFloatingActionButton sortByName, sortByExpiryDate;
+    private Button submitButton;
 
 
     private IngredientAdapter ingredientAdapter;
@@ -50,8 +54,10 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
+        ingredientsForRecipeSearch = new ArrayList<>();
+
         activityFindRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_find_recipe_by_ingredient);
-        findRecipeByIngredientClickHandlers = new FindRecipeByIngredientClickHandlers(this);
+        findRecipeByIngredientClickHandlers = new FindRecipeByIngredientClickHandlers(this, ingredientsForRecipeSearch);
         activityFindRecipeByIngredientBinding.setClickHandler(findRecipeByIngredientClickHandlers);
         ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
 
@@ -89,9 +95,28 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ingredientList.sort(BY_EXPIRY_DATE);
                 ingredientAdapter.notifyDataSetChanged();
+
             }
         });
 
+
+        submitButton = findViewById(R.id.btnSubmit);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.i("Submit button clicked", "****Activity Submit button onClickListener start");
+                Log.i("Submit button clicked", "****Activity Submit button onClickListener sent the following ingredients ::" + ingredientAdapter.selectedIngredientsForSearch);
+
+                ingredientsForRecipeSearch = ingredientAdapter.getSelectedIngredientsForSearch();
+
+                Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("ingredient_list", ingredientsForRecipeSearch);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     public Comparator<Ingredient> BY_NAME_ALPHABETICAL = new Comparator<Ingredient>() {
