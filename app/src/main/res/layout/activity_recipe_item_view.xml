@@ -7,28 +7,12 @@
         <variable
             name="Ingredient"
             type="com.candlelightapps.stocknroll_frontend.model.Ingredient" />
-        <variable
-            name="clickHandler"
-            type="com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRecipeByIngredientClickHandlers" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="60sp"
         >
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/addButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            android:background="@drawable/btn_shape_round"-->
-<!--            android:src="@drawable/btn_add_drawable_selector"-->
-<!--            android:contentDescription="Select item To Search For Recipe"-->
-
-<!--            />-->
 
         <CheckBox
             android:id="@+id/checkBox"
