@@ -23,6 +23,6 @@ public interface IngredientApiService {
     @DELETE("ingredients/{id}")
     Call<Ingredient> deleteIngredient(@Path("id") long id);
 
-    @PATCH
+    @PATCH("ingredients/{id}")
     Call<Ingredient> updateIngredient(@Path("id") long id, @Body int quantity);
 }
