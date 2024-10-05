@@ -2,11 +2,9 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.os.Bundle;
 
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,12 +40,10 @@ public class FoundRecipeByIngredient extends AppCompatActivity {
         viewModel = new ViewModelProvider(this)
                 .get(RecipeViewModel.class);
 
-        Bundle b = getIntent().getBundleExtra("ingredient_list");
+        Bundle b = getIntent().getExtras();
+        ingredientList = b.getStringArrayList("ingredient_list");
 
-        if (b != null) {
-            ingredientList = (List<String>) b.getSerializable("ingredient_list");
-
-        }
+        getRecipesByIngredients(ingredientList);
     }
 
     private void getRecipesByIngredients(List<String> ingredientList) {
