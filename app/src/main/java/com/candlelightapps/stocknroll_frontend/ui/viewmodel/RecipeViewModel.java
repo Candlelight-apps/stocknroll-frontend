@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.candlelightapps.stocknroll_frontend.model.Recipe;
 import com.candlelightapps.stocknroll_frontend.repository.RecipeRepository;
@@ -20,6 +20,8 @@ public class RecipeViewModel extends AndroidViewModel {
         this.recipeRepository = new RecipeRepository(application);
     }
 
-    public LiveData<List<Recipe>> getRecipesByIngredients(List<String> ingredients) { return recipeRepository.getRecipesByIngredients(ingredients);}
+    public MutableLiveData<List<Recipe>> getRecipes() {
+        return recipeRepository.getMutableLiveData();
+    }
 
 }
