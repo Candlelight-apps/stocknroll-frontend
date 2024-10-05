@@ -2,10 +2,9 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -48,27 +47,18 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         Ingredient ingredient = ingredientList.get(position);
         holder.activityRecipeItemViewBinding.setIngredient(ingredient);
 
-        ImageButton addButton = holder.activityRecipeItemViewBinding.addButton;
+        CheckBox checkBox = holder.activityRecipeItemViewBinding.checkBox;
 
-        if (selectedIngredientsForSearch.contains(ingredient.getName())) {
-            addButton.setImageResource(R.drawable.close_icon);
-        } else {
-            addButton.setImageResource(R.drawable.add_icon);
-        }
+        checkBox.setOnCheckedChangeListener(null);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                String name = ingredient.getName();
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
-                if (selectedIngredientsForSearch.contains(name)) {
-                    selectedIngredientsForSearch.remove(name);
-                    Toast.makeText(context, name + " removed!", Toast.LENGTH_SHORT).show();
-                    addButton.setImageResource(R.drawable.add_icon);
-                } else {
-                    selectedIngredientsForSearch.add(name);
-                    Toast.makeText(context, name + " added!", Toast.LENGTH_SHORT).show();
-                    addButton.setImageResource(R.drawable.close_icon);
+                if (isChecked) {
+                    selectedIngredientsForSearch.add(ingredient.getName());
+                }  else {
+                    selectedIngredientsForSearch.remove(ingredient.getName());
                 }
             }
         });
@@ -95,6 +85,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         public IngredientViewHolder(ActivityRecipeItemViewBinding activityRecipeItemViewBinding) {
             super(activityRecipeItemViewBinding.getRoot());
             this.activityRecipeItemViewBinding = activityRecipeItemViewBinding;
+
         }
     }
 }

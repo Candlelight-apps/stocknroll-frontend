@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.candlelightapps.stocknroll_frontend.util.Converter"/>
         <variable
             name="ingredient"
             type="com.candlelightapps.stocknroll_frontend.model.Ingredient" />
-    </data>
+        </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -45,17 +46,18 @@
                     android:background="@drawable/btn_shape_round"
                     android:src="@drawable/ic_remove"
                     android:contentDescription="@string/decrease_quantity"
+
                     android:layout_marginEnd="8dp" />
 
                 <TextView
                     android:id="@+id/ingredient_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{``+ingredient.quantity}"
-                    tools:text="5"
+                    android:layout_marginEnd="8dp"
+                    android:text="@={Converter.intToString(ingredient.quantity)}"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_marginEnd="8dp" />
+                    tools:text="5" />
 
                 <ImageButton
                     android:id="@+id/btn_increase_quantity"

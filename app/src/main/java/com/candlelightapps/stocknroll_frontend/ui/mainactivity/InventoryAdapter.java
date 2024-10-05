@@ -2,15 +2,20 @@ package com.candlelightapps.stocknroll_frontend.ui.mainactivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candlelightapps.stocknroll_frontend.databinding.ItemIngredientViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 import java.util.List;
 
@@ -28,6 +33,12 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
         this.context = context;
         this.ingredientList = ingredientList;
         this.onDeleteButtonClickListener = onDeleteButtonClickListener;
+    private IngredientViewModel viewModel;
+
+    public InventoryAdapter(Context context, List<Ingredient> ingredientList,IngredientViewModel viewModel) {
+        this.context = context;
+        this.ingredientList = ingredientList;
+        this.viewModel = viewModel;
     }
 
     @NonNull
@@ -57,6 +68,39 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
                     })
                     .setNegativeButton("No", null)
                     .show();
+          
+        holder.itemIngredientViewBinding.btnDecreaseQuantity.setOnClickListener(v -> {
+            int presentQuantity = ingredient.getQuantity();
+            int updatedQuantity;
+            if (presentQuantity > 0) {
+                updatedQuantity = presentQuantity - 1;
+                ingredient.setQuantity(updatedQuantity);
+                viewModel.updateIngredient(ingredient.getId(),updatedQuantity);
+                if (updatedQuantity == 0) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Shopping Time!")
+                            .setMessage("Do you want to add " + ingredient.getName() + " to your shopping list?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(context, ingredient.getName() + " added to shopping list.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(context, MainActivity.class);
+                                    context.startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("No", null)
+                            .show();
+                }
+            }
+            notifyItemChanged(position);
+
+        });
+
+        holder.itemIngredientViewBinding.btnIncreaseQuantity.setOnClickListener(v -> {
+            int updatedQuantity = ingredient.getQuantity()+1;
+            ingredient.setQuantity(updatedQuantity);
+            viewModel.updateIngredient(ingredient.getId(),updatedQuantity);
+            notifyItemChanged(position);
         });
     }
 
