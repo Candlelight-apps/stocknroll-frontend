@@ -37,7 +37,6 @@ public class IngredientViewModel extends AndroidViewModel {
     public void deleteIngredient(long id) {
         ingredientRepository.deleteIngredient(id);
         isDeleted.setValue(true);
-        getIngredients();
     }
 
     public void updateIngredient(long id, int quantity) {

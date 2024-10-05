@@ -42,7 +42,7 @@
                     android:id="@+id/btn_decrease_quantity"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:background="@drawable/btn_shape_round"
                     android:src="@drawable/ic_remove"
                     android:contentDescription="@string/decrease_quantity"
                     android:layout_marginEnd="8dp" />
@@ -61,20 +61,40 @@
                     android:id="@+id/btn_increase_quantity"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:background="@drawable/btn_shape_round"
                     android:src="@drawable/add_icon"
                     android:contentDescription="@string/increase_quantity" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/ingredient_expiry_date"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{``+ingredient.expiryDate}"
-                tools:text="Expiry Date"
-                android:textSize="12sp"
-                />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/ingredient_expiry_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{``+ingredient.expiryDate}"
+                    tools:text="Expiry Date"
+                    android:textSize="12sp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btnDelete"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/btn_shape_round"
+                    android:src="@drawable/delete_icon"
+                    android:contentDescription="Delete Ingredient"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
