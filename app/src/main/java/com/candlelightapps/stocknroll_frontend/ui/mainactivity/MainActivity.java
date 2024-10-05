@@ -1,10 +1,15 @@
 package com.candlelightapps.stocknroll_frontend.ui.mainactivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,12 +27,11 @@ import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRec
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements InventoryAdapter.OnDeleteButtonClickListener {
 
     private ActivityMainBinding binding;
     private IngredientViewModel ingredientViewModel;
@@ -98,11 +102,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onButtonClick(long ingredientId) {
+        ingredientViewModel.getIsDeleted().observe(this, isDeleted -> {
+            if (isDeleted) {
+                getAllIngredients();
+            }
+        });
+        ingredientViewModel.deleteIngredient(ingredientId);
+    }
+
     private void displayInRecyclerView() {
         recyclerView = binding.inventoryRecyclerView;
-        inventoryAdapter = new InventoryAdapter(this, ingredientList);
+        inventoryAdapter = new InventoryAdapter(this, ingredientList, this);
         recyclerView.setAdapter(inventoryAdapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
