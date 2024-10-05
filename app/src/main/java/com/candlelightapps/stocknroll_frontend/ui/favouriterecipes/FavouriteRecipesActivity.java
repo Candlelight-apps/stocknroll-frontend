@@ -24,6 +24,7 @@ import com.candlelightapps.stocknroll_frontend.databinding.ActivityMainBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.model.Recipe;
 import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRecipeByIngredientActivity;
+import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FoundRecipesRecyclerViewInterface;
 import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.RecipeAdapter;
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.InventoryAdapter;
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
@@ -36,7 +37,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class FavouriteRecipesActivity extends AppCompatActivity {
+public class FavouriteRecipesActivity extends AppCompatActivity implements FoundRecipesRecyclerViewInterface {
 
     private ActivityFavouriteRecipesBinding binding;
     private RecipeViewModel recipeViewModel;
@@ -107,13 +108,16 @@ public class FavouriteRecipesActivity extends AppCompatActivity {
 
     private void displayInRecyclerView() {
         recyclerView = binding.rvFavouriteRecipes;
-        recipeAdapter = new RecipeAdapter(recipeList, this);
+        recipeAdapter = new RecipeAdapter(recipeList, this, this);
         recyclerView.setAdapter(recipeAdapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recipeAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }
