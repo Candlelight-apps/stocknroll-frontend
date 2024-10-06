@@ -26,7 +26,7 @@ public interface RecipeApiService {
     Call<ResponseBody> deleteRecipe(@Path("id") long id);
 
     @GET("recipes/criteria")
-    Call<List<Recipe>> getRecipesByCriteria(@Path("cuisine") String cuisine, @Path("diet") String diet, @Path("intolerances") String intolerances);
+    Call<List<Recipe>> getRecipesByCriteria(@Query("cuisine") String cuisine, @Query("diet") String diet, @Query("intolerances") String intolerances);
 
     @GET("recipes/ingredient")
     Call<List<Recipe>> getRecipesByIngredients(@Query("values") List<String> ingredients);
