@@ -34,7 +34,6 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
     private RecipeViewModel viewModel;
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
-    private BottomNavigationView bottomNavigationView;
     private TextView resultsCountText;
 
 
