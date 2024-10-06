@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candlelightapps.stocknroll_frontend.databinding.ItemIngredientViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.IngredientAdapter;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 import java.util.List;
@@ -24,20 +25,16 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
     private Context context;
     private List<Ingredient> ingredientList;
     private OnDeleteButtonClickListener onDeleteButtonClickListener;
+    private IngredientViewModel viewModel;
 
     public interface OnDeleteButtonClickListener {
         void onButtonClick(long ingredientId);
     }
 
-    public InventoryAdapter(Context context, List<Ingredient> ingredientList, OnDeleteButtonClickListener onDeleteButtonClickListener) {
+    public InventoryAdapter(Context context, List<Ingredient> ingredientList, OnDeleteButtonClickListener onDeleteButtonClickListener, IngredientViewModel viewModel) {
         this.context = context;
         this.ingredientList = ingredientList;
         this.onDeleteButtonClickListener = onDeleteButtonClickListener;
-    private IngredientViewModel viewModel;
-
-    public InventoryAdapter(Context context, List<Ingredient> ingredientList,IngredientViewModel viewModel) {
-        this.context = context;
-        this.ingredientList = ingredientList;
         this.viewModel = viewModel;
     }
 
@@ -68,6 +65,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
                     })
                     .setNegativeButton("No", null)
                     .show();
+            });
           
         holder.itemIngredientViewBinding.btnDecreaseQuantity.setOnClickListener(v -> {
             int presentQuantity = ingredient.getQuantity();
@@ -106,11 +104,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
 
     @Override
     public int getItemCount() {
-        if (ingredientList == null) {
-            return 0;
-        } else {
-            return ingredientList.size();
-        }
+            return ingredientList == null ? 0 : ingredientList.size();
     }
 
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {

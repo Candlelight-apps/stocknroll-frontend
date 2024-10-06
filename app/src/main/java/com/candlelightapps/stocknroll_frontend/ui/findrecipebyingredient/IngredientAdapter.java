@@ -48,13 +48,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         holder.activityRecipeItemViewBinding.setIngredient(ingredient);
 
         CheckBox checkBox = holder.activityRecipeItemViewBinding.checkBox;
+        checkBox.setChecked(ingredient.isChecked());
 
         checkBox.setOnCheckedChangeListener(null);
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
+                ingredient.setIsChecked(isChecked);
                 if (isChecked) {
                     selectedIngredientsForSearch.add(ingredient.getName());
                 }  else {
@@ -74,7 +75,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     }
 
     public void setIngredientFilteredList(ArrayList<Ingredient> ingredientFilterList) {
-        this.ingredientList = ingredientFilterList;
+        this.ingredientList = new ArrayList<>(ingredientFilterList);
         notifyDataSetChanged();
     }
 

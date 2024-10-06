@@ -19,6 +19,7 @@ public class Ingredient extends BaseObservable implements Parcelable {
     int quantity;
     String expiryDate;
     String imageUrl; //To be implemented later
+    boolean isChecked;
 
     public Ingredient() {}
 
@@ -29,6 +30,7 @@ public class Ingredient extends BaseObservable implements Parcelable {
         this.quantity = quantity;
         this.expiryDate = expiryDate;
         this.imageUrl = imageUrl;
+        this.isChecked = false;
     }
 
     protected Ingredient(Parcel in) {
@@ -109,6 +111,14 @@ public class Ingredient extends BaseObservable implements Parcelable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         notifyPropertyChanged(BR.imageUrl);
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean checked) {
+        isChecked = checked;
     }
 
     @Override

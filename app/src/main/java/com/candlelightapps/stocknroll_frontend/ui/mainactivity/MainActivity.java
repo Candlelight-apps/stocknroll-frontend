@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
 
     private void displayInRecyclerView() {
         recyclerView = binding.inventoryRecyclerView;
-        inventoryAdapter = new InventoryAdapter(this, ingredientList, this);
+        inventoryAdapter = new InventoryAdapter(this, ingredientList, this, ingredientViewModel);
         recyclerView.setAdapter(inventoryAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
