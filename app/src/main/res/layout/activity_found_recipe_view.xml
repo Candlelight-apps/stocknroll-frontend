@@ -8,6 +8,9 @@
         <variable
             name="Recipe"
             type="com.candlelightapps.stocknroll_frontend.model.Recipe" />
+        <variable
+            name="clickHandler"
+            type="com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FoundRecipesClickHandlers" />
 
     </data>
 
@@ -74,6 +77,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/btn_favourite_recipe_drawable_selector"
             android:background="@android:color/transparent"
+            android:onClick="@{clickHandler::favouriteRecipeBtnClicked}"
             />
 
 
