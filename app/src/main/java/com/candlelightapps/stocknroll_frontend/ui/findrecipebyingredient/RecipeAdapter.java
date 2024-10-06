@@ -1,12 +1,11 @@
 package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -16,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityFoundRecipeViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Recipe;
+import com.candlelightapps.stocknroll_frontend.ui.viewmodel.RecipeViewModel;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     List<Recipe> recipeList;
     Recipe recipe;
-    Recipe recipeToAddToFavorites;
-    Recipe recipeToRemoveFromFavourites;
+    List<Recipe> recipesToAddToFavorites;
+    List<Recipe> recipesToRemoveFromFavourites;
     Context context;
     FoundRecipesRecyclerViewInterface recyclerViewInterface;
     List<Recipe> favouriteRecipes;
@@ -67,9 +67,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                     }
                 }
                 if (!isCurrentRecipeFavourited) {
-                    recipeToAddToFavorites = recipe;
+                    recipesToAddToFavorites.add(recipe);
+                    Toast.makeText(context,
+                            String.format("Recipe %s selected", recipe.getTitle()),
+                            Toast.LENGTH_SHORT).show();
+
                 } else {
-                    recipeToRemoveFromFavourites = recipe;
+                    recipesToRemoveFromFavourites.remove(recipe);
+                    Toast.makeText(context,
+                            String.format("Recipe %s de-selected", recipe.getTitle()),
+                            Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -81,12 +88,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return recipeList.size();
     }
 
-    public Recipe getRecipeToAddToFavorites() {
-        return recipeToAddToFavorites;
+    public List<Recipe> getRecipesToAddToFavorites() {
+        return recipesToAddToFavorites;
     }
 
-    public Recipe getRecipeToRemoveFromFavourites() {
-        return recipeToRemoveFromFavourites;
+    public List<Recipe> getRecipesToRemoveFromFavourites() {
+        return recipesToRemoveFromFavourites;
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
