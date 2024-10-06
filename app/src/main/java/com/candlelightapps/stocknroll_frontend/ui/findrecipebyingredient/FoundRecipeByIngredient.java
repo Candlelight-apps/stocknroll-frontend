@@ -3,6 +3,7 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import java.util.List;
 public class FoundRecipeByIngredient extends AppCompatActivity implements FoundRecipesRecyclerViewInterface{
 
     private List<String> ingredientList;
+    private ArrayList<String> criteria;
     private List<Recipe> recipeList;
     private ActivityFoundRecipeByIngredientBinding foundRecipeByIngredientBinding;
     private RecipeViewModel viewModel;
@@ -42,11 +44,24 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
                 .get(RecipeViewModel.class);
 
         Bundle b = getIntent().getExtras();
-        ingredientList = b.getStringArrayList("ingredient_list");
+        if(b.containsKey("ingredient_list")){
+            ingredientList = b.getStringArrayList("ingredient_list");
+            getRecipesByIngredients(ingredientList);
+        }
+        else{criteria = b.getStringArrayList("criteria");
+        getRecipesByCriteria(criteria);}
 
-        getRecipesByIngredients(ingredientList);
+
     }
-
+    private void getRecipesByCriteria(List<String> criteria) {
+        viewModel.getRecipesByCriteria(criteria.get(0),criteria.get(1), criteria.get(2) ).observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                recipeList = (ArrayList<Recipe>) recipes;
+                displayInRecyclerView();
+            }
+        });
+    }
     private void getRecipesByIngredients(List<String> ingredientList) {
         viewModel.getRecipesByIngredients(ingredientList).observe(this, new Observer<List<Recipe>>() {
             @Override
