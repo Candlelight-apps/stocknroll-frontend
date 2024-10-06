@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -20,8 +22,12 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     List<Recipe> recipeList;
+    Recipe recipe;
+    Recipe recipeToAddToFavorites;
+    Recipe recipeToRemoveFromFavourites;
     Context context;
     FoundRecipesRecyclerViewInterface recyclerViewInterface;
+    List<Recipe> favouriteRecipes;
 
     public RecipeAdapter(List<Recipe> recipeList, Context context, FoundRecipesRecyclerViewInterface recyclerViewInterface) {
         this.recipeList = recipeList;
@@ -44,16 +50,43 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        Recipe recipe = recipeList.get(position);
+        recipe = recipeList.get(position);
 
         Glide.with(holder.itemView.getContext()).load(recipeList.get(position).getImage()).into(holder.activityFoundRecipeViewBinding.recipeImage);
 
         holder.activityFoundRecipeViewBinding.setRecipe(recipe);
+
+        ImageButton favouriteButton = holder.activityFoundRecipeViewBinding.btnFavoriteRecipe;
+        favouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Boolean isCurrentRecipeFavourited = false;
+                for (int i = 0; i < favouriteRecipes.size(); i ++) {
+                    if (recipe == favouriteRecipes.get(i)) {
+                        isCurrentRecipeFavourited = true;
+                    }
+                }
+                if (!isCurrentRecipeFavourited) {
+                    recipeToAddToFavorites = recipe;
+                } else {
+                    recipeToRemoveFromFavourites = recipe;
+                }
+
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return recipeList.size();
+    }
+
+    public Recipe getRecipeToAddToFavorites() {
+        return recipeToAddToFavorites;
+    }
+
+    public Recipe getRecipeToRemoveFromFavourites() {
+        return recipeToRemoveFromFavourites;
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
