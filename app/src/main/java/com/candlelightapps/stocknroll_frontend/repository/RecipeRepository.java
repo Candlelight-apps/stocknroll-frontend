@@ -8,12 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.candlelightapps.stocknroll_frontend.model.Recipe;
+import com.candlelightapps.stocknroll_frontend.service.IngredientApiService;
 import com.candlelightapps.stocknroll_frontend.service.RecipeApiService;
 import com.candlelightapps.stocknroll_frontend.service.RetrofitInstance;
 
 import java.util.List;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,5 +88,30 @@ public class RecipeRepository {
 
             }
         });
+    }
+
+    public void deleteRecipe(Long id) {
+        Call<ResponseBody> call = recipeApiService.deleteRecipe(id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Toast.makeText(application.getApplicationContext(),
+                        "Recipe removed from favourites",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                Toast.makeText(application.getApplicationContext(),
+                        "Unable to remove recipe from favourites",
+                        Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
+
     }
 }
