@@ -27,5 +27,8 @@ public class RecipeViewModel extends AndroidViewModel {
     public MutableLiveData<List<Recipe>> getRecipesByIngredients(List<String> ingredients) {
         return recipeRepository.getRecipesByIngredients(ingredients);
     }
+    public MutableLiveData<List<Recipe>> getRecipesByCriteria(String diet,String cuisine,String intolerances) {
+        return recipeRepository.getRecipesByCriteria(diet,cuisine,intolerances);
+    }
 
 }
