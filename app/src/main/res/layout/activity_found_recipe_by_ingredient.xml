@@ -77,13 +77,13 @@
             app:layout_constraintTop_toBottomOf="@+id/recipesFoundLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+            app:layout_constraintBottom_toTopOf="@+id/backBtn"
             android:layout_margin="10sp"
             tools:listitem="@layout/activity_found_recipe_view"
             />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btnSubmit"
+            android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
