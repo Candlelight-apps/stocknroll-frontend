@@ -2,6 +2,7 @@ package com.candlelightapps.stocknroll_frontend.repository;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -21,10 +22,12 @@ public class RecipeRepository {
 
     private final MutableLiveData<List<Recipe>> recipeListMutableLiveData;
     private final RecipeApiService recipeApiService;
+    private Application application;
 
     public RecipeRepository(Application application) {
         recipeListMutableLiveData = new MutableLiveData<>();
         recipeApiService = RetrofitInstance.getRetrofitInstance().create(RecipeApiService.class);
+        this.application = application;
     }
 
     public MutableLiveData<List<Recipe>> getMutableLiveData() {
@@ -63,5 +66,25 @@ public class RecipeRepository {
         });
 
         return recipeListMutableLiveData;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        Call<Recipe> call = recipeApiService.addRecipe(recipe);
+        call.enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(Call<Recipe> call, Response<Recipe> response) {
+                Toast.makeText(application.getApplicationContext(),
+                        String.format("Recipe %s added", recipe.getTitle()),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Recipe> call, Throwable throwable) {
+                Toast.makeText(application.getApplicationContext(),
+                        "Invalid recipe. Unable to add to the database",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }
