@@ -13,43 +13,24 @@
         android:layout_height="match_parent"
         tools:context=".ui.findrecipebyingredient.FoundRecipeByIngredient">
 
-        <TextView
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="25sp"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/grey"
-            android:text="Stock'n'Roll"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:gravity="center"
-            />
+            app:title="@string/recipe_list"
+            app:titleTextColor="@color/white" />
 
         <TextView
-            android:id="@+id/recipeListTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="15sp"
-            app:layout_constraintTop_toBottomOf="@+id/header"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="Recipe List"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:gravity="center"
-            />
-
-        <TextView
-            android:id="@+id/recipesFoundLabel"
+            android:id="@+id/recipesFoundCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20 Recipes Found"
-            app:layout_constraintTop_toBottomOf="@+id/recipeListTitle"
+            android:text="@string/_0_recipes_found"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="20sp"
             android:textColor="@color/black"
@@ -61,12 +42,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_shape_round"
-            android:contentDescription="Filter Recipe"
+            android:contentDescription="@string/filter_recipe"
             android:src="@drawable/btn_filter_drawable_selector"
             android:layout_marginTop="10sp"
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/recipeListTitle"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
@@ -74,25 +55,24 @@
             android:id="@+id/recipeRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0sp"
-            app:layout_constraintTop_toBottomOf="@+id/recipesFoundLabel"
+            app:layout_constraintTop_toBottomOf="@+id/recipesFoundCount"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
             android:layout_margin="10sp"
             tools:listitem="@layout/activity_found_recipe_view"
             />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/material_dynamic_primary95"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="@color/grey"
-            android:text="Back"
-            style="@style/BtnTextStyle"
-            android:layout_margin="30sp"
-            />
+            app:menu="@menu/bottom_nav_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
