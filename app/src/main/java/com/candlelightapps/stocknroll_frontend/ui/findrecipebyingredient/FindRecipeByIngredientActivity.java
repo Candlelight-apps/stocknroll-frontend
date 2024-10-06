@@ -54,6 +54,9 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
     private FindRecipeByIngredientClickHandlers findRecipeByIngredientClickHandlers;
     private IngredientViewModel ingredientViewModel;
+    private  AutoCompleteTextView dietTypeDropdown;
+    private AutoCompleteTextView cuisineDropdown;
+    private AutoCompleteTextView intolerancesDropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,31 +95,43 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             }
         });
 
+        initaliseBottomNavigationMenu(bottomNavigationView);
+
+        handleSwitchToggle();
+        cuisineDropdown = findViewById(R.id.cuisine_dropdown);
+        cuisineDropdownSetup();
+        dietTypeDropdown = findViewById(R.id.diet_type_dropdown);
+        dietDropdownSetup();
+        intolerancesDropdown = findViewById(R.id.intolerances_dropdown);
+        intoleranceDropdownSetup();
+
         submitButton = findViewById(R.id.button_search);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ingredientsForRecipeSearch = ingredientAdapter.getSelectedIngredientsForSearch();
-
-                Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("ingredient_list", ingredientsForRecipeSearch);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if (!switchFindRecipe.isChecked()) {
+                    ingredientsForRecipeSearch = ingredientAdapter.getSelectedIngredientsForSearch();
+                    Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putStringArrayList("ingredient_list", ingredientsForRecipeSearch);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    String diet = dietTypeDropdown.getText().toString();
+                    String cuisine = cuisineDropdown.getText().toString();
+                    String intolerances = intolerancesDropdown.getText().toString();
+                    ArrayList<String> criteria = new ArrayList<>();
+                    criteria.add(cuisine);
+                    criteria.add(diet);
+                    criteria.add(intolerances);
+                    Intent intent = new Intent(view.getContext(), FoundRecipeByIngredient.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putStringArrayList("criteria", criteria);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
-
-
-        initaliseBottomNavigationMenu(bottomNavigationView);
-
-        handleSwitchToggle();
-
-        cuisineDropdownSetup();
-
-        dietDropdownSetup();
-
-        intoleranceDropdownSetup();
     }
 
 
@@ -252,7 +267,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     }
 
     private void intoleranceDropdownSetup() {
-        AutoCompleteTextView intolerancesDropdown = findViewById(R.id.intolerances_dropdown);
+
         String[] intolerances = new String[]{
                 "Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy",
                 "Sulfite", "Tree Nut", "Wheat"
@@ -262,7 +277,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     }
 
     private void dietDropdownSetup() {
-        AutoCompleteTextView dietTypeDropdown = findViewById(R.id.diet_type_dropdown);
+
         String[] diets = new String[]{
                 "Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan",
                 "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"
@@ -272,7 +287,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     }
 
     private void cuisineDropdownSetup() {
-        AutoCompleteTextView cuisineDropdown = findViewById(R.id.cuisine_dropdown);
+
         String[] cuisines = new String[]{
                 "African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European",
                 "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish",
