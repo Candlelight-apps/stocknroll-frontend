@@ -20,6 +20,12 @@ public class RecipeViewModel extends AndroidViewModel {
         this.recipeRepository = new RecipeRepository(application);
     }
 
+    private MutableLiveData<Boolean> isDeleted = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> getIsDeleted() {
+        return isDeleted;
+    }
+
     public MutableLiveData<List<Recipe>> getRecipes() {
         return recipeRepository.getMutableLiveData();
     }
@@ -30,6 +36,11 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public void addRecipe(Recipe recipe) {
         recipeRepository.addRecipe(recipe);
+    }
+
+    public void deleteRecipe(long id) {
+        recipeRepository.deleteRecipe(id);
+        isDeleted.setValue(true);
     }
 
 }
