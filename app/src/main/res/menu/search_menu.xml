@@ -10,11 +10,4 @@
         app:showAsAction="ifRoom|collapseActionView"
         />
 
-    <item
-        android:iconTint="@color/white"
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings"
-        app:showAsAction="ifRoom"
-        />
 </menu>

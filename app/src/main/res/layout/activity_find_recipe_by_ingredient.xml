@@ -140,23 +140,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <!-- Cooking Time -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cooking_time_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Max Cooking Time (in minutes)"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_cooking_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>
-
         </LinearLayout>
 
 
@@ -176,8 +159,9 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
             android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ingredientRecyclerView"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{clickHandler::onBackBtnClicked}"/>
         
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
