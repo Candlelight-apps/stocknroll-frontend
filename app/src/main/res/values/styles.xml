@@ -111,6 +111,22 @@
         <item name="cardBackgroundColor">@color/white</item>
     </style>
 
+<!--Ingredient ImageButtons-->
+
+    <style name="CustomDecreaseButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:tint">@color/blue</item>
+        <item name="android:background">@drawable/btn_decrease_round</item>
+    </style>
+
+    <style name="CustomIncreaseButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:tint">@color/green</item>
+        <item name="android:background">@drawable/btn_increase_round</item>
+    </style>
+
+    <style name="CustomDeleteButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:tint">@color/red</item>
+        <item name="android:background">@drawable/btn_delete_round</item>
+    </style>
 
 
 </resources>
