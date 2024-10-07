@@ -42,8 +42,7 @@
                 android:layout_marginEnd="100sp"
                 android:text="@{Ingredient.name}"
                 tools:text="Name"
-                android:textStyle="bold"
-                android:textColor="@color/black"
+                style="@style/BtnTextStyle"
                 android:padding="10sp"
                 android:ellipsize="end"
                 android:maxLines="1"/>
