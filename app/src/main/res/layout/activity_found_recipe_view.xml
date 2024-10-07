@@ -8,10 +8,6 @@
         <variable
             name="Recipe"
             type="com.candlelightapps.stocknroll_frontend.model.Recipe" />
-        <variable
-            name="clickHandler"
-            type="com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FoundRecipesClickHandlers" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
