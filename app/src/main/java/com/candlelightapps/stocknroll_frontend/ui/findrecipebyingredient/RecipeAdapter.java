@@ -13,10 +13,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityFoundRecipeViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
@@ -28,12 +31,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     List<Recipe> favouriteRecipes;
     OnFavouriteBtnClickedListener onFavouriteBtnClickedListener;
 
+
     public interface OnFavouriteBtnClickedListener {
         void onFavouriteBtnClicked(Recipe recipe);
     }
 
     public RecipeAdapter(List<Recipe> recipeList, Context context, FoundRecipesRecyclerViewInterface recyclerViewInterface, OnFavouriteBtnClickedListener onFavouriteBtnClickedListener, List<Recipe> favouriteRecipes) {
-        this.recipeList = recipeList;
+        this.recipeList = recipeList==null? new ArrayList<>():recipeList;
         this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
         this.onFavouriteBtnClickedListener = onFavouriteBtnClickedListener;
@@ -55,13 +59,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
+
         Log.i("Position int", "**********Recipe click at position ::" + position);
         Log.i("Favourite recipes", "**********Favourite Recipes:" + favouriteRecipes);
 
-        recipe = recipeList.get(position);
-
-        Glide.with(holder.itemView.getContext()).load(recipeList.get(position).getImage()).into(holder.activityFoundRecipeViewBinding.recipeImage);
-
+        Recipe recipe = recipeList.get(position);
+        Glide.with(context).clear(holder.activityFoundRecipeViewBinding.recipeImage);
+        Glide.with(context)
+                .load(recipe.getImage())
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.default_recipe_image) // Add placeholder image while loading
+                        .error(R.drawable.error_loading_recipe_image)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true) )
+                .into(holder.activityFoundRecipeViewBinding.recipeImage);
+     
         holder.activityFoundRecipeViewBinding.setRecipe(recipe);
 
         ImageButton favouriteButton = holder.activityFoundRecipeViewBinding.btnFavoriteRecipe;
@@ -115,6 +127,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 }
             }
         });
+
     }
 
     @Override

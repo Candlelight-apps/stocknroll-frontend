@@ -25,7 +25,8 @@ public class RecipeRepository {
     private final MutableLiveData<List<Recipe>> recipeListMutableLiveData;
     private final MutableLiveData<List<Recipe>> favouriteRecipes;
     private final RecipeApiService recipeApiService;
-    private Application application;
+
+    Application application;
 
     public RecipeRepository(Application application) {
         recipeListMutableLiveData = new MutableLiveData<>();
@@ -59,11 +60,34 @@ public class RecipeRepository {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 List<Recipe> recipeList = response.body();
+                if(recipeList == null || recipeList.isEmpty()) Toast.makeText(application.getApplicationContext(), "Sorry!, No recipes found.", Toast.LENGTH_LONG).show();
                 recipeListMutableLiveData.setValue(recipeList);
             }
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                Toast.makeText(application.getApplicationContext(), "Sorry!, No recipes found.", Toast.LENGTH_LONG).show();
+                Log.i("HTTP Failure", Objects.requireNonNull(t.getMessage()));
+
+            }
+        });
+
+        return recipeListMutableLiveData;
+    }
+
+    public MutableLiveData<List<Recipe>> getRecipesByCriteria(String cuisine, String diet, String intolerances) {
+        Call<List<Recipe>> call = recipeApiService.getRecipesByCriteria(cuisine,diet,intolerances);
+        call.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                List<Recipe> recipeList = response.body();
+                if(recipeList == null || recipeList.isEmpty()) Toast.makeText(application.getApplicationContext(), "Sorry!, No recipes found.", Toast.LENGTH_LONG).show();
+                recipeListMutableLiveData.setValue(recipeList);
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                    Toast.makeText(application.getApplicationContext(), "Sorry!, No recipes found.", Toast.LENGTH_LONG).show();
                 Log.i("HTTP Failure", Objects.requireNonNull(t.getMessage()));
 
             }

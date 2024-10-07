@@ -1,7 +1,9 @@
 package com.candlelightapps.stocknroll_frontend.ui.addingredient;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,7 +19,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityAddIngredientBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.favouriterecipes.FavouriteRecipesActivity;
+import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRecipeByIngredientActivity;
+import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Calendar;
 
 public class AddIngredientActivity extends AppCompatActivity {
 
@@ -54,6 +63,9 @@ public class AddIngredientActivity extends AppCompatActivity {
                 openDatePickerDialog();
             }
         });
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        initaliseBottomNavigationMenu(bottomNavigationView);
     }
 
     private void initaliseCategoryDropdownMenu() {
@@ -68,13 +80,47 @@ public class AddIngredientActivity extends AppCompatActivity {
         categoryDropdownMenu.setAdapter(adapter);
     }
 
+    Calendar calendar = Calendar.getInstance();
+    int mYear = calendar.get(Calendar.YEAR);
+    int mMonth = calendar.get(Calendar.MONTH);
+    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
     private void openDatePickerDialog() {
         DatePickerDialog dialog = new DatePickerDialog(this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+
+
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                expiryDateText.setText(String.format("%s-%s-%s", year, month + 1, dayOfMonth));
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                expiryDateText.setText(String.format("%s-%s-%s", year, month + 1, day));
             }
-        }, 2024, 0, 1);
+        }, mYear, mMonth, mDay);
         dialog.show();
+    }
+
+    private void initaliseBottomNavigationMenu(BottomNavigationView bottomNavigationView) {
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+
+            Intent intent;
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.pantry) {
+                    intent = new Intent(AddIngredientActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.recipes) {
+                    intent = new Intent(AddIngredientActivity.this, FindRecipeByIngredientActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.favourites) {
+                    intent = new Intent(AddIngredientActivity.this, FavouriteRecipesActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

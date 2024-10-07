@@ -54,9 +54,16 @@ public class IngredientRepository {
         call.enqueue(new Callback<Ingredient>() {
             @Override
             public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
-                Toast.makeText(application.getApplicationContext(),
-                        String.format("Ingredient %s added", ingredient.getName()),
-                        Toast.LENGTH_SHORT).show();
+                if(response.body() == null){
+                    Toast.makeText(application.getApplicationContext(),
+                            "Invalid ingredient. Unable to add to the database",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(application.getApplicationContext(),
+                            String.format("Ingredient %s added", ingredient.getName()),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -74,9 +81,10 @@ public class IngredientRepository {
         call.enqueue(new Callback<Ingredient>() {
             @Override
             public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
-                Toast.makeText(application.getApplicationContext(),
-                        String.format("Quantity updated for %s.", response.body().getName()),
-                        Toast.LENGTH_SHORT).show();
+                Log.i("updateIngredient",String.format("Quantity updated for %s.", response.body().getName()));
+//                Toast.makeText(application.getApplicationContext(),
+//                        String.format("Quantity updated for %s.", response.body().getName()),
+//                        Toast.LENGTH_SHORT).show();
             }
 
             @Override
