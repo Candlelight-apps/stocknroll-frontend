@@ -66,25 +66,29 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             public void onClick(View view) {
                 boolean isCurrentRecipeFavourited = false;
                 for (int i = 0; i < favouriteRecipes.size(); i ++) {
-                    if (recipe == favouriteRecipes.get(i)) {
+                    if (recipe.getId() == favouriteRecipes.get(i).getSpoonacularId()) {
+                        recipe.setSpoonacularId((int)recipe.getId());
+                        recipe.setId(favouriteRecipes.get(i).getId());
                         isCurrentRecipeFavourited = true;
                     }
                 }
                 if (!isCurrentRecipeFavourited) {
-                    if (onFavouriteBtnClickedListener != null) {onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, false);
+                    if (onFavouriteBtnClickedListener != null) {
+                        recipe.setSpoonacularId((int)recipe.getId());
+                        recipe.setId(0);
+                        onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, true);
                         Toast.makeText(context,
-                                String.format("Recipe %s removed from favourites", recipe.getTitle()),
+                                String.format("Recipe %s added to favourites", recipe.getTitle()),
                                 Toast.LENGTH_LONG).show();
 
                     }
 
                 } else {
-                    if (onFavouriteBtnClickedListener != null) {
-                        onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, true);
-
-                        Toast.makeText(context,
-                                String.format("Recipe %s added to favourites", recipe.getTitle()),
-                                Toast.LENGTH_LONG).show();
+                        if (onFavouriteBtnClickedListener != null) {
+                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, false);
+                            Toast.makeText(context,
+                                    String.format("Recipe %s removed from favourites", recipe.getTitle()),
+                                    Toast.LENGTH_LONG).show();
 
                     }
                 }

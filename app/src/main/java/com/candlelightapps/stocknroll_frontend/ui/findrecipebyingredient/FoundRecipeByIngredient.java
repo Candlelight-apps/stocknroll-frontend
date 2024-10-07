@@ -62,7 +62,7 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
 
     public void onFavouriteBtnClicked(Recipe recipe, boolean isFavourite) {
         if (!isFavourite) {
-            recipeViewModel.deleteRecipe(recipe.getId());
+            recipeViewModel.deleteRecipe(recipe.getSpoonacularId());
         } else {
             recipeViewModel.addRecipe(recipe);
         }
