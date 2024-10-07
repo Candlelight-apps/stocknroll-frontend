@@ -6,14 +6,15 @@ import androidx.databinding.Bindable;
 import com.candlelightapps.stocknroll_frontend.BR;
 
 public class Recipe extends BaseObservable {
-
-     String title;
-     int readyInMinutes;
-     String sourceUrl;
-     String image;
-     Boolean isFavourite;
+    long id;
+    String title;
+    int readyInMinutes;
+    String sourceUrl;
+    String image;
+    Boolean isFavourite;
 
     public Recipe(String title, int readyInMinutes, String sourceUrl, String image, Boolean isFavourite) {
+        this.id = id;
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.sourceUrl = sourceUrl;
@@ -22,6 +23,14 @@ public class Recipe extends BaseObservable {
     }
 
     public Recipe() {}
+
+    @Bindable
+    public long getId() {return id;}
+
+    public void setId(long id) {
+        this.id = id;
+        notifyPropertyChanged(BR.id);
+    }
 
     @Bindable
     public String getTitle() {
