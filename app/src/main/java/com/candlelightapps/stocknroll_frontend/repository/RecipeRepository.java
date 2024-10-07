@@ -23,11 +23,13 @@ import retrofit2.Response;
 public class RecipeRepository {
 
     private final MutableLiveData<List<Recipe>> recipeListMutableLiveData;
+    private final MutableLiveData<List<Recipe>> favouriteRecipes;
     private final RecipeApiService recipeApiService;
     private Application application;
 
     public RecipeRepository(Application application) {
         recipeListMutableLiveData = new MutableLiveData<>();
+        favouriteRecipes = new MutableLiveData<>();
         recipeApiService = RetrofitInstance.getRetrofitInstance().create(RecipeApiService.class);
         this.application = application;
     }
@@ -39,7 +41,7 @@ public class RecipeRepository {
             @Override
             public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 if(response.isSuccessful() && response.body() != null) {
-                    recipeListMutableLiveData.setValue(response.body());
+                    favouriteRecipes.setValue(response.body());
                 }
             }
 
@@ -48,7 +50,7 @@ public class RecipeRepository {
                 Log.e("HTTP Failure", Objects.requireNonNull(t.getMessage()));
             }
         });
-        return recipeListMutableLiveData;
+        return favouriteRecipes;
     }
 
     public MutableLiveData<List<Recipe>> getRecipesByIngredients(List<String> ingredients) {
