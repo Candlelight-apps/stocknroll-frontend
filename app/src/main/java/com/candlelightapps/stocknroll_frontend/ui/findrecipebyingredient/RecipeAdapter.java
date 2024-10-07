@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ActivityFoundRecipeViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Recipe;
-import com.candlelightapps.stocknroll_frontend.ui.viewmodel.RecipeViewModel;
 
 import java.util.List;
 
@@ -23,16 +22,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     List<Recipe> recipeList;
     Recipe recipe;
-    List<Recipe> recipesToAddToFavorites;
-    List<Recipe> recipesToRemoveFromFavourites;
     Context context;
     FoundRecipesRecyclerViewInterface recyclerViewInterface;
     List<Recipe> favouriteRecipes;
+    OnFavouriteBtnClickedListener onFavouriteBtnClickedListener;
 
-    public RecipeAdapter(List<Recipe> recipeList, Context context, FoundRecipesRecyclerViewInterface recyclerViewInterface) {
+    public interface OnFavouriteBtnClickedListener {
+        void onFavouriteBtnClicked(Recipe recipe, boolean isFavourite);
+    }
+
+    public RecipeAdapter(List<Recipe> recipeList, Context context, FoundRecipesRecyclerViewInterface recyclerViewInterface, OnFavouriteBtnClickedListener onFavouriteBtnClickedListener, List<Recipe> favouriteRecipes) {
         this.recipeList = recipeList;
         this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
+        this.onFavouriteBtnClickedListener = onFavouriteBtnClickedListener;
+        this.favouriteRecipes = favouriteRecipes;
     }
 
     @NonNull
@@ -60,23 +64,29 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         favouriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean isCurrentRecipeFavourited = false;
+                boolean isCurrentRecipeFavourited = false;
                 for (int i = 0; i < favouriteRecipes.size(); i ++) {
                     if (recipe == favouriteRecipes.get(i)) {
                         isCurrentRecipeFavourited = true;
                     }
                 }
                 if (!isCurrentRecipeFavourited) {
-                    recipesToAddToFavorites.add(recipe);
-                    Toast.makeText(context,
-                            String.format("Recipe %s selected", recipe.getTitle()),
-                            Toast.LENGTH_SHORT).show();
+                    if (onFavouriteBtnClickedListener != null) {onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, false);
+                        Toast.makeText(context,
+                                String.format("Recipe %s removed from favourites", recipe.getTitle()),
+                                Toast.LENGTH_LONG).show();
+
+                    }
 
                 } else {
-                    recipesToRemoveFromFavourites.remove(recipe);
-                    Toast.makeText(context,
-                            String.format("Recipe %s de-selected", recipe.getTitle()),
-                            Toast.LENGTH_SHORT).show();
+                    if (onFavouriteBtnClickedListener != null) {
+                        onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, true);
+
+                        Toast.makeText(context,
+                                String.format("Recipe %s added to favourites", recipe.getTitle()),
+                                Toast.LENGTH_LONG).show();
+
+                    }
                 }
 
             }
@@ -86,14 +96,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public int getItemCount() {
         return recipeList.size();
-    }
-
-    public List<Recipe> getRecipesToAddToFavorites() {
-        return recipesToAddToFavorites;
-    }
-
-    public List<Recipe> getRecipesToRemoveFromFavourites() {
-        return recipesToRemoveFromFavourites;
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
