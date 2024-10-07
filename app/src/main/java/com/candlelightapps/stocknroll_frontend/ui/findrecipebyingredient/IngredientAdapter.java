@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -62,10 +63,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
                     selectedIngredientsForSearch.add(ingredient.getName());
                     ingredient.setIsChecked(true);
                     itemStateArray.put(holder.getAdapterPosition(), true);
+                    Toast.makeText(context, String.format("%s added!", ingredient.getName()), Toast.LENGTH_SHORT).show();
                 }  else {
                     selectedIngredientsForSearch.remove(ingredient.getName());
                     ingredient.setIsChecked(false);
                     itemStateArray.put(holder.getAdapterPosition(), false);
+                    Toast.makeText(context, String.format("%s removed!", ingredient.getName()), Toast.LENGTH_SHORT).show();
                 }
             }
         });
