@@ -28,4 +28,6 @@
     <string name="filter_recipe">Filter Recipe</string>
     <string name="stock_n_roll">Stock\'n\'Roll</string>
     <string name="_0_recipes_found">0 Recipes Found</string>
+    <string name="logo">logo</string>
+    <string name="delete_ingredient">Delete Ingredient %s</string>
 </resources>
