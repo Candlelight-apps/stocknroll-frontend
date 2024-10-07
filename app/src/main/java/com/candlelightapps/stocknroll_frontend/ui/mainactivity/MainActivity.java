@@ -139,68 +139,7 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
             }
         });
     }
-/*
-    private void getAllIngredients() {
-        ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
-            @Override
-            public void onChanged(List<Ingredient> ingredientsFromLiveData) {
-                ingredientList = (List<Ingredient>) ingredientsFromLiveData;
-
-                Collections.sort(ingredientList, new Comparator<Ingredient>() {
-                    @Override
-                    public int compare(Ingredient o1, Ingredient o2) {
-                        return o1.getName().compareToIgnoreCase(o2.getName());
-                    }
-                });
-                displayInRecyclerView();
-            }
-        });
-    }
-
-    private void getAllIngredientsByStock() {
-        ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
-            @Override
-            public void onChanged(List<Ingredient> ingredientsFromLiveData) {
-                ingredientList = (List<Ingredient>) ingredientsFromLiveData;
-
-                Collections.sort(ingredientList, new Comparator<Ingredient>() {
-                    @Override
-                    public int compare(Ingredient i1, Ingredient i2) {
-                        return i1 == null || i2 == null || i1.getName() == null || i2.getName() == null ? 0 : Integer.compare(i2.getQuantity(), i1.getQuantity());
-                    }
-                });
-                displayInRecyclerView();
-            }
-        });
-    }
-
-    private void getAllIngredientsByExpiryDate() {
-        ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
-            @Override
-            public void onChanged(List<Ingredient> ingredientsFromLiveData) {
-                ingredientList = (List<Ingredient>) ingredientsFromLiveData;
-
-                Collections.sort(ingredientList, new Comparator<Ingredient>() {
-                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    @Override
-                    public int compare(Ingredient ingredient, Ingredient i1) {
-                        if (ingredient == null || i1 == null || ingredient.getExpiryDate() == null || i1.getExpiryDate() == null) {
-                            return 0;
-                        } else {
-                            LocalDate ingredientDate = LocalDate.parse(ingredient.getExpiryDate(), dateTimeFormatter);
-                            LocalDate i1Date = LocalDate.parse(i1.getExpiryDate(), dateTimeFormatter);
-
-                            return ingredientDate.compareTo(i1Date);
-                        }
-                    }
-                });
-                displayInRecyclerView();
-            }
-        });
-    }
-
- */
-
+    
     @Override
     public void onButtonClick(long ingredientId) {
         ingredientViewModel.getIsDeleted().observe(this, isDeleted -> {
