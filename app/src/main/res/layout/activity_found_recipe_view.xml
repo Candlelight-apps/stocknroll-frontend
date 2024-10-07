@@ -8,7 +8,6 @@
         <variable
             name="Recipe"
             type="com.candlelightapps.stocknroll_frontend.model.Recipe" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

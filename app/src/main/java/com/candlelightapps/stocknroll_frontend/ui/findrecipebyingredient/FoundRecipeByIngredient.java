@@ -3,6 +3,9 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import android.util.Log;
+
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -26,13 +29,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FoundRecipeByIngredient extends AppCompatActivity implements FoundRecipesRecyclerViewInterface{
+public class FoundRecipeByIngredient extends AppCompatActivity implements FoundRecipesRecyclerViewInterface, RecipeAdapter.OnFavouriteBtnClickedListener {
 
     private List<String> ingredientList;
     private ArrayList<String> criteria;
     private List<Recipe> recipeList;
+    private List<Recipe> favouriteRecipesList;
     private ActivityFoundRecipeByIngredientBinding foundRecipeByIngredientBinding;
-    private RecipeViewModel viewModel;
+    private RecipeViewModel recipeViewModel;
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     private TextView resultsCountText;
@@ -46,7 +50,7 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
 
         foundRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_found_recipe_by_ingredient);
 
-        viewModel = new ViewModelProvider(this)
+        recipeViewModel = new ViewModelProvider(this)
                 .get(RecipeViewModel.class);
 
         Bundle b = getIntent().getExtras();
@@ -59,6 +63,8 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
           getRecipesByCriteria(criteria);
         }
 
+
+        getFavouriteRecipes();
 
         getRecipesByIngredients(ingredientList);
 
@@ -81,7 +87,7 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
         });
     }
     private void getRecipesByIngredients(List<String> ingredientList) {
-        viewModel.getRecipesByIngredients(ingredientList).observe(this, new Observer<List<Recipe>>() {
+        recipeViewModel.getRecipesByIngredients(ingredientList).observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
                 recipeList = (ArrayList<Recipe>) recipes;
@@ -91,9 +97,14 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
         });
     }
 
+    public void onFavouriteBtnClicked(Recipe recipe) {
+        recipeViewModel.addRecipe(recipe);
+
+    }
+
     public void displayInRecyclerView() {
         recyclerView = foundRecipeByIngredientBinding.recipeRecyclerView;
-        recipeAdapter = new RecipeAdapter(recipeList, this, this);
+        recipeAdapter = new RecipeAdapter(recipeList, this, this, this, favouriteRecipesList);
         recyclerView.setAdapter(recipeAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -138,6 +149,16 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
                     return true;
                 }
                 return false;
+            }
+        });
+    }
+
+    private void getFavouriteRecipes() {
+        recipeViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipesFromLiveData) {
+                favouriteRecipesList = recipesFromLiveData;
+                Log.i("Favourite recipes", "**********Favourite recipes in activity ::" + favouriteRecipesList);
             }
         });
     }
