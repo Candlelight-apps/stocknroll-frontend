@@ -24,4 +24,8 @@
     <string name="recipes">Recipes</string>
     <string name="favourites">Favourites</string>
     <string name="shopping_list">Shopping List</string>
+    <string name="recipe_list">Recipe List</string>
+    <string name="filter_recipe">Filter Recipe</string>
+    <string name="stock_n_roll">Stock\'n\'Roll</string>
+    <string name="_0_recipes_found">0 Recipes Found</string>
 </resources>
