@@ -56,7 +56,6 @@ public class FavouriteRecipesActivity extends AppCompatActivity implements Found
         recipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         clickHandler = new FavouriteRecipesClickHandler(this);
         binding.setClickHandler(clickHandler);
-
         getFavouriteRecipes();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -124,6 +123,9 @@ public class FavouriteRecipesActivity extends AppCompatActivity implements Found
     @Override
     public void onFavouriteBtnClicked(Recipe recipe) {
         recipeViewModel.deleteRecipe(recipe.getId());
+         Intent intent = new Intent(FavouriteRecipesActivity.this, FavouriteRecipesActivity.class);
+        startActivity(intent);
+
 
 
     }
