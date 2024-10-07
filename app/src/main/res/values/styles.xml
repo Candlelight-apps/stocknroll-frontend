@@ -25,6 +25,13 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+<!--TextInputEditText-->
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/orange</item>
+        <item name="background">@color/white</item>
+        <item name="hintTextColor">@color/orange</item>
+    </style>
+
 
 
 
