@@ -69,7 +69,10 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
    
     }
     private void getRecipesByCriteria(List<String> criteria) {
-        viewModel.getRecipesByCriteria(criteria.get(0),criteria.get(1), criteria.get(2) ).observe(this, new Observer<List<Recipe>>() {
+        String cuisine = criteria.get(0).equals("Any")?"": criteria.get(0);
+        String diet = criteria.get(1).equals("Any")?"": criteria.get(1);
+        String intolerances = criteria.get(2).equals("None")?"": criteria.get(2);
+        viewModel.getRecipesByCriteria(cuisine,diet, intolerances ).observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
                 recipeList = (ArrayList<Recipe>) recipes;
