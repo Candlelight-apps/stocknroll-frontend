@@ -47,6 +47,12 @@
         <item name="itemTextColor">@color/black</item>
     </style>
 
+<!--SwitchCompact-->
+
+    <style name="CustomSwitchCompat" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:thumbTint">@color/thumb_switch_color</item>
+        <item name="android:trackTint">@color/thumb_track_color</item>
+    </style>
 
 
 
