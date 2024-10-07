@@ -54,6 +54,20 @@
         <item name="android:trackTint">@color/thumb_track_color</item>
     </style>
 
+<!--FloatingButton-->
+
+    <style name="CustomFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/orange</item>
+        <item name="tint">@color/white</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Fab</item>
+        <item name="elevation">6dp</item>
+        <item name="hoveredFocusedTranslationZ">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Fab" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 
 
 
