@@ -98,7 +98,9 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
     }
 
     public void onFavouriteBtnClicked(Recipe recipe) {
-        recipeViewModel.addRecipe(recipe);
+        if (!(recipe.getSpoonacularId() == 0)) {
+            recipeViewModel.addRecipe(recipe);
+        }
 
     }
 
