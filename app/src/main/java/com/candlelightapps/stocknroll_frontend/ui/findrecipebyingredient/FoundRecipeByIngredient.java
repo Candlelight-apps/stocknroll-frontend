@@ -3,6 +3,7 @@ package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,12 +61,9 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
         });
     }
 
-    public void onFavouriteBtnClicked(Recipe recipe, boolean isFavourite) {
-        if (!isFavourite) {
-            recipeViewModel.deleteRecipe(recipe.getSpoonacularId());
-        } else {
-            recipeViewModel.addRecipe(recipe);
-        }
+    public void onFavouriteBtnClicked(Recipe recipe) {
+        recipeViewModel.addRecipe(recipe);
+
     }
 
     public void displayInRecyclerView() {
@@ -94,6 +92,7 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
             @Override
             public void onChanged(List<Recipe> recipesFromLiveData) {
                 favouriteRecipesList = recipesFromLiveData;
+                Log.i("Favourite recipes", "**********Favourite recipes in activity ::" + favouriteRecipesList);
             }
         });
     }

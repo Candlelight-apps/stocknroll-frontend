@@ -122,12 +122,9 @@ public class FavouriteRecipesActivity extends AppCompatActivity implements Found
     }
 
     @Override
-    public void onFavouriteBtnClicked(Recipe recipe, boolean isFavourite) {
-        if (!isFavourite) {
-            recipeViewModel.deleteRecipe(recipe.getId());
-        } else {
-            recipeViewModel.addRecipe(recipe);
-        }
+    public void onFavouriteBtnClicked(Recipe recipe) {
+        recipeViewModel.deleteRecipe(recipe.getId());
+
 
     }
 }
