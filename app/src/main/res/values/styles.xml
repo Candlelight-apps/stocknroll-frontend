@@ -85,7 +85,21 @@
         <item name="strokeWidth">2dp</item>
     </style>
 
+<!--TabLayout-->
 
+    <style name="CustomTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabRippleColor">@color/orange</item>
+        <item name="tabSelectedTextColor">@color/orange</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabTextColor">@color/blue</item>
+        <item name="tabIndicatorColor">@color/orange</item>
+        <item name="tabBackground">@color/white</item>
+    </style>
+
+    <style name="TabTextAppearance">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 
 
