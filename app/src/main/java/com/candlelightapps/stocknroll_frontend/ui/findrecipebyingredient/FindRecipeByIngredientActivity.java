@@ -91,8 +91,6 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 filterIngredientList(newText);
-                recyclerView.scrollToPosition(0);
-                ingredientAdapter.notifyDataSetChanged();
                 return true;
             }
         });

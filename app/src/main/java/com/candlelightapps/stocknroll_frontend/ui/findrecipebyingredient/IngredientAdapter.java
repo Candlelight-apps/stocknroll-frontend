@@ -1,10 +1,13 @@
 package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -22,6 +25,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     List<Ingredient> ingredientList;
     Context context;
     ArrayList<String> selectedIngredientsForSearch = new ArrayList<>();
+    private SparseBooleanArray itemStateArray = new SparseBooleanArray();
 
     public IngredientAdapter(List<Ingredient> ingredientList, Context context) {
         this.ingredientList = ingredientList;
@@ -52,14 +56,19 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
         checkBox.setOnCheckedChangeListener(null);
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                ingredient.setIsChecked(isChecked);
-                if (isChecked) {
+            public void onClick(View v) {
+                if (checkBox.isChecked()) {
                     selectedIngredientsForSearch.add(ingredient.getName());
+                    ingredient.setIsChecked(true);
+                    itemStateArray.put(holder.getAdapterPosition(), true);
+                    Toast.makeText(context, String.format("%s added!", ingredient.getName()), Toast.LENGTH_SHORT).show();
                 }  else {
                     selectedIngredientsForSearch.remove(ingredient.getName());
+                    ingredient.setIsChecked(false);
+                    itemStateArray.put(holder.getAdapterPosition(), false);
+                    Toast.makeText(context, String.format("%s removed!", ingredient.getName()), Toast.LENGTH_SHORT).show();
                 }
             }
         });
