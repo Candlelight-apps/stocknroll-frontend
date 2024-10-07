@@ -77,7 +77,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/btn_favourite_recipe_drawable_selector"
             android:background="@android:color/transparent"
-            android:onClick="@{clickHandler::favouriteRecipeBtnClicked}"
             />
 
 
