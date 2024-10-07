@@ -29,7 +29,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     OnFavouriteBtnClickedListener onFavouriteBtnClickedListener;
 
     public interface OnFavouriteBtnClickedListener {
-        void onFavouriteBtnClicked(Recipe recipe, boolean isFavourite);
+        void onFavouriteBtnClicked(Recipe recipe);
     }
 
     public RecipeAdapter(List<Recipe> recipeList, Context context, FoundRecipesRecyclerViewInterface recyclerViewInterface, OnFavouriteBtnClickedListener onFavouriteBtnClickedListener, List<Recipe> favouriteRecipes) {
@@ -84,7 +84,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                         if (onFavouriteBtnClickedListener != null) {
                             recipe.setSpoonacularId((int) recipe.getId());
                             recipe.setId(0);
-                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, true);
+                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe);
                             Toast.makeText(context,
                                     String.format("Recipe %s added to favourites", recipe.getTitle()),
                                     Toast.LENGTH_LONG).show();
@@ -93,8 +93,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
                     } else {
                         if (onFavouriteBtnClickedListener != null) {
+                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe);
                             Toast.makeText(context,
-                                    String.format("Recipe %s already in favourites", recipe.getTitle()),
+                                    String.format("Recipe %s removed from favourites", recipe.getTitle()),
                                     Toast.LENGTH_LONG).show();
 
                         }
@@ -104,7 +105,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                         if (onFavouriteBtnClickedListener != null) {
                             recipe.setSpoonacularId((int) recipe.getId());
                             recipe.setId(0);
-                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, true);
+                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe);
                             Toast.makeText(context,
                                     String.format("Recipe %s added to favourites", recipe.getTitle()),
                                     Toast.LENGTH_LONG).show();
