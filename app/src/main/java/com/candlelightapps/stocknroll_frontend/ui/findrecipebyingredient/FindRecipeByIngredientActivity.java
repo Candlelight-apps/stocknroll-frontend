@@ -269,7 +269,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private void intoleranceDropdownSetup() {
 
         String[] intolerances = new String[]{
-                "Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy",
+                "None","Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy",
                 "Sulfite", "Tree Nut", "Wheat"
         };
         ArrayAdapter<String> intoleranceAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, intolerances);
@@ -279,7 +279,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private void dietDropdownSetup() {
 
         String[] diets = new String[]{
-                "Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan",
+                "Any","Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan",
                 "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"
         };
         ArrayAdapter<String> dietAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, diets);
@@ -289,7 +289,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private void cuisineDropdownSetup() {
 
         String[] cuisines = new String[]{
-                "African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European",
+                "Any","African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European",
                 "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish",
                 "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern",
                 "Spanish", "Thai", "Vietnamese"
