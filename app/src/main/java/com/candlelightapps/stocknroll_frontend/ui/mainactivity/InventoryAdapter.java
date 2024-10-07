@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candlelightapps.stocknroll_frontend.databinding.ItemIngredientViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
+import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.IngredientAdapter;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 import java.util.List;
@@ -22,11 +24,17 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
 
     private Context context;
     private List<Ingredient> ingredientList;
+    private OnDeleteButtonClickListener onDeleteButtonClickListener;
     private IngredientViewModel viewModel;
 
-    public InventoryAdapter(Context context, List<Ingredient> ingredientList,IngredientViewModel viewModel) {
+    public interface OnDeleteButtonClickListener {
+        void onButtonClick(long ingredientId);
+    }
+
+    public InventoryAdapter(Context context, List<Ingredient> ingredientList, OnDeleteButtonClickListener onDeleteButtonClickListener, IngredientViewModel viewModel) {
         this.context = context;
         this.ingredientList = ingredientList;
+        this.onDeleteButtonClickListener = onDeleteButtonClickListener;
         this.viewModel = viewModel;
     }
 
@@ -44,6 +52,21 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
         holder.itemIngredientViewBinding.setIngredient(ingredient);
         holder.itemIngredientViewBinding.executePendingBindings();
 
+        ImageButton deleteButton = holder.itemIngredientViewBinding.btnDelete;
+
+        deleteButton.setOnClickListener(view -> {
+            new AlertDialog.Builder(context)
+                    .setTitle(String.format("Delete %s?", ingredient.getName()))
+                    .setMessage("This action cannot be undone.")
+                    .setPositiveButton("Yes", (dialog, v) -> {
+                            if (onDeleteButtonClickListener != null) {
+                                onDeleteButtonClickListener.onButtonClick(ingredient.getId());
+                            }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+            });
+          
         holder.itemIngredientViewBinding.btnDecreaseQuantity.setOnClickListener(v -> {
             int presentQuantity = ingredient.getQuantity();
             int updatedQuantity;
@@ -81,11 +104,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
 
     @Override
     public int getItemCount() {
-        if (ingredientList == null) {
-            return 0;
-        } else {
-            return ingredientList.size();
-        }
+            return ingredientList == null ? 0 : ingredientList.size();
     }
 
     public static class IngredientViewHolder extends RecyclerView.ViewHolder {

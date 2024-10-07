@@ -104,7 +104,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
+                android:focusable="false"
                 android:text="@={ingredient.expiryDate}" />
+
+            <Button
+                android:id="@+id/expiryDateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Select Date"
+                android:layout_marginTop="5sp"
+                android:textColor="@color/white"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -118,16 +129,6 @@
             app:layout_constraintTop_toBottomOf="@id/expiry_date_layout">
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/button_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="32dp"
-            android:text="Back"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-            app:layout_constraintStart_toStartOf="@+id/image_url_layout" />
 
         <Button
             android:id="@+id/addIngredientButton"

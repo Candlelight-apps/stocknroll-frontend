@@ -6,7 +6,7 @@
     <string name="name">Name</string>
     <string name="category">Category</string>
     <string name="quantity">Quantity</string>
-    <string name="expiry_date">Expiry date (yyyy-MM-dd)</string>
+    <string name="expiry_date">Expiry date</string>
     <string name="image_url">Image URL</string>
     <string name="add">Add</string>
     <string name="increase_quantity">Increase quantity</string>
@@ -24,4 +24,8 @@
     <string name="recipes">Recipes</string>
     <string name="favourites">Favourites</string>
     <string name="shopping_list">Shopping List</string>
+    <string name="recipe_list">Recipe List</string>
+    <string name="filter_recipe">Filter Recipe</string>
+    <string name="stock_n_roll">Stock\'n\'Roll</string>
+    <string name="_0_recipes_found">0 Recipes Found</string>
 </resources>

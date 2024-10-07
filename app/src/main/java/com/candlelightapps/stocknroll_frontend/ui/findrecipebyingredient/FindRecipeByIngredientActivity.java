@@ -91,6 +91,8 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 filterIngredientList(newText);
+                recyclerView.scrollToPosition(0);
+                ingredientAdapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -201,7 +203,6 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
                 layoutEditFilters.setVisibility(View.GONE);
                 ingredientSearchView.setVisibility(View.VISIBLE);
                 switchFindRecipe.setText("By ingredient   ");
-
             }
         });
     }
@@ -234,9 +235,8 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
 
         if (ingredientFilterList.isEmpty()) {
             Toast.makeText(FindRecipeByIngredientActivity.this, "No Ingredients By Name or Category Found", Toast.LENGTH_SHORT).show();
-        } else {
-            ingredientAdapter.setIngredientFilteredList(ingredientFilterList);
         }
+            ingredientAdapter.setIngredientFilteredList(ingredientFilterList);
     }
 
 
