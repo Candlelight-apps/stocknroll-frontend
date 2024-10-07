@@ -74,9 +74,10 @@ public class IngredientRepository {
         call.enqueue(new Callback<Ingredient>() {
             @Override
             public void onResponse(Call<Ingredient> call, Response<Ingredient> response) {
-                Toast.makeText(application.getApplicationContext(),
-                        String.format("Quantity updated for %s.", response.body().getName()),
-                        Toast.LENGTH_SHORT).show();
+                Log.i("updateIngredient",String.format("Quantity updated for %s.", response.body().getName()));
+//                Toast.makeText(application.getApplicationContext(),
+//                        String.format("Quantity updated for %s.", response.body().getName()),
+//                        Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -29,6 +29,7 @@ import java.util.List;
 public class FoundRecipeByIngredient extends AppCompatActivity implements FoundRecipesRecyclerViewInterface{
 
     private List<String> ingredientList;
+    private ArrayList<String> criteria;
     private List<Recipe> recipeList;
     private ActivityFoundRecipeByIngredientBinding foundRecipeByIngredientBinding;
     private RecipeViewModel viewModel;
@@ -49,7 +50,15 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
                 .get(RecipeViewModel.class);
 
         Bundle b = getIntent().getExtras();
-        ingredientList = b.getStringArrayList("ingredient_list");
+        if(b.containsKey("ingredient_list")){
+            ingredientList = b.getStringArrayList("ingredient_list");
+            getRecipesByIngredients(ingredientList);
+        }
+        else {
+          criteria = b.getStringArrayList("criteria");
+          getRecipesByCriteria(criteria);
+        }
+
 
         getRecipesByIngredients(ingredientList);
 
@@ -57,8 +66,17 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         initaliseBottomNavigationMenu(bottomNavigationView);
+   
     }
-
+    private void getRecipesByCriteria(List<String> criteria) {
+        viewModel.getRecipesByCriteria(criteria.get(0),criteria.get(1), criteria.get(2) ).observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                recipeList = (ArrayList<Recipe>) recipes;
+                displayInRecyclerView();
+            }
+        });
+    }
     private void getRecipesByIngredients(List<String> ingredientList) {
         viewModel.getRecipesByIngredients(ingredientList).observe(this, new Observer<List<Recipe>>() {
             @Override
