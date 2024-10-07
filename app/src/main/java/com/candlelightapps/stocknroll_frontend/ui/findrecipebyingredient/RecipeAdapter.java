@@ -1,6 +1,7 @@
 package com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
+        Log.i("Position int", "**********Recipe click at position ::" + position);
+        Log.i("Favourite recipes", "**********Favourite Recipes:" + favouriteRecipes);
+
         recipe = recipeList.get(position);
 
         Glide.with(holder.itemView.getContext()).load(recipeList.get(position).getImage()).into(holder.activityFoundRecipeViewBinding.recipeImage);
@@ -61,38 +65,53 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.activityFoundRecipeViewBinding.setRecipe(recipe);
 
         ImageButton favouriteButton = holder.activityFoundRecipeViewBinding.btnFavoriteRecipe;
+
         favouriteButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+
+                Log.i("Recipe select", "*******Recipe clicked" + recipe.getTitle());
                 boolean isCurrentRecipeFavourited = false;
-                for (int i = 0; i < favouriteRecipes.size(); i ++) {
-                    if (recipe.getId() == favouriteRecipes.get(i).getSpoonacularId()) {
-                        recipe.setSpoonacularId((int)recipe.getId());
-                        recipe.setId(favouriteRecipes.get(i).getId());
-                        isCurrentRecipeFavourited = true;
+                if (!(favouriteRecipes == null)) {
+                    Log.i("Favourite recipes empty", "*********Favourite recipes are empty*******");
+                    for (int i = 0; i < favouriteRecipes.size(); i++) {
+                        if (recipe.getTitle().equals(favouriteRecipes.get(i).getTitle())) {
+                            isCurrentRecipeFavourited = true;
+                        }
                     }
-                }
-                if (!isCurrentRecipeFavourited) {
-                    if (onFavouriteBtnClickedListener != null) {
-                        recipe.setSpoonacularId((int)recipe.getId());
-                        recipe.setId(0);
-                        onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, true);
-                        Toast.makeText(context,
-                                String.format("Recipe %s added to favourites", recipe.getTitle()),
-                                Toast.LENGTH_LONG).show();
-
-                    }
-
-                } else {
+                    if (!isCurrentRecipeFavourited) {
                         if (onFavouriteBtnClickedListener != null) {
-                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, false);
+                            recipe.setSpoonacularId((int) recipe.getId());
+                            recipe.setId(0);
+                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, true);
                             Toast.makeText(context,
-                                    String.format("Recipe %s removed from favourites", recipe.getTitle()),
+                                    String.format("Recipe %s added to favourites", recipe.getTitle()),
                                     Toast.LENGTH_LONG).show();
 
-                    }
-                }
+                        }
 
+                    } else {
+                        if (onFavouriteBtnClickedListener != null) {
+                            Toast.makeText(context,
+                                    String.format("Recipe %s already in favourites", recipe.getTitle()),
+                                    Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                } else {
+
+                        if (onFavouriteBtnClickedListener != null) {
+                            recipe.setSpoonacularId((int) recipe.getId());
+                            recipe.setId(0);
+                            onFavouriteBtnClickedListener.onFavouriteBtnClicked(recipe, true);
+                            Toast.makeText(context,
+                                    String.format("Recipe %s added to favourites", recipe.getTitle()),
+                                    Toast.LENGTH_LONG).show();
+
+                        }
+
+                }
             }
         });
     }
