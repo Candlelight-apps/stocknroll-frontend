@@ -4,17 +4,21 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.candlelightapps.stocknroll_frontend.BR;
+import com.google.gson.annotations.SerializedName;
 
 public class Recipe extends BaseObservable {
     long id;
+    @SerializedName("recipeId")
+    int spoonacularId;
     String title;
     int readyInMinutes;
     String sourceUrl;
     String image;
     Boolean isFavourite;
 
-    public Recipe(String title, int readyInMinutes, String sourceUrl, String image, Boolean isFavourite) {
+    public Recipe(int spoonacularId, String title, int readyInMinutes, String sourceUrl, String image, Boolean isFavourite) {
         this.id = id;
+        this.spoonacularId = spoonacularId;
         this.title = title;
         this.readyInMinutes = readyInMinutes;
         this.sourceUrl = sourceUrl;
@@ -30,6 +34,14 @@ public class Recipe extends BaseObservable {
     public void setId(long id) {
         this.id = id;
         notifyPropertyChanged(BR.id);
+    }
+
+    @Bindable
+    public long getSpoonacularId() {return spoonacularId;}
+
+    public void setSpoonacularId(int spoonacularId) {
+        this.spoonacularId = spoonacularId;
+        notifyPropertyChanged(BR.spoonacularId);
     }
 
     @Bindable
