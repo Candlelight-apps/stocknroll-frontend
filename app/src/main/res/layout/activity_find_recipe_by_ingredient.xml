@@ -176,7 +176,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
             android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ingredientRecyclerView"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintStart_toStartOf="parent" />
         
     </androidx.constraintlayout.widget.ConstraintLayout>
