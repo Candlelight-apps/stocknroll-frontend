@@ -63,7 +63,6 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
           getRecipesByCriteria(criteria);
         }
 
-
         getFavouriteRecipes();
 
         getRecipesByIngredients(ingredientList);
@@ -90,8 +89,10 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
         recipeViewModel.getRecipesByIngredients(ingredientList).observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(List<Recipe> recipes) {
+                int listSize = 0;
                 recipeList = (ArrayList<Recipe>) recipes;
-                updateResultsCount(recipeList.size());
+                if (recipeList != null) listSize = recipeList.size();
+                updateResultsCount(listSize);
                 displayInRecyclerView();
             }
         });
