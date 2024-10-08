@@ -6,20 +6,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.LinearLayout;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.databinding.DataBindingUtil;
-
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +25,7 @@ import com.candlelightapps.stocknroll_frontend.databinding.ActivityFindRecipeByI
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.ui.favouriterecipes.FavouriteRecipesActivity;
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
+import com.candlelightapps.stocknroll_frontend.ui.shoppinglist.ShoppingListActivity;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -54,15 +52,13 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
     private ActivityFindRecipeByIngredientBinding activityFindRecipeByIngredientBinding;
     private FindRecipeByIngredientClickHandlers findRecipeByIngredientClickHandlers;
     private IngredientViewModel ingredientViewModel;
-    private  AutoCompleteTextView dietTypeDropdown;
+    private AutoCompleteTextView dietTypeDropdown;
     private AutoCompleteTextView cuisineDropdown;
     private AutoCompleteTextView intolerancesDropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // EdgeToEdge.enable(this);
 
         ingredientsForRecipeSearch = new ArrayList<>();
 
@@ -96,8 +92,6 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        initaliseBottomNavigationMenu(bottomNavigationView);
 
         handleSwitchToggle();
         cuisineDropdown = findViewById(R.id.cuisine_dropdown);
@@ -134,6 +128,38 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
                 }
             }
         });
+
+        bottomNavigationView = activityFindRecipeByIngredientBinding.bottomNavigation;
+        bottomNavigationView.setSelectedItemId(R.id.recipes);
+
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
+
+                if (item.getItemId() == R.id.pantry) {
+                    intent = new Intent(FindRecipeByIngredientActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                } else if (item.getItemId() == R.id.recipes) {
+                    // Already in Recipes activity, no need to restart
+                    return true;
+                } else if (item.getItemId() == R.id.favourites) {
+                    intent = new Intent(FindRecipeByIngredientActivity.this, FavouriteRecipesActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                } else if (item.getItemId() == R.id.shopping_list) {
+                    intent = new Intent(FindRecipeByIngredientActivity.this, ShoppingListActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
 
@@ -236,34 +262,7 @@ public class FindRecipeByIngredientActivity extends AppCompatActivity {
         if (ingredientFilterList.isEmpty()) {
             Toast.makeText(FindRecipeByIngredientActivity.this, "No Ingredients By Name or Category Found", Toast.LENGTH_SHORT).show();
         }
-            ingredientAdapter.setIngredientFilteredList(ingredientFilterList);
-    }
-
-
-    private void initaliseBottomNavigationMenu(BottomNavigationView bottomNavigationView) {
-
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-
-            Intent intent;
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.pantry) {
-                    intent = new Intent(FindRecipeByIngredientActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    return true;
-
-
-                } else if (id == R.id.favourites) {
-                    intent = new Intent(FindRecipeByIngredientActivity.this, FavouriteRecipesActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-                return false;
-            }
-
-        });
+        ingredientAdapter.setIngredientFilteredList(ingredientFilterList);
     }
 
     private void intoleranceDropdownSetup() {
