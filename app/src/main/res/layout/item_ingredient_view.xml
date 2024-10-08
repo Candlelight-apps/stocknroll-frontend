@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="@={Converter.intToString(ingredient.quantity)}"
+                    android:text="@={Converter.intToStringDisplay(ingredient.quantity)}"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     tools:text="5" />
