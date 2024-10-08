@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -162,7 +164,17 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
 
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setQueryHint("Find in your pantry...");
-
+        searchView.setBackgroundResource(R.drawable.search_view_background);
+        EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(getColor(R.color.blue));
+        ImageView closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+        closeButton.setImageResource(R.drawable.close_icon);
+        closeButton.setOnClickListener(view -> {
+            // Clear the search query and collapse the SearchView
+            searchView.setQuery("", false);
+            searchView.clearFocus();
+            searchItem.collapseActionView();
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
