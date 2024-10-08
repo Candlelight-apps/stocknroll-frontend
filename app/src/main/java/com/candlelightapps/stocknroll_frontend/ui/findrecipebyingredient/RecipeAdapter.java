@@ -77,7 +77,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.activityFoundRecipeViewBinding.setRecipe(recipe);
 
         ImageButton favouriteButton = holder.activityFoundRecipeViewBinding.btnFavoriteRecipe;
-
+        favouriteButton.setSelected(true);
         favouriteButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -92,6 +92,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                             isCurrentRecipeFavourited = true;
                         }
                     }
+//                    //Uncomment lines 96-103 to toggle between heart_filled_icon
+//                    if(favouriteButton.isSelected()){
+                        favouriteButton.setImageResource(R.drawable.favorite_filled_icon);
+//                        favouriteButton.setSelected(false);
+//                    }
+//                    else{
+//                        favouriteButton.setImageResource(R.drawable.favorite_outline_icon);
+//                        favouriteButton.setSelected(true);
+//                    }
+
                     if (!isCurrentRecipeFavourited) {
                         if (onFavouriteBtnClickedListener != null) {
                             recipe.setSpoonacularId((int) recipe.getId());
