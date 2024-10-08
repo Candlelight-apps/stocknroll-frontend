@@ -10,11 +10,11 @@
             type="com.candlelightapps.stocknroll_frontend.model.Ingredient" />
         </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="16dp">
+        style="@style/CustomCardView"
+        >
 
         <ImageView
             android:id="@+id/ingredientImage"
@@ -55,17 +55,18 @@
                     android:text="@{ingredient.name}"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:textColor="@color/blue"
                     tools:text="Ingredient name"/>
 
                 <ImageButton
                     android:id="@+id/btn_decrease_quantity"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/btn_shape_round"
                     android:src="@drawable/ic_remove"
                     android:contentDescription="@string/decrease_quantity"
-
-                    android:layout_marginEnd="8dp" />
+                    android:layout_marginEnd="8dp"
+                    style="@style/CustomDecreaseButton"
+                    />
 
                 <TextView
                     android:id="@+id/ingredient_quantity"
@@ -81,9 +82,10 @@
                     android:id="@+id/btn_increase_quantity"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/btn_shape_round"
                     android:src="@drawable/add_icon"
-                    android:contentDescription="@string/increase_quantity" />
+                    android:contentDescription="@string/increase_quantity"
+                    style="@style/CustomIncreaseButton"
+                    />
 
             </LinearLayout>
 
@@ -98,25 +100,25 @@
 
                 <TextView
                     android:id="@+id/ingredient_expiry_date"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@{``+ingredient.expiryDate}"
                     tools:text="Expiry Date"
-                    android:textSize="12sp"
+                    style="@style/BtnSubTextStyle"
                     />
 
                 <ImageButton
                     android:id="@+id/btnDelete"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/btn_shape_round"
+                    style="@style/CustomDeleteButton"
                     android:src="@drawable/delete_icon"
-                    android:contentDescription="Delete Ingredient"
+                    android:contentDescription="@{@string/delete_ingredient(ingredient.name)}"
                     />
 
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
