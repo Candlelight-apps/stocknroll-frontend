@@ -2,6 +2,8 @@ package com.candlelightapps.stocknroll_frontend.ui.mainactivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,11 +26,13 @@ import com.candlelightapps.stocknroll_frontend.databinding.ActivityMainBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.ui.favouriterecipes.FavouriteRecipesActivity;
 import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRecipeByIngredientActivity;
+import com.candlelightapps.stocknroll_frontend.ui.shoppinglist.ShoppingListActivity;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
     private ActivityMainBinding binding;
     private IngredientViewModel ingredientViewModel;
     private List<Ingredient> ingredientList;
+    private List<Ingredient> inventoryListFiltered;
     private MainActivityClickHandler mainActivityClickHandler;
     private AutoCompleteTextView sortingDropdownMenu;
     private RecyclerView recyclerView;
@@ -43,7 +50,11 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
     private String sortByName = "Name";
     private String sortByExpiry = "Expiry Date";
     private String sortByStock = "Stock Level";
+    private BottomNavigationView bottomNavigationView;
 
+    // **********************
+    //      onCreate
+    // **********************
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
         ingredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
         mainActivityClickHandler = new MainActivityClickHandler(this);
         binding.setClickHandler(mainActivityClickHandler);
+
+        Toolbar toolbar = binding.toolbar;
+        setSupportActionBar(toolbar);
 
         initaliseSortingDropdownMenu();
         getAllIngredientsBy(sortByName);
@@ -65,39 +79,85 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
 
                 Toast.makeText(MainActivity.this, "Sorting by " + selectedSortOption, Toast.LENGTH_SHORT).show();
 
-                if(selectedSortOption.equalsIgnoreCase(sortByStock)) {
+                if (selectedSortOption.equalsIgnoreCase(sortByStock)) {
                     getAllIngredientsBy(sortByStock);
-                }
-                else if(selectedSortOption.equalsIgnoreCase(sortByExpiry)) {
+                } else if (selectedSortOption.equalsIgnoreCase(sortByExpiry)) {
                     getAllIngredientsBy(sortByExpiry);
-                }
-                else {
+                } else {
                     getAllIngredientsBy(sortByName);
                 }
             }
         });
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = binding.bottomNavigation;
+        bottomNavigationView.setSelectedItemId(R.id.pantry);
+
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-
-            Intent intent;
-
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.recipes) {
+                Intent intent;
+
+                if (item.getItemId() == R.id.pantry) {
+                    return true;
+                } else if (item.getItemId() == R.id.recipes) {
                     intent = new Intent(MainActivity.this, FindRecipeByIngredientActivity.class);
                     startActivity(intent);
+                    finish();
                     return true;
-                } else if (id == R.id.favourites) {
+                } else if (item.getItemId() == R.id.favourites) {
                     intent = new Intent(MainActivity.this, FavouriteRecipesActivity.class);
                     startActivity(intent);
+                    finish();
+                    return true;
+                } else if (item.getItemId() == R.id.shopping_list) {
+                    intent = new Intent(MainActivity.this, ShoppingListActivity.class);
+                    startActivity(intent);
+                    finish();
                     return true;
                 }
                 return false;
             }
         });
+
     }
+
+    // ***************************
+    //      onCreateOptionsMenu
+    // ***************************
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Find in your pantry...");
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterIngredientList(newText);
+                recyclerView.scrollToPosition(0);
+                inventoryAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
+        return true;
+    }
+
+
+    // ***************************
+    //      / onCreateOptionsMenu
+    // ***************************
 
     private void getAllIngredientsBy(String sortOption) {
         ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
@@ -105,16 +165,17 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
             public void onChanged(List<Ingredient> ingredientsFromLiveData) {
                 ingredientList = (List<Ingredient>) ingredientsFromLiveData;
 
-                if(sortOption.equalsIgnoreCase(sortByStock)) {
+                if (sortOption.equalsIgnoreCase(sortByStock)) {
                     Collections.sort(ingredientList, new Comparator<Ingredient>() {
                         @Override
                         public int compare(Ingredient i1, Ingredient i2) {
                             return i1 == null || i2 == null || i1.getName() == null || i2.getName() == null ? 0 : Integer.compare(i2.getQuantity(), i1.getQuantity());
                         }
                     });
-                } else if(sortOption.equalsIgnoreCase(sortByExpiry)) {
+                } else if (sortOption.equalsIgnoreCase(sortByExpiry)) {
                     Collections.sort(ingredientList, new Comparator<Ingredient>() {
                         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
                         @Override
                         public int compare(Ingredient ingredient, Ingredient i1) {
                             if (ingredient == null || i1 == null || ingredient.getExpiryDate() == null || i1.getExpiryDate() == null) {
@@ -139,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
             }
         });
     }
-    
+
     @Override
     public void onButtonClick(long ingredientId) {
         ingredientViewModel.getIsDeleted().observe(this, isDeleted -> {
@@ -170,6 +231,24 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortingDropdownMenu.setAdapter(adapter);
+    }
+
+    private void filterIngredientList(String text) {
+
+        inventoryListFiltered = new ArrayList<>();
+
+        for (Ingredient ingredient : ingredientList) {
+            if (ingredient.getName().toLowerCase().contains(text.toLowerCase())) {
+                inventoryListFiltered.add(ingredient);
+            }
+        }
+
+        if (inventoryListFiltered.isEmpty()) {
+            Toast.makeText(MainActivity.this, "No items found", Toast.LENGTH_SHORT).show();
+
+        }
+        inventoryAdapter.setInventoryFilteredList(inventoryListFiltered);
+
     }
 }
 
