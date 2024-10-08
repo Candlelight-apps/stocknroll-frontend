@@ -60,7 +60,8 @@ public class RecipeRepository {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 List<Recipe> recipeList = response.body();
-                if(recipeList == null || recipeList.isEmpty()) Toast.makeText(application.getApplicationContext(), "Sorry!, No recipes found.", Toast.LENGTH_LONG).show();
+                if(recipeList == null || recipeList.isEmpty())
+                    Toast.makeText(application.getApplicationContext(), "Sorry!, No recipes found.", Toast.LENGTH_SHORT).show();
                 recipeListMutableLiveData.setValue(recipeList);
             }
 
