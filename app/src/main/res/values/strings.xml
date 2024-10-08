@@ -30,4 +30,5 @@
     <string name="_0_recipes_found">0 Recipes Found</string>
     <string name="logo">logo</string>
     <string name="delete_ingredient">Delete Ingredient %s</string>
+    <string name="ingredient_image">Ingredient Image</string>
 </resources>

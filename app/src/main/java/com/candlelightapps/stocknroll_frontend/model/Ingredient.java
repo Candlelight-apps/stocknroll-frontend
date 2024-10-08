@@ -113,12 +113,14 @@ public class Ingredient extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.imageUrl);
     }
 
+    @Bindable
     public boolean isChecked() {
         return isChecked;
     }
 
     public void setIsChecked(boolean checked) {
         isChecked = checked;
+        notifyPropertyChanged(BR.checked);
     }
 
     @Override
