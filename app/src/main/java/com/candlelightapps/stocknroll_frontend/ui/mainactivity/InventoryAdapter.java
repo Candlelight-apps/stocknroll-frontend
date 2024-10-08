@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.candlelightapps.stocknroll_frontend.databinding.ItemIngredientViewBin
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.IngredientViewHolder> {
@@ -28,6 +31,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
     private List<Ingredient> ingredientList;
     private OnDeleteButtonClickListener onDeleteButtonClickListener;
     private IngredientViewModel viewModel;
+
+
 
     public interface OnDeleteButtonClickListener {
         void onButtonClick(long ingredientId);
@@ -39,6 +44,19 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
         this.onDeleteButtonClickListener = onDeleteButtonClickListener;
         this.viewModel = viewModel;
     }
+
+    // ******************************
+    //     Search Filtering - START
+    // ******************************
+
+    public void setInventoryFilteredList(List<Ingredient> inventoryListFiltered) {
+        this.ingredientList = new ArrayList<>(inventoryListFiltered);
+        notifyDataSetChanged();
+    }
+
+    // ***************************
+    //     Search Filtering - END
+    // ***************************
 
     @NonNull
     @Override

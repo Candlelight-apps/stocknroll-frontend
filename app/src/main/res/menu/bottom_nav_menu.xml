@@ -10,7 +10,7 @@
         android:title="@string/recipes" />
     <item
         android:id="@+id/favourites"
-        android:icon="@drawable/baseline_favorite_border_24"
+        android:icon="@drawable/ic_favourites"
         android:title="@string/favourites" />
     <item
         android:id="@+id/shopping_list"
