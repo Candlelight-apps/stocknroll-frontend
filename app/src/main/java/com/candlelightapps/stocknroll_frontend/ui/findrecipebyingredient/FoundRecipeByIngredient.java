@@ -45,7 +45,6 @@ public class FoundRecipeByIngredient extends AppCompatActivity implements FoundR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_found_recipe_by_ingredient);
 
         foundRecipeByIngredientBinding = DataBindingUtil.setContentView(this, R.layout.activity_found_recipe_by_ingredient);
