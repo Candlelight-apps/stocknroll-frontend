@@ -12,12 +12,14 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.candlelightapps.stocknroll_frontend.R;
 import com.candlelightapps.stocknroll_frontend.databinding.ItemIngredientViewBinding;
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
-import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.IngredientAdapter;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 
 import java.util.ArrayList;
@@ -67,6 +69,17 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Ingr
     @Override
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
         Ingredient ingredient = ingredientList.get(position);
+
+        Glide.with(context).clear(holder.itemIngredientViewBinding.ingredientImage);
+        Glide.with(context)
+                .load(ingredient.getImageUrl())
+                .apply(new RequestOptions()
+                    .placeholder(R.drawable.default_ingredient_image)
+                    .error(R.drawable.error_loading_ingredient_image_square)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
+                .into(holder.itemIngredientViewBinding.ingredientImage);
+
         holder.itemIngredientViewBinding.setIngredient(ingredient);
         holder.itemIngredientViewBinding.executePendingBindings();
 

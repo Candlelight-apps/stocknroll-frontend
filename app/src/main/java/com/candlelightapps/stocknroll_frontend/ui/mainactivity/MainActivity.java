@@ -29,6 +29,7 @@ import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRec
 import com.candlelightapps.stocknroll_frontend.ui.shoppinglist.ShoppingListActivity;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements InventoryAdapter.OnDeleteButtonClickListener {
 
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
     private IngredientViewModel ingredientViewModel;
     private List<Ingredient> ingredientList;
     private List<Ingredient> inventoryListFiltered;
+    private List<Ingredient> allIngredientList;
+
     private MainActivityClickHandler mainActivityClickHandler;
     private AutoCompleteTextView sortingDropdownMenu;
     private RecyclerView recyclerView;
@@ -50,11 +54,15 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
     private String sortByName = "Name";
     private String sortByExpiry = "Expiry Date";
     private String sortByStock = "Stock Level";
+
     private BottomNavigationView bottomNavigationView;
 
     // **********************
     //      onCreate
     // **********************
+
+    private String viewAll = "View All";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
         setSupportActionBar(toolbar);
 
         initaliseSortingDropdownMenu();
-        getAllIngredientsBy(sortByName);
+        getAllIngredientsBy(sortByName, ingredientList);
 
         AutoCompleteTextView ddSortingView = findViewById(R.id.dropdown_sorting_inventory);
         ddSortingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,22 +86,42 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
                 String selectedSortOption = adapterView.getItemAtPosition(position).toString();
 
                 Toast.makeText(MainActivity.this, "Sorting by " + selectedSortOption, Toast.LENGTH_SHORT).show();
-
-                if (selectedSortOption.equalsIgnoreCase(sortByStock)) {
-                    getAllIngredientsBy(sortByStock);
-                } else if (selectedSortOption.equalsIgnoreCase(sortByExpiry)) {
-                    getAllIngredientsBy(sortByExpiry);
-                } else {
-                    getAllIngredientsBy(sortByName);
+ 
+                if(selectedSortOption.equalsIgnoreCase(sortByStock)) {
+                    getAllIngredientsBy(sortByStock, ingredientList);
+                }
+                else if(selectedSortOption.equalsIgnoreCase(sortByExpiry)) {
+                    getAllIngredientsBy(sortByExpiry, ingredientList);
+                }
+                else if(selectedSortOption.equalsIgnoreCase(sortByName)) {
+                    getAllIngredientsBy(sortByName, ingredientList);
                 }
             }
         });
 
-        bottomNavigationView = binding.bottomNavigation;
-        bottomNavigationView.setSelectedItemId(R.id.pantry);
-
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                String selectedTab = tab.getText().toString();
+                Toast.makeText(MainActivity.this, "Selected Tab: " + selectedTab, Toast.LENGTH_SHORT).show();
+                getAllIngredientsIn(selectedTab);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+          
+        @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
 
@@ -154,67 +182,94 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
         return true;
     }
 
+    private void getAllIngredientsIn(String selectedProductTab) {
 
-    // ***************************
-    //      / onCreateOptionsMenu
-    // ***************************
+        if(selectedProductTab.equalsIgnoreCase(viewAll)) {
+            getAllIngredientsBy(sortByName, null);
+        } else {
+            ingredientList = allIngredientList.stream()
+                    .filter(ingredient -> ingredient.getCategory().equalsIgnoreCase(selectedProductTab))
+                    .collect(Collectors.toList());
 
-    private void getAllIngredientsBy(String sortOption) {
-        ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
-            @Override
-            public void onChanged(List<Ingredient> ingredientsFromLiveData) {
-                ingredientList = (List<Ingredient>) ingredientsFromLiveData;
-
-                if (sortOption.equalsIgnoreCase(sortByStock)) {
-                    Collections.sort(ingredientList, new Comparator<Ingredient>() {
-                        @Override
-                        public int compare(Ingredient i1, Ingredient i2) {
-                            return i1 == null || i2 == null || i1.getName() == null || i2.getName() == null ? 0 : Integer.compare(i2.getQuantity(), i1.getQuantity());
-                        }
-                    });
-                } else if (sortOption.equalsIgnoreCase(sortByExpiry)) {
-                    Collections.sort(ingredientList, new Comparator<Ingredient>() {
-                        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-                        @Override
-                        public int compare(Ingredient ingredient, Ingredient i1) {
-                            if (ingredient == null || i1 == null || ingredient.getExpiryDate() == null || i1.getExpiryDate() == null) {
-                                return 0;
-                            } else {
-                                LocalDate ingredientDate = LocalDate.parse(ingredient.getExpiryDate(), dateTimeFormatter);
-                                LocalDate i1Date = LocalDate.parse(i1.getExpiryDate(), dateTimeFormatter);
-
-                                return ingredientDate.compareTo(i1Date);
-                            }
-                        }
-                    });
-                } else {
-                    Collections.sort(ingredientList, new Comparator<Ingredient>() {
-                        @Override
-                        public int compare(Ingredient o1, Ingredient o2) {
-                            return o1.getName().compareToIgnoreCase(o2.getName());
-                        }
-                    });
-                }
-                displayInRecyclerView();
-            }
-        });
+            inventoryAdapter = new InventoryAdapter(this, ingredientList, this, ingredientViewModel);
+            recyclerView.setAdapter(inventoryAdapter);
+            displayInRecyclerView();
+        }
     }
 
+    private void getAllIngredientsBy(String sortOption, List<Ingredient> filteredIngredientList) {
+      
+    ingredientViewModel.getIngredients().observe(this, new Observer<List<Ingredient>>() {
+      
+        @Override
+        public void onChanged(List<Ingredient> ingredientsFromLiveData) {
+            MainActivity.this.ingredientList = (List<Ingredient>) ingredientsFromLiveData;
+            allIngredientList = MainActivity.this.ingredientList;
+          
+            if(filteredIngredientList != null) {
+                ingredientList = filteredIngredientList;
+            }
+
+            if(sortOption.equalsIgnoreCase(sortByStock)) {
+                Collections.sort(MainActivity.this.ingredientList, new Comparator<Ingredient>() {
+                  
+                    @Override
+                    public int compare(Ingredient i1, Ingredient i2) {
+                        return i1 == null || i2 == null || i1.getName() == null || i2.getName() == null ? 0 : Integer.compare(i2.getQuantity(), i1.getQuantity());
+                    }
+                });
+              
+            } else if(sortOption.equalsIgnoreCase(sortByExpiry)) {
+                Collections.sort(MainActivity.this.ingredientList, new Comparator<Ingredient>() {
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                  
+                    @Override
+                    public int compare(Ingredient ingredient, Ingredient i1) {
+                      
+                        if (ingredient == null || i1 == null || ingredient.getExpiryDate() == null || i1.getExpiryDate() == null) {
+                            return 0;
+                        } else {
+                            LocalDate ingredientDate = LocalDate.parse(ingredient.getExpiryDate(), dateTimeFormatter);
+                            LocalDate i1Date = LocalDate.parse(i1.getExpiryDate(), dateTimeFormatter);
+
+                            return ingredientDate.compareTo(i1Date);
+                        }
+                    }
+                });
+              
+            } else {
+                Collections.sort(MainActivity.this.ingredientList, new Comparator<Ingredient>() {
+                  
+                    @Override
+                    public int compare(Ingredient o1, Ingredient o2) {
+                        return o1.getName().compareToIgnoreCase(o2.getName());
+                    }
+                });
+            }
+            setUpdatedInventoryList();
+        }
+    });
+}
+  
     @Override
     public void onButtonClick(long ingredientId) {
         ingredientViewModel.getIsDeleted().observe(this, isDeleted -> {
             if (isDeleted) {
-                getAllIngredientsBy(sortByName);
+                getAllIngredientsBy(sortByName, ingredientList);
             }
         });
         ingredientViewModel.deleteIngredient(ingredientId);
     }
 
-    private void displayInRecyclerView() {
+    private void setUpdatedInventoryList() {
         recyclerView = binding.inventoryRecyclerView;
         inventoryAdapter = new InventoryAdapter(this, ingredientList, this, ingredientViewModel);
         recyclerView.setAdapter(inventoryAdapter);
+
+        displayInRecyclerView();
+    }
+
+    private void displayInRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);

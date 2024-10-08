@@ -15,19 +15,36 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/doodle">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
+            android:id="@+id/toolbarLayout"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="Find a recipe"
-            app:titleTextColor="@color/white" />
+            style="@style/CustomToolBar"
+            >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/stocknroll_logo"
+                android:contentDescription="@string/logo"
+                />
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/toolbar"
+                android:layout_weight="1"
+                app:title="Find A Recipe"
+                style="@style/CustomToolBar"
+                />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/button_search"
@@ -37,7 +54,10 @@
             android:layout_marginVertical="16dp"
             android:text="Search"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+            style="@style/CustomButton"
+            android:textAllCaps="false"
+            />
 
 
         <androidx.appcompat.widget.SwitchCompat
@@ -47,10 +67,11 @@
             android:paddingStart="16dp"
             android:paddingEnd="30dp"
             android:text="By ingredient   "
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintTop_toTopOf="@+id/button_search" />
+            app:layout_constraintTop_toTopOf="@+id/button_search"
+            style="@style/CustomSwitchCompat"
+            />
 
         <SearchView
             android:id="@+id/searchItems"
@@ -63,7 +84,8 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_search" />
+            app:layout_constraintTop_toBottomOf="@id/button_search"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"
@@ -71,7 +93,7 @@
             android:layout_height="0dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintBottom_toTopOf="@id/backButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchItems"
@@ -83,7 +105,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintBottom_toTopOf="@id/navigationLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_search">
@@ -96,7 +118,9 @@
                 android:layout_height="wrap_content"
                 android:hint="Diet Type"
                 android:paddingHorizontal="32dp"
-                android:paddingVertical="16dp">
+                android:paddingVertical="16dp"
+                app:hintTextColor="@color/orange"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                 <AutoCompleteTextView
                     android:id="@+id/diet_type_dropdown"
@@ -113,7 +137,9 @@
                 android:layout_height="wrap_content"
                 android:hint="Cuisine"
                 android:paddingHorizontal="32dp"
-                android:paddingVertical="16dp">
+                android:paddingVertical="16dp"
+                app:hintTextColor="@color/orange"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                 <AutoCompleteTextView
                     android:id="@+id/cuisine_dropdown"
@@ -130,7 +156,9 @@
                 android:layout_height="wrap_content"
                 android:hint="Intolerances"
                 android:paddingHorizontal="32dp"
-                android:paddingVertical="16dp">
+                android:paddingVertical="16dp"
+                app:hintTextColor="@color/orange"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color_selector">
 
                 <AutoCompleteTextView
                     android:id="@+id/intolerances_dropdown"
@@ -142,26 +170,45 @@
 
         </LinearLayout>
 
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
+        <LinearLayout
+            android:id="@+id/navigationLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/material_dynamic_primary95"
-            app:itemIconTint="@color/black"
-            app:itemTextColor="@color/black"
-            app:labelVisibilityMode="labeled"
+            android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/bottom_nav_menu" />
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/navigation_image"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelVisibilityMode="labeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:menu="@menu/bottom_nav_menu"
+                style="@style/CustomBottomNavigationView"
+                />
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
             android:layout_margin="16dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintBottom_toTopOf="@id/navigationLayout"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{clickHandler::onBackBtnClicked}"/>
+            android:onClick="@{clickHandler::onBackBtnClicked}"
+            style="@style/CustomFloatingActionButton"
+            />
         
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

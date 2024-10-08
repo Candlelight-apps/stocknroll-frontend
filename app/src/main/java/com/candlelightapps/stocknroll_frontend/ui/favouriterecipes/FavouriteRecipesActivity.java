@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class FavouriteRecipesActivity extends AppCompatActivity implements FoundRecipesRecyclerViewInterface {
+public class FavouriteRecipesActivity extends AppCompatActivity implements FoundRecipesRecyclerViewInterface, RecipeAdapter.OnFavouriteBtnClickedListener {
 
     private ActivityFavouriteRecipesBinding binding;
     private RecipeViewModel recipeViewModel;
@@ -48,7 +48,6 @@ public class FavouriteRecipesActivity extends AppCompatActivity implements Found
         recipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         clickHandler = new FavouriteRecipesClickHandler(this);
         binding.setClickHandler(clickHandler);
-
         getFavouriteRecipes();
 
         bottomNavigationView = binding.bottomNavigation;
@@ -104,7 +103,7 @@ public class FavouriteRecipesActivity extends AppCompatActivity implements Found
 
     private void displayInRecyclerView() {
         recyclerView = binding.rvFavouriteRecipes;
-        recipeAdapter = new RecipeAdapter(recipeList, this, this);
+        recipeAdapter = new RecipeAdapter(recipeList, this, this, this, recipeList);
         recyclerView.setAdapter(recipeAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -114,6 +113,16 @@ public class FavouriteRecipesActivity extends AppCompatActivity implements Found
 
     @Override
     public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void onFavouriteBtnClicked(Recipe recipe) {
+        recipeViewModel.deleteRecipe(recipe.getId());
+         Intent intent = new Intent(FavouriteRecipesActivity.this, FavouriteRecipesActivity.class);
+        startActivity(intent);
+
+
 
     }
 }

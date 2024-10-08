@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:iconTint="@color/white"
+        android:iconTint="@color/orange"
         android:id="@+id/action_search"
         android:icon="@drawable/ic_magnifying_glass"
         android:title="@string/search"

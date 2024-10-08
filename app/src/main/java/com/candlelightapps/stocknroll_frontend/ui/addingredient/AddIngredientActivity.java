@@ -21,10 +21,11 @@ import com.candlelightapps.stocknroll_frontend.databinding.ActivityAddIngredient
 import com.candlelightapps.stocknroll_frontend.model.Ingredient;
 import com.candlelightapps.stocknroll_frontend.ui.favouriterecipes.FavouriteRecipesActivity;
 import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FindRecipeByIngredientActivity;
-import com.candlelightapps.stocknroll_frontend.ui.findrecipebyingredient.FoundRecipeByIngredient;
 import com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivity;
 import com.candlelightapps.stocknroll_frontend.ui.viewmodel.IngredientViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Calendar;
 
 public class AddIngredientActivity extends AppCompatActivity {
 
@@ -79,13 +80,20 @@ public class AddIngredientActivity extends AppCompatActivity {
         categoryDropdownMenu.setAdapter(adapter);
     }
 
+    Calendar calendar = Calendar.getInstance();
+    int mYear = calendar.get(Calendar.YEAR);
+    int mMonth = calendar.get(Calendar.MONTH);
+    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
     private void openDatePickerDialog() {
         DatePickerDialog dialog = new DatePickerDialog(this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+
+
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                expiryDateText.setText(String.format("%s-%s-%s", year, month + 1, dayOfMonth));
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                expiryDateText.setText(String.format("%s-%s-%s", year, month + 1, day));
             }
-        }, 2024, 0, 1);
+        }, mYear, mMonth, mDay);
         dialog.show();
     }
 
