@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements InventoryAdapter.
         });
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation)
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
           
         @Override
