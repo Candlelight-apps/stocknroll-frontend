@@ -140,12 +140,11 @@
             android:layout_height="0dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            app:layout_constraintBottom_toTopOf="@id/navigationLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dropdown_layout"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_ingredient_view" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -168,27 +167,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:orientation="vertical"
-            >
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/navigation_image"
-                android:scaleType="fitXY"
                 android:adjustViewBounds="true"
-                />
+                android:scaleType="fitXY"
+                android:src="@drawable/navigation_image" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation"
+                style="@style/CustomBottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:labelVisibilityMode="labeled"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:menu="@menu/bottom_nav_menu"
-                style="@style/CustomBottomNavigationView"
-                />
+                app:menu="@menu/bottom_nav_menu" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
