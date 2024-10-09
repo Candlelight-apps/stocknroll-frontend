@@ -6,6 +6,7 @@
     tools:context=".ui.main.MainActivity">
 
     <data>
+
         <variable
             name="clickHandler"
             type="com.candlelightapps.stocknroll_frontend.ui.mainactivity.MainActivityClickHandler" />
@@ -20,43 +21,40 @@
 
         <LinearLayout
             android:id="@+id/toolbarLayout"
+            style="@style/CustomToolBar"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/CustomToolBar"
-            >
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/stocknroll_logo"
                 android:contentDescription="@string/logo"
-                />
+                android:src="@drawable/stocknroll_logo" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
+                style="@style/CustomToolBar"
                 android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
                 app:menu="@menu/search_menu"
-                app:title="Stock'n'Roll"
-                style="@style/CustomToolBar"
-                />
+                app:title="Stock'n'Roll" />
 
         </LinearLayout>
 
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
+            style="@style/CustomTabLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
-            app:tabMode="scrollable"
-            style="@style/CustomTabLayout"
-            >
+            app:tabMode="scrollable">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -118,19 +116,19 @@
             android:paddingEnd="16dp"
             android:paddingBottom="6dp"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout"
+            app:boxBackgroundColor="@android:color/white"
             app:boxStrokeColor="@color/text_input_layout_stroke_color_selector"
             app:hintTextColor="@color/orange"
-            >
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_layout">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_sorting_inventory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
-                android:text=""/>
+                android:text="" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -149,18 +147,17 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add"
-            android:tint="@color/white"
+            style="@style/CustomFloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toTopOf="@id/navigationLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="16dp"
             android:onClick="@{clickHandler::onFABClicked}"
-            style="@style/CustomFloatingActionButton"
-            />
+            android:src="@drawable/ic_add"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/navigationLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:id="@+id/navigationLayout"
